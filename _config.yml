@@ -1,2 +1,19 @@
 theme: jekyll-theme-slate
 title: dmcavinue.github.io
+
+# Short description (goes below the title; it will also be used in the RSS feed)
+description: This is a sample Jekyll Blog.
+
+# Your name, as you want it to appear underneath each post and in the footer
+author: Daniel McAvinue
+
+# Your email if you want it to be linked on the contact page
+author_email: dmcavinue@gmail.com
+
+markdown: rdiscount
+
+# Makes pretty (descriptive) permalinks. See Jekyll docs for alternatives.
+permalink: pretty
+
+# How many articles do you wish to appear on the front page:
+paginate: 3
