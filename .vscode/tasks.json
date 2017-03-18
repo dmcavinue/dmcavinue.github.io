@@ -34,7 +34,7 @@
                 "\"${workspaceRoot}/docker-compose.yml\"",
                 "bundle",
                 "-o",
-                "${workspaceRoot}/build"
+                "\"${workspaceRoot}/build\""
             ],
             "isBuildCommand": true
         }
