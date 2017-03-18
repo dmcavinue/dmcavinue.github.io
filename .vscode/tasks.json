@@ -10,7 +10,6 @@
                 "-f",
                 "\"${workspaceRoot}/docker-compose.yml\"",
                 "up",
-                "--force-recreate",
                 "-d"
             ],
             "isShellCommand": true
