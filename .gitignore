@@ -3,4 +3,6 @@ _site
 .jekyll-metadata
 *.sublime-project
 *.sublime-workspace
+Gemfile.lock
+.bundle\config
 .DS_Store

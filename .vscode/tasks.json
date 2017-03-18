@@ -1,0 +1,43 @@
+{
+    "version": "0.1.0",
+    "showOutput": "always",
+    "tasks": [
+        {
+            "taskName": "Start-Container",
+            "command": "docker-compose.exe",
+            "isBackground": true,
+            "args": [
+                "-f",
+                "\"${workspaceRoot}/docker-compose.yml\"",
+                "-d",
+                "up",
+                "--force-recreate"
+            ],
+            "isShellCommand": true
+        },
+        {
+            "taskName": "Stop-Container",
+            "command": "docker-compose.exe",
+            "isBackground": true,
+            "args": [
+                "-f",
+                "\"${workspaceRoot}/docker-compose.yml\"",
+                "down"
+            ],
+            "isShellCommand": true   
+        },
+        {
+            "taskName": "Build-Container",
+            "command": "docker-compose.exe",
+            "isBackground": true,
+            "args": [
+                "-f",
+                "\"${workspaceRoot}/docker-compose.yml\"",
+                "bundle",
+                "-o",
+                "${workspaceRoot}/build"
+            ],
+            "isBuildCommand": true
+        }
+    ]
+}
