@@ -9,9 +9,9 @@
             "args": [
                 "-f",
                 "\"${workspaceRoot}/docker-compose.yml\"",
-                "-d",
                 "up",
-                "--force-recreate"
+                "--force-recreate",
+                "-d"
             ],
             "isShellCommand": true
         },
