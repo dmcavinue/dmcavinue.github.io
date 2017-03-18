@@ -5,7 +5,6 @@
         {
             "taskName": "Start-Container",
             "command": "docker-compose.exe",
-            "isBackground": true,
             "args": [
                 "-f",
                 "\"${workspaceRoot}/docker-compose.yml\"",
@@ -17,7 +16,6 @@
         {
             "taskName": "Stop-Container",
             "command": "docker-compose.exe",
-            "isBackground": true,
             "args": [
                 "-f",
                 "\"${workspaceRoot}/docker-compose.yml\"",
@@ -28,7 +26,6 @@
         {
             "taskName": "Clean-Project",
             "command": "git.exe",
-            "isBackground": true,
             "args": [
                 "clean",
                 "-f",
