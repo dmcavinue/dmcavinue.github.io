@@ -24,19 +24,6 @@
                 "down"
             ],
             "isShellCommand": true   
-        },
-        {
-            "taskName": "Build-Container",
-            "command": "docker-compose.exe",
-            "isBackground": true,
-            "args": [
-                "-f",
-                "\"${workspaceRoot}/docker-compose.yml\"",
-                "bundle",
-                "-o",
-                "\"${workspaceRoot}/build\""
-            ],
-            "isBuildCommand": true
         }
     ]
 }
