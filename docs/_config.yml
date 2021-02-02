@@ -1,5 +1,5 @@
 # Site settings
-title: dmcavinue
+title: Daniel McAvinue
 description: 'dmcavinue.github.io'
 url: 'http://dmcavinue.github.io'
 
@@ -9,8 +9,7 @@ author:
   github_username:  dmcavinue
 
 defaults:
-  -
-    scope:
+  - scope:
       path: ''
       type: 'posts'
     values:
