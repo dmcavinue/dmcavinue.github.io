@@ -2,14 +2,20 @@
 title: Daniel McAvinue
 description: 'dmcavinue.github.io'
 url: 'http://dmcavinue.github.io'
+# baseurl: '/'
+# google_analytics: 'UA-XXXXXX-X'
+# disqus_shortname: 'your-disqus-name'
+# disable_landing_page: true
 
 author:
   name: 'Daniel McAvinue'
   email: dan@mcavinue.io
   github_username:  dmcavinue
+  linkedin_username:  dmcavinue
 
 defaults:
-  - scope:
+  -
+    scope:
       path: ''
       type: 'posts'
     values:
@@ -21,6 +27,10 @@ paginate: 10
 permalink: /:year/:title/
 markdown: kramdown
 highlighter: rouge
+
+sass:
+    sass_dir: _sass
+    style: compressed
 
 kramdown:
   # use Github Flavored Markdown
