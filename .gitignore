@@ -1,7 +1,5 @@
 _site
 .sass-cache
 .jekyll-metadata
-*.sublime-project
-*.sublime-workspace
 Gemfile.lock
-.bundle\config
+.bundle/config
