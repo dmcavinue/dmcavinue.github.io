@@ -5,4 +5,3 @@ _site
 *.sublime-workspace
 Gemfile.lock
 .bundle\config
-.DS_Store
