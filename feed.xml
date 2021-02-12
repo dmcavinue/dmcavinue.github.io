@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Daniel McAvinue</title>
+    <description>dmcavinue.github.io</description>
+    <link>https://dmcavinue.github.io/</link>
+    <atom:link href="https://dmcavinue.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Fri, 12 Feb 2021 17:30:04 +0000</pubDate>
+    <lastBuildDate>Fri, 12 Feb 2021 17:30:04 +0000</lastBuildDate>
+    <generator>Jekyll v3.9.0</generator>
+    
+      <item>
+        <title>Initial Commit</title>
+        <description>&lt;p&gt;This is my initial post, in the form of a quick refresh of my github pages &lt;a href=&quot;https://github.com/dmcavinue/dmcavinue.github.io&quot;&gt;repo&lt;/a&gt;. I ran with the crisp &lt;a href=&quot;https://github.com/joshgerdes/jekyll-uno&quot;&gt;jekyll-uno&lt;/a&gt; theme. It should work with any jekyll theme you find out there.  You can set up a repo using their &lt;a href=&quot;https://pages.github.com/&quot;&gt;docs&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I’ll probably be dumping some posts in here as I clean up my repos and drop some things I’ve been playing with over the years.  As anyone who knows me can attest to, I’m heavily afflicted with the home automation bug and many of my projects usually take the form of tying into my setup in some way or another. The goal of this is to drag me kicking and screaming into cleaning up my ‘perpetually private’ github repos and as a form of portfolio booster to demonstrate the tech I’ve played with.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Bonus&lt;/strong&gt;: 
+Quick explanation on this profile/background image.  It is actually a 3D model of me I had made a few years back.  Just like me, he’s seen better years but nothing a little superglue can’t fix.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/mac-mini/superglue.jpg&quot; alt=&quot;mac-mini-superglue&quot; /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Tue, 02 Feb 2021 15:30:00 +0000</pubDate>
+        <link>https://dmcavinue.github.io/2021/initial-commit/</link>
+        <guid isPermaLink="true">https://dmcavinue.github.io/2021/initial-commit/</guid>
+        
+        <category>blog</category>
+        
+        <category>docker</category>
+        
+        <category>markdown</category>
+        
+        <category>jekyll</category>
+        
+        
+        <category>blog</category>
+        
+        <category>docker</category>
+        
+        <category>markdown</category>
+        
+        <category>jekyll</category>
+        
+      </item>
+    
+  </channel>
+</rss>
