@@ -38,9 +38,5 @@ kramdown:
   # do not replace newlines by <br>s
   hard_wrap: false
 
-jekyll-spaceship:
-  emoji-processor:
-    src: "/images/emoji"
-
 plugins: ['jekyll-paginate', 'jekyll-spaceship']
 exclude: ['README.md', 'Gemfile', 'Gemfile.lock', 'screenshot.png']

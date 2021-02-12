@@ -15,11 +15,4 @@ The core services I need to find alternatives for are:
 - **Notes**: *Google Notes/Evernote*
 - **Phone**: *Android*
 
-As you can see, a scary over-dependence on google services.  
-
-@startmermaid
-pie title Pets adopted by volunteers
-  "Dogs" : 386
-  "Cats" : 85
-  "Rats" : 35
-@endmermaid
+As you can see, a scary over-dependence on google services.
