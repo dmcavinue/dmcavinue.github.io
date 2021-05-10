@@ -1,6 +1,6 @@
 ---
 title:  "Initial Commit"
-date:   2021-02-02 15:30:00
+date:   2021-02-02 00:00:00
 categories: [personal]
 tags: ['tool:docker','tool:git','language:markdown']
 ---
