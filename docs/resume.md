@@ -1,16 +1,10 @@
 
-#### Technical
 
-```mermaid!
-pie title Pets adopted by volunteers
-  "Dogs" : 386
-  "Cats" : 85
-  "Rats" : 35
-```
+##### Technical
 
 ------
 
-#### Experience
+##### Experience
 
 **NTTData** : *Senior Consultant* : __2012 to present__
 	Designed Backbone.js based application to replace and improve upon existing legacy system.
@@ -55,19 +49,7 @@ pie title Pets adopted by volunteers
 
 ------
 
-### Education
+#### Education
 
-**Bachelor of Science (Software Development)** __2003 to 2007__
-	Seneca College of Applied Arts and Technology (Seneca@York), Toronto, Ontario
-
-------
-
-{% assign tags = site.tags | sort %}
-{% for tag in tags %}
- <span class="wordcloud">
-    <a href="/tags/#{{ tag | first | slugify }}/"
-        style="font-size: {{ tag | last | size  |  times: 4 | plus: 80  }}%">
-            {{ tag[0] | replace:'-', ' ' }} ({{ tag | last | size }})
-    </a>
-</span>
-{% endfor %}
+**Bachelor of Science (Information Systems)** : __2004 to 2008__
+	Unversity of Limerick, Ireland

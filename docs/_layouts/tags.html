@@ -1,10 +1,11 @@
 ---
 layout: default
 ---
-<h2>Tags:</h2>
-<div class="tags"> 
-{% for tagitem in site.tags  %} 
-  <a href="#{{ tagitem[0] }}">{{  tagitem[0] }}</a>
+<h2><b>Tags</b></h2><br>
+<div class="tags">
+{% assign tags = site.tags | sort %}
+{% for tag in tags %}
+  <a href="#{{ tag[0] }}">{{  tag[0] }} ({{ tag | last | size }})</a>
 {% endfor %}
 </div>
 
