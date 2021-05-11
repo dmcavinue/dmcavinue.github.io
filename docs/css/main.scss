@@ -6,6 +6,15 @@
 
 /* Modifications */
 
+a {
+	color: #000000;
+  font-weight: normal;
+}
+a:hover {
+  color: #000000;
+  font-weight: 900;
+}
+
 pre.highlight,
 .highlight pre {
   padding: 10px;
@@ -29,15 +38,22 @@ pre.highlight code,
 
 .categories a,
 .tags a {
-  border: 1px solid #e25440;
+  border: 2px solid #000000;
   border-radius: 20px;
-  color: #e25440;
+  color: #000000;  
   display: inline-block;
-  font-size: 12px;
+  font-size: 15px;
   margin: 5px 0;
   padding: 5px 10px;
   text-shadow: none;
   white-space: nowrap;
+  
+}
+
+.tags a:hover {
+  color: #ffffff;
+  background-color: #000000;
+  border: 2px solid #ffffff;
 }
 
 .post-meta__tags {
