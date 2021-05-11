@@ -2,29 +2,30 @@
 layout: default
 ---
 <h2><b>Tags</b></h2><br>
-<div class="tags">
+<div>
+
 {% assign tags = site.tags | sort %}
 {% for tag in tags %}
-  <a href="#{{ tag[0] }}">{{  tag[0] }} ({{ tag | last | size }})</a>
+  {% assign kv = tag[0] | split: ":" -%}
+  {% if kv.size == 2 -%}
+    <div class="{{kv[0]}}">
+      <a href="{{ site.baseurl }}/tags/#{{ tag[0] }}">{{ kv[1] }} ({{ tag | last | size }})</a>  
+    </div>
+  {% else -%}
+    <div class="tags">
+      <a href="#{{ tag[0] }}">{{  tag[0] }} ({{ tag | last | size }})</a>
+    </div>
+  {% endif %}
+  <ul> <!-- create the list of posts -->
+    <!-- iterate through all the posts on the site --> 
+    {% for post in site.posts %}
+      <!-- list only those which contain the current tag -->
+      {% if post.tags contains tag[0] %}
+          <li>
+            <b><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></b>
+          </li>
+      {% endif %}
+    {% endfor %}
+  </ul>  
 {% endfor %}
 </div>
-
-<!-- iterate through all tags on the site --> 
-{% for tagitem in site.tags %} 
-  <!-- for each tag, create an anchor by using the tag name as an id --> 
-  <div id="{{ tagitem[0] }}">  
-    <h3> {{ tagitem[0] }} </h3>  <!-- for create a heading --> 
-
-    <ul> <!-- create the list of posts -->
-      <!-- iterate through all the posts on the site --> 
-      {% for post in site.posts %} 
-        <!-- list only those which contain the current tag --> 
-        {% if post.tags contains tagitem[0] %} 
-            <li>
-              <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-            </li>
-        {% endif %}
-      {% endfor %}
-    </ul>
-  </div>
-{% endfor %}

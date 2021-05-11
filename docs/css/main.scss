@@ -22,7 +22,13 @@ body {
 h1,
 h2,
 h3,
-h4,
+h4{	
+	margin-top: 0;
+	margin-bottom: .2em;
+	font-size: 1.2em;
+	line-height: 1.1em;
+  color: #fff; }
+
 h5 {	
 	margin-top: 0;
 	margin-bottom: .2em;
@@ -44,7 +50,7 @@ p {
   -webkit-font-smoothing: antialiased; }
 
 .post-list__post-title a {
-  color: #fff; }
+  color: #fff;}
 .post-list__post-title a:hover {
   color: #bbb; }
 .post-list__meta {
@@ -129,15 +135,56 @@ pre.highlight code,
   white-space: nowrap;
   
 }
-
 .tags a:hover {
   color: #000;
   background-color: #fff;
   border: 2px solid #000;
 }
+
+.tool a {
+  border: 2px solid #fff;
+  border-radius: 20px;
+  color: #fff;
+  background-color: rgb(37, 65, 192);
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 900;
+  margin: 5px 0;
+  padding: 5px 10px;
+  text-shadow: none;
+  white-space: nowrap;
+  
+}
+.tool a:hover {
+  color: rgb(37, 65, 192);
+  background-color: #fff;
+  border: 2px solid rgb(37, 65, 192);
+}
+
+.language a {
+  border: 2px solid #fff;
+  border-radius: 20px;
+  color: #fff;
+  background-color: rgb(42, 134, 62);
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 900;
+  margin: 5px 0;
+  padding: 5px 10px;
+  text-shadow: none;
+  white-space: nowrap;
+  
+}
+.language a:hover {
+  color: rgb(42, 134, 62);
+  background-color: #fff;
+  border: 2px solid rgb(42, 134, 62);
+}
+
 .post-meta__tags {
   font-size: 12px;
   padding: 0 5px;
+  float:right;
 }
 
 .footer__copyright {
