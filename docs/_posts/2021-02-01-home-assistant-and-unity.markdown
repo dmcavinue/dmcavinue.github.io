@@ -1,0 +1,22 @@
+---
+title:  "Home Assistant Floorplan and Unity"
+date:   2021-02-01 00:00:00
+categories: [home-automation]
+tags: ['tool:unity','tool:blender','tool:home-assistant','tool:mosquitto','language:C#','language:javascript','tool:docker']
+---
+
+Anyone that knows me knows I play a bit too much in home automation.  One loose goal of mine I've been looking to figure out is real time visualizing of my home automation devices.  Ultimately, I wanted to provision a web application that could be dropped on a kiosk (in my case, a magic mirror) that pops up and pan in real time when devices state events occurs.  I'll be going into the magic mirror setup itself later on at some point. This post is just to brain dump the approach I took to get this up and running.
+
+#### **The Setup**
+In basic terms, my home automation solution of choice is [Home Assistant](https://www.home-assistant.io/). I have used it successfully for many years and it allows me to manage to my home automation setup declared as code in a github repository.  The backbone communication between things in my setup is a simple MQTT broker, that is responsible for the getting and setting the state of devices in my home. This can be as simple as the state of a light switch or motion sensor but include useful things like the real time power consupmtion of individual sockets. This broker serves up this state to any authenticated client that needs it, allowing clients to subscribe to realtime changes the state of any device(s) it needs.  I have played with floorplan tools in the past in my deployment, allowing me to overlay my devices on a floorplan of my home and have interactable icons available to view or toggle the state of things.  While this works well, I want to take it a step further.  
+
+#### **The Goal**
+The goal here is to render my house in 3D and build something via Unity that allows some form of client communication visulize this state in 3D.  Projects like this [aren't new](https://community.home-assistant.io/t/3d-floorplan-using-lovelace-picture-elements-card/123357), I will basically be doing similar to this.  My implementation will be slightly different, linking to my MQTT broker as opposed to home assistant.  I will also be attempting to build and deploy the resulting code to my Kubernetes Cluster as a WebGL capable application that will hopefully let me view it in home assistant directly on my magic mirror(I'll post separately about this.)
+
+#### **Results**
+<p align="center">
+<img height="50%" width="50%" align="center" src="{{ site.baseurl }}/images/unity-hass/1-unity.png" alt="Unity Demo" />
+</p>
+Unfortunately, I can't go into _too_ much detail on the 3D model of my house itself. Here's a screenshot of an outside door thats panned to automatically when opened.  I have thrown up a quick demo project [here](https://github.com/dmcavinue/unity-floorplan).  There is plenty of documentation on how to build this out.  My approach was a combination of [Sketchup](https://www.sketchup.com/) and [Blender](https://www.blender.org/).  This example repo is very basic, just demonstrates a single door and light tied to two devices under an MQTT Broker.  This is very rough around the edges still, with plenty of TODO items to clean up but it is functional.  
+
+Other implementations I have seen have relied on a poll on interval of the Home assistant states API to update all devices.  This approach offloads this to a MQTT client subscription that runs client-side.  It does rely on the client having direct access to the MQTT broker, but in my case, this was doable. In my case, I have also added [Cinemachine](https://unity.com/unity/features/editor/art-and-design/cinemachine) to allow for some virtual camera's that trigger and pan to regions as lights turn on, doors/windows open, motion sensors trigger.
