@@ -14,7 +14,7 @@ exclude: 'yes'
         $('.content-wrapper').addClass('animated slideInRight')
       } else {
         $('.panel-cover').css('max-width', currentWidth)
-        $('.panel-cover').animate({ 'max-width': '530px', 'width': '40%' }, 400, swing = 'swing', function () { })
+        $('.panel-cover').animate({ 'max-width': '530px', 'width': '25%' }, 400, swing = 'swing', function () { })
       }
     })
 
@@ -36,5 +36,4 @@ exclude: 'yes'
       $('.navigation-wrapper').toggleClass('visible')
       $('.btn-mobile-menu__icon').toggleClass('icon-list icon-x-circle animated fadeIn')
     })
-
   })
