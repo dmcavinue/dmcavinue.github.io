@@ -131,11 +131,33 @@ pre.highlight code,
   font-weight: 900;
   margin: 5px 0;
   padding: 5px 10px;
+  text-align: center;
   text-shadow: none;
   white-space: nowrap;
   
 }
 .tags a:hover {
+  color: #000;
+  background-color: #fff;
+  border: 2px solid #000;
+}
+.tags-small a {
+  border: 2px solid #fff;
+  border-radius: 20px;
+  color: #fff;
+  background-color: #000;
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 900;
+  margin: 5px 0;
+  min-width: 40px;
+  padding: 5px 10px;
+  text-align: center;
+  text-shadow: none;
+  white-space: nowrap;
+  
+}
+.tags-small a:hover {
   color: #000;
   background-color: #fff;
   border: 2px solid #000;
@@ -152,10 +174,31 @@ pre.highlight code,
   margin: 5px 0;
   padding: 5px 10px;
   text-shadow: none;
+  text-align: center;
   white-space: nowrap;
   
 }
 .tool a:hover {
+  color: rgb(37, 65, 192);
+  background-color: #fff;
+  border: 2px solid rgb(37, 65, 192);
+}
+.tool-small a {
+  border: 2px solid #fff;
+  border-radius: 20px;
+  color: #fff;
+  background-color: rgb(37, 65, 192);
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 900;
+  margin: 5px 0;
+  min-width: 40px;
+  padding: 1px 5px;
+  text-shadow: none;
+  text-align: center;
+  white-space: nowrap;
+}
+.tool-small a:hover {
   color: rgb(37, 65, 192);
   background-color: #fff;
   border: 2px solid rgb(37, 65, 192);
@@ -172,10 +215,31 @@ pre.highlight code,
   margin: 5px 0;
   padding: 5px 10px;
   text-shadow: none;
+  text-align: center;
   white-space: nowrap;
   
 }
 .language a:hover {
+  color: rgb(42, 134, 62);
+  background-color: #fff;
+  border: 2px solid rgb(42, 134, 62);
+}
+.language-small a {
+  border: 2px solid #fff;
+  border-radius: 20px;
+  color: #fff;
+  background-color: rgb(42, 134, 62);
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 900;
+  margin: 5px 0;
+  min-width: 40px;
+  padding: 1px 5px;
+  text-shadow: none;
+  text-align: center;
+  white-space: nowrap;
+}
+.language-small a:hover {
   color: rgb(42, 134, 62);
   background-color: #fff;
   border: 2px solid rgb(42, 134, 62);
@@ -186,6 +250,8 @@ pre.highlight code,
   padding: 0 5px;
   float:right;
 }
+.post-title {
+  font-weight: 900;}
 
 .footer__copyright {
     margin: 0 20px 10px;
