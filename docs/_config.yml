@@ -64,10 +64,10 @@ jekyll-spaceship:
           - ['\[','\]']
       svg:
         fontCache: 'global'
-    optimize: # optimization on building stage to check and add mathjax scripts
-      enabled: true # value `false` for adding to all pages
-      include: []   # include patterns for math expressions checking (regexp)
-      exclude: []   # exclude patterns for math expressions checking (regexp)
+    optimize:
+      enabled: true
+      include: []
+      exclude: []
   plantuml-processor:
     mode: default  # mode value 'pre-fetch' for fetching image at building stage
     css:
@@ -77,7 +77,7 @@ jekyll-spaceship:
       custom: ['@startuml', '@enduml']
     src: http://www.plantuml.com/plantuml/svg/
   mermaid-processor:
-    mode: default  # mode value 'pre-fetch' for fetching image at building stage
+    mode: default
     css:
       class: mermaid
     syntax:
