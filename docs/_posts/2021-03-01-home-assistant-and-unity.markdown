@@ -16,7 +16,7 @@ The goal here was to render my house in 3D and build something via Unity that al
 #### **The Floorplan**
 Unfortunately, I can't go into _too_ much detail on the 3D model of my house itself but here's a screenshot of an outside door thats panned to automatically when opened.
 <p align="center">
-<img height="50%" width="50%" align="center" src="{{ site.baseurl }}/images/unity-hass/1-unity.png" alt="Unity Demo" />
+<img height="50%" width="50%" align="center" src="{{ site.baseurl }}/images/posts/unity-hass/1-unity.png" alt="Unity Demo" />
 </p>
 I did however throw up a quick demo project [here](https://github.com/dmcavinue/unity-floorplan) that demostrates the basic communication. A given unity gameobject's state is managed by a simple javascript MQTT client from client that loads up the webgl instance and subscribes to device topics via websocket.  With regards to the 3d model, There is plenty of documentation on how to build these out. Really, its down to how much time you want to put into it.  I most definitely put way more time than I shoudl have into it!  My approach was a combination of [Sketchup](https://www.sketchup.com/) to build out the floorplan and some furniture model and [Blender](https://www.blender.org/) to provision things that animate like doors and windows.
 
