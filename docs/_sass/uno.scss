@@ -1098,9 +1098,9 @@ pre {
 
 .content-wrapper {
 	z-index: 800;
-	width: 60%;
-	max-width: 800px;
-	margin-left: 40%; }
+	width: 75%;
+	max-width: 1200px;
+	margin-left: 25%; }
 
 .content-wrapper__inner {
 	margin: 0 10%;
@@ -1214,7 +1214,7 @@ hr {
 	background-size: cover; }
 
 .panel-cover--collapsed {
-	width: 40%;
+	width: 27%;
 	max-width: 530px; }
 
 .panel-cover--overlay {
@@ -1249,18 +1249,18 @@ hr {
 	height: 100%; }
 
 .no-js .panel-main {
-	width: 40%;
+	width: 25%;
 	max-width: 530px; }
 
 .panel-main__inner {
 	display: table-cell;
 	vertical-align: middle;
 	position: relative;
-	z-index: 800;
+	z-index: 1200;
 	padding: 0 60px; }
 
 .panel-main__content {
-	max-width: 620px;
+	max-width: 800px;
 	margin: 0 auto; }
 
 .panel-main__content--fixed {
