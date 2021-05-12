@@ -2,18 +2,25 @@
 
 ##### **Work**
 
-
 * **Wayfair LLC** : *Cloud Engineer* : __Feb 2017 - Feb 2021__
-  foo
+  <p>
+  TODO
+  </p>
 
 * **Wayfair LLC** : *Systems Engineer IV* : __March 2016 - Feb 2017__
-  foo
+  <p>
+  TODO
+  </p>
 
 * **Wayfair LLC** : *Systems Engineer III* : __March 2015 - March 2016__
-  foo
+  <p>
+  TODO
+  </p>
 
 * **Wayfair LLC** : *Systems Engineer II* : __Jan 2014 - March 2015__
-  foo
+  <p>
+  TODO
+  </p>
 
 * **Wayfair IE/UK** : *Systems Engineer I* : __Jul 2011 - Jan 2014__
   Acted as Local and sole Tech Resource for all European Offices based in London, Galway and Berlin.  Worked on infrastructural optimization to expand and improve the European access to our US-based services and Data Centres.  Ensured day-to-day uptime of all critical services for each office.  Acted as contact point for all tech-related items resulting from all EU Office plans and expansions.  Improved local Backup and disaster recovery procedures per office.  Acted as on-site resource during Office transition/relocation periods and ensure provision of all required tech resources within these deadlines.
