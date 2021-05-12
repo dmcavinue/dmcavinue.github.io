@@ -32,13 +32,16 @@ The first variable allows you to trigger the Animation for another gameobject if
 <p align="center">
 @startmermaid
 sequenceDiagram
-    Alice->>John: Hello John, how are you?
-    John-->>Alice: Great!
-    Alice-)John: See you later!
+    Client->>WebGL Server: HTTP Call to Server, loads up unity instance
+    WebGL Server->>Client: Server returns MQTT broker session info/device topics
+    Client->>MQTT Broker: Client spins up JS MQTT client and subscribes to MQTT brokers device topics
+    MQTT Broker->>Client: Broker returns device topic events to client
+    Client->>WebGL Server: Client triggers associated gameobject animation/state changes
 @endmermaid
 </p>
+This is a 'back of napkin' outline of the intended flow.  As you can see, there are some rough edges.  For example, auth to the MQTT broker under JS probably isn't ideal.
 
-As a quick plug, I also added the fantastic [Cinemachine](https://unity.com/unity/features/editor/art-and-design/cinemachine) plugin to my project, which allowed me to define virtual camera's that could be triggered to pan to regions as lights turn on, doors/windows open, motion sensors trigger, etc. 
+As a quick plug, Its not included in this demo but I suggest checing out the fantastic [Cinemachine](https://unity.com/unity/features/editor/art-and-design/cinemachine) plugin, which allowed me to define virtual camera's that could be triggered to pan to regions as lights turn on, doors/windows open, motion sensors trigger, etc.
 
 #### **The build/deploy**
 I have opted to roll the resulting unity WebGL build into a container image, for deployment to my home automation k8s cluster, It hasn't been rolled into a helm chart yet but you can see the basic deployment [here](https://github.com/nucstack/k8s/tree/main/cluster/apps/home-automation/floorplan).  Even though my floorplan model was pretty complex in the end, covering two floors of my house with all furniture and lighting as well as the outside perimeter, the resulting compiled WebGL artifacts were relatively small, at ~40mb uncompressed. There are definitely some fine-tuning opportunities too related to the build to improve performance, load time, etc.  I included a simplified `docker-compose.yml` and `Dockerfile` the the [demo project](https://github.com/dmcavinue/unity-floorplan) to demonstrate rolling the resulting build into a container image.  In all honesty, its a one-liner that loads the build under `nginx:stable`.  In the future, I will likely attempt to reroll this under another provider besides `nginx` that will allow for useful things like env vars. Assuming you build the webgl output to `./build`, yoiu should be able to simply run `docker-compose up` to instantiate this and access it at `http://locahost:4000`.
