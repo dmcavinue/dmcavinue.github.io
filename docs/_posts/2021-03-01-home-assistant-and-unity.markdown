@@ -16,7 +16,7 @@ The goal here was to render my house in 3D and build something via Unity that al
 #### **The Floorplan**
 Unfortunately, I can't go into _too_ much detail on the 3D model of my house itself but here's a screenshot of an outside door thats panned to automatically when opened.
 <p align="center">
-<img height="50%" width="50%" align="center" src="{{ site.baseurl }}/images/unity-hass/1-unity.png" alt="Unity Demo" />
+<img height="50%" width="50%" align="center" src="{{ site.baseurl }}/images/posts/unity-hass/1-unity.png" alt="Unity Demo" />
 </p>
 I did however throw up a quick demo project [here](https://github.com/dmcavinue/unity-floorplan) that demostrates the basic communication. A given unity gameobject's state is managed by a simple javascript MQTT client from client that loads up the webgl instance and subscribes to device topics via websocket.  With regards to the 3d model, There is plenty of documentation on how to build these out. Really, its down to how much time you want to put into it.  I most definitely put way more time than I shoudl have into it!  My approach was a combination of [Sketchup](https://www.sketchup.com/) to build out the floorplan and some furniture model and [Blender](https://www.blender.org/) to provision things that animate like doors and windows.
 
@@ -48,5 +48,5 @@ I have opted to roll the resulting unity WebGL build into a container image, for
 
 **Disclaimer:** While it is functional, This example repo is VERY basic, it just demonstrates a single door and light tied to two devices topics under an MQTT Broker.  This is very rough around the edges still
 
-#### ** Final Note**
+#### **Final Note**
 Next steps will probably be some cleanup of environmental configuration as well as allowing for 2 way state. E.g. selecting gameobject devices in unity will perform an MQTT publish against a target topic to toggle lights, etc.  Interestingly, I was actually able to set up this up pretty quickly to deploy to my Oculus Quest 2 as an apk and walk around within this model so that may be an avenue to dive into too.
