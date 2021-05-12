@@ -22,21 +22,36 @@ body {
 	color: #fff;
 	line-height: 1; }
 
-h1,
-h2,
-h3,
+h1{	
+	margin-top: 0;
+	margin-bottom: .2em;
+	font-size: 2em;
+	line-height: 1.1em;
+  color: #fff; }
+h2{	
+	margin-top: 0;
+	margin-bottom: .2em;
+	font-size: 1.8em;
+	line-height: 1.1em;
+  color: #fff; }
+h3{	
+	margin-top: 0;
+	margin-bottom: .2em;
+	font-size: 1.6em;
+	line-height: 1.1em;
+  color: #fff; }
 h4{	
 	margin-top: 0;
 	margin-bottom: .2em;
-	font-size: 1.2em;
+	font-size: 1.4em;
 	line-height: 1.1em;
   color: #fff; }
 
 h5 {	
 	margin-top: 0;
 	margin-bottom: .2em;
-	font-size: 1.5em;
-	line-height: 1.3em;
+	font-size: 1.2em;
+	line-height: 1.1em;
   color: #fff; }
 
 p {
@@ -46,7 +61,7 @@ p {
 
 .panel-subtitle {
   font-family: "Roboto Slab", serif;
-  font-size: 1.2em;
+  font-size: 1.6em;
   font-weight: lighter;
   letter-spacing: 3px;
   color: #fff;

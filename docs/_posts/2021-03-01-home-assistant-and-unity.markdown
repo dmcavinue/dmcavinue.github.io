@@ -48,5 +48,5 @@ I have opted to roll the resulting unity WebGL build into a container image, for
 
 **Disclaimer:** While it is functional, This example repo is VERY basic, it just demonstrates a single door and light tied to two devices topics under an MQTT Broker.  This is very rough around the edges still
 
-#### ** Final Note**
+#### **Final Note**
 Next steps will probably be some cleanup of environmental configuration as well as allowing for 2 way state. E.g. selecting gameobject devices in unity will perform an MQTT publish against a target topic to toggle lights, etc.  Interestingly, I was actually able to set up this up pretty quickly to deploy to my Oculus Quest 2 as an apk and walk around within this model so that may be an avenue to dive into too.
