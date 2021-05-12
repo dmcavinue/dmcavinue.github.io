@@ -2,7 +2,7 @@
 title:  "Home Assistant Floorplan and Unity"
 date:   2021-03-01 00:00:00
 categories: [home-automation]
-tags: ['tool:unity','tool:blender','tool:home-assistant','tool:mosquitto','language:C#','language:javascript','tool:docker']
+tags: ['tool:unity','tool:blender','tool:home-assistant','tool:mqtt','language:C#','language:javascript','tool:docker']
 ---
 
 Anyone that knows me knows I play a bit too much in home automation.  One loose goal of mine I've been looking to figure out is real time visualizing of my home automation devices.  Ultimately, I wanted to provision a web application that could be dropped on a kiosk (in my case, a magic mirror) that pops up and pan in real time when devices state events occurs.  I'll be going into the magic mirror setup itself later on at some point. This post is just to brain dump the approach I took to get this up and running.
