@@ -161,7 +161,7 @@ pre.highlight code,
   color: #fff;
   background-color: #000;
   display: inline-block;
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 900;
   margin: 5px 0;
   padding: 5px 10px;
@@ -181,15 +181,14 @@ pre.highlight code,
   color: #fff;
   background-color: #000;
   display: inline-block;
-  font-size: 10px;
+  font-size: 8px;
   font-weight: 900;
   margin: 5px 0;
   min-width: 40px;
-  padding: 5px 10px;
-  text-align: center;
+  padding: 1px 5px;
   text-shadow: none;
+  text-align: center;
   white-space: nowrap;
-  
 }
 .tags-small a:hover {
   color: #000;
@@ -203,7 +202,7 @@ pre.highlight code,
   color: #fff;
   background-color: rgb(37, 65, 192);
   display: inline-block;
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 900;
   margin: 5px 0;
   padding: 5px 10px;
@@ -223,7 +222,7 @@ pre.highlight code,
   color: #fff;
   background-color: rgb(37, 65, 192);
   display: inline-block;
-  font-size: 10px;
+  font-size: 8px;
   font-weight: 900;
   margin: 5px 0;
   min-width: 40px;
@@ -244,7 +243,7 @@ pre.highlight code,
   color: #fff;
   background-color: rgb(42, 134, 62);
   display: inline-block;
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 900;
   margin: 5px 0;
   padding: 5px 10px;
@@ -264,7 +263,7 @@ pre.highlight code,
   color: #fff;
   background-color: rgb(42, 134, 62);
   display: inline-block;
-  font-size: 10px;
+  font-size: 8px;
   font-weight: 900;
   margin: 5px 0;
   min-width: 40px;
@@ -280,7 +279,7 @@ pre.highlight code,
 }
 
 .post-meta__tags {
-  font-size: 12px;
+  font-size: 15px;
   padding: 0 5px;
   float:right;
 }
