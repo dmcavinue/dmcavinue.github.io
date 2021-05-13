@@ -2,40 +2,116 @@
 
 ##### **Work**
 
-* **Wayfair LLC** : *Cloud Engineer* : __Feb 2017 - Feb 2021__
+* **Wayfair LLC** : *Systems Engineer III/IV/Cloud Engineer* : __Jan 2014 - Feb 2021__
+  <br><br>
   <p>
-  TODO
+    Relocated to the companies HQ based in Boston in 2014.  For a couple of years, I managed a small team of engineers focused on projects. Became interested in automation, configuration management and infrastructure provisioning.  Migrated under the SRE team and got involved in figuring out the management of our windows environment via DSC.  This expanded into figuring IAC responsibilities.  Worked heavily in Terraform Provider and module development to handle and flatten provisioning of infrastucture in our private and public environments.
   </p>
+  {% assign skills    = 'ansible,puppet,terraform,vagrant,vault,consul,kubernetes,helm,dsc,gcp,packer,ci,docker,git' | split: ',' | uniq | sort -%}
+  {% assign languages = 'golang,python,powershell,hcl,sql' | split: ',' | uniq | sort -%}
+  {% assign others    = 'shell,windows,centos,esxi,cisco,networking' | split: ',' | uniq | sort -%}
 
-* **Wayfair LLC** : *Systems Engineer IV* : __March 2016 - Feb 2017__
+  <div style="display: inline" class="language-small">
+    {% for language in languages -%}
+      <a href="{{ site.baseurl }}/tags/#{{ language }}">{{ language | downcase }}</a>
+    {% endfor -%}
+  </div>
+  <div style="display: inline" class="tool-small">
+    {% for skill in skills -%}
+      <a href="{{ site.baseurl }}/tags/#{{ skill }}">{{ skill | downcase }}</a>
+    {% endfor -%}
+  </div>
+  <div style="display: inline" class="tags-small">
+    {% for other in others -%}
+      <a href="{{ site.baseurl }}/tags/#{{ other }}">{{ other | downcase }}</a>
+    {% endfor -%}
+  </div>
+
+  ------
+
+* **Wayfair IE/UK** : *Systems Engineer I/II* : __Jul 2011 - Jan 2014__
+  <br><br>
   <p>
-  TODO
+    Acted as Local and Tech Resource for all European Offices based in London, Galway and Berlin.  Anything tech related on this side of the pond, a.k.a Lots of hats.
+    This generally involved travelling to remote sites and provisioning any and all infrastructure necessary to bring the site up.
   </p>
+  {% assign skills    = 'sccm,active-directory,vsphere' | split: ',' | uniq | sort -%}
+  {% assign languages = 'powershell' | split: ',' | uniq | sort -%}
+  {% assign others    = 'shell,datacenter,windows,esxi,networking,storage,os-provisioning' | split: ',' | uniq | sort -%}
 
-* **Wayfair LLC** : *Systems Engineer III* : __March 2015 - March 2016__
-  <p>
-  TODO
-  </p>
+  <div style="display: inline" class="language-small">
+    {% for language in languages -%}
+      <a href="{{ site.baseurl }}/tags/#{{ language }}">{{ language | downcase }}</a>
+    {% endfor -%}
+  </div>
+  <div style="display: inline" class="tool-small">
+    {% for skill in skills -%}
+      <a href="{{ site.baseurl }}/tags/#{{ skill }}">{{ skill | downcase }}</a>
+    {% endfor -%}
+  </div>
+  <div style="display: inline" class="tags-small">
+    {% for other in others -%}
+      <a href="{{ site.baseurl }}/tags/#{{ other }}">{{ other | downcase }}</a>
+    {% endfor -%}
+  </div>
 
-* **Wayfair LLC** : *Systems Engineer II* : __Jan 2014 - March 2015__
-  <p>
-  TODO
-  </p>
-
-* **Wayfair IE/UK** : *Systems Engineer I* : __Jul 2011 - Jan 2014__
-  Acted as Local and sole Tech Resource for all European Offices based in London, Galway and Berlin.  Worked on infrastructural optimization to expand and improve the European access to our US-based services and Data Centres.  Ensured day-to-day uptime of all critical services for each office.  Acted as contact point for all tech-related items resulting from all EU Office plans and expansions.  Improved local Backup and disaster recovery procedures per office.  Acted as on-site resource during Office transition/relocation periods and ensure provision of all required tech resources within these deadlines.
+  ------
 
 * **Active Technology Ltd.** : *IT Consultant/Technician* : __Jul 2009 – Jul 2011__
+  <br><br>
   <p>
-  Installed and maintained network based CCTV, Intruder Alarms and Access Control Systems.  Provided IT consultancy and IT Support for customer based systems.
-  Discussed and planned customer IT requirements on site.
+  Handled the IT side of CCTV, Intruder Alarms and Access Control Systems.  Provided IT consultancy and IT Support for customer based systems.
   </p>
+  {% assign skills    = 'networking,storage' | split: ',' | uniq | sort -%}
+  {% assign languages = 'powershell' | split: ',' | uniq | sort -%}
+  {% assign others    = 'shell' | split: ',' | uniq | sort -%}
+
+  <div style="display: inline" class="language-small">
+    {% for language in languages -%}
+      <a href="{{ site.baseurl }}/tags/#{{ language }}">{{ language | downcase }}</a>
+    {% endfor -%}
+  </div>
+  <div style="display: inline" class="tool-small">
+    {% for skill in skills -%}
+      <a href="{{ site.baseurl }}/tags/#{{ skill }}">{{ skill | downcase }}</a>
+    {% endfor -%}
+  </div>
+  <div style="display: inline" class="tags-small">
+    {% for other in others -%}
+      <a href="{{ site.baseurl }}/tags/#{{ other }}">{{ other | downcase }}</a>
+    {% endfor -%}
+  </div>
+
+  ------
 
 * **Postgraduate Researcher** : *University of Limerick* : __Oct 2008 – Jul 2009__
+  <br><br>
   <p>
-  Worked as part of a small research team developing an interactive tutoring environment for use in primary school education.  Investigating modern techniques for the use of interpretation of spoken statements into a query that can be processed and responded to by a computer.  The simplest way to describe it is Google Assistant/Amazon Alexa before it was a thing.
+  Worked as part of a small research team developing an interactive tutoring environment for use in primary school education.  Investigating modern techniques for the use of interpretation of spoken statements into a query that can be processed and responded to by a computer.  The simplest way to describe the goal is a very simple Google Assistant/Amazon Alexa for education before it was so readily available.
   </p>
-------
+
+  {% assign skills    = 'networking' | split: ',' | uniq | sort -%}
+  {% assign languages = 'java,python' | split: ',' | uniq | sort -%}
+  {% assign others    = 'shell,distributed-computing' | split: ',' | uniq | sort -%}
+
+  <div style="display: inline" class="language-small">
+    {% for language in languages -%}
+      <a href="{{ site.baseurl }}/tags/#{{ language }}">{{ language | downcase }}</a>
+    {% endfor -%}
+  </div>
+  <div style="display: inline" class="tool-small">
+    {% for skill in skills -%}
+      <a href="{{ site.baseurl }}/tags/#{{ skill }}">{{ skill | downcase }}</a>
+    {% endfor -%}
+  </div>
+  <div style="display: inline" class="tags-small">
+    {% for other in others -%}
+      <a href="{{ site.baseurl }}/tags/#{{ other }}">{{ other | downcase }}</a>
+    {% endfor -%}
+  </div>
+
+  ------
+
 ##### **Personal Projects**
 
 * **[Kubernetes at Home]({{ site.baseurl }}/2021/k8s-at-home-pt-1/)** : Kubernetes cluster at home to handle home automation, managed with Flux, GitOps.
@@ -49,34 +125,3 @@
 * **Bachelor of Science (Information Systems)** : *2004 to 2008*
 	[University of Limerick, Ireland](https://www.ul.ie/)
 ------
-
-{% assign languages = 'golang,ruby,html,css,powershell,python' | split: ',' %}
-{% assign tools = 'ansible,puppet,terraform' | split: ',' %}
-
-{% for tag in site.tags -%}
-{% assign kv = tag[0] | split: ":" -%}
-  {% if kv.size == 2 and kv[0] == "tool" -%}    
-    {% assign tools = tools | push: kv[1] %}  
-  {% endif %}
-  {% if kv.size == 2 and kv[0] == "language" -%}
-    {% assign languages = languages | push: kv[1] %}
-  {% endif %}
-{% endfor -%}
-
-------
-##### **Tools**
-<div class="tool">
-{% assign sorted_tools = tools | uniq -%}
-{% for tool in sorted_tools -%}
-  <a href="{{ site.baseurl }}/tags/#{{ tool }}">{{ tool | downcase }}</a>
-{% endfor -%}
-</div>
-------
-
-##### **Languages**
-<div class="language">
-{% assign sorted_languages = languages | uniq -%}
-{% for language in languages -%}
-  <a href="{{ site.baseurl }}/tags/#{{ language }}">{{ language | downcase }}</a>
-{% endfor -%}
-</div>
