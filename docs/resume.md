@@ -27,7 +27,7 @@
     {% endfor -%}
   </div>
 
-  ------
+  <br><br>
 
 * **Wayfair IE/UK** : *Systems Engineer I/II* : __Jul 2011 - Jan 2014__
   <br><br>
@@ -55,12 +55,12 @@
     {% endfor -%}
   </div>
 
-  ------
+  <br><br>
 
 * **Active Technology Ltd.** : *IT Consultant/Technician* : __Jul 2009 – Jul 2011__
   <br><br>
   <p>
-  Handled the IT side of CCTV, Intruder Alarms and Access Control Systems.  Provided IT consultancy and IT Support for customer based systems.
+  Handled the IT side of CCTV, Intruder Alarms and Access Control Systems installs.  Provided general IT consultancy and Support for customer-based systems.
   </p>
   {% assign skills    = 'networking,storage' | split: ',' | uniq | sort -%}
   {% assign languages = 'powershell' | split: ',' | uniq | sort -%}
@@ -82,7 +82,7 @@
     {% endfor -%}
   </div>
 
-  ------
+  <br><br>
 
 * **Postgraduate Researcher** : *University of Limerick* : __Oct 2008 – Jul 2009__
   <br><br>
@@ -110,7 +110,7 @@
     {% endfor -%}
   </div>
 
-  ------
+  <br><br>
 
 ##### **Personal Projects**
 
