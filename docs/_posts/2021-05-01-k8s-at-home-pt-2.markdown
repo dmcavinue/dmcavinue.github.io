@@ -1,0 +1,13 @@
+---
+title:  "Kubernetes at Home: part 2"
+date:   2021-05-01 00:00:00
+categories: ['home-automation','kubernetes','terraform','nucstack']
+tags: ['tool:ansible','tool:terraform','tool:kubernetes','tool:docker','tool:git','tool:helm','tool:flux','tool:sops','tool:kustomize','language:hcl','language:bash','language:golang','gitops','ci/cd'
+]
+
+---
+
+This is part 2 of the [Kubernetes at Home : part 1]({{ site.baseurl }}/2021/k8s-at-home-pt-1/) post a made earlier.  This goes more into the gitops/flux aspect of this setup, as well as some of the interesting affinity hurdles to overcome related to home automation in general. My setup uses a smattering of tooling and practices that work well for me.  As I said before, the whole point of doing this under kubernetes for me is to enforce some additional skills for me with the technology.  It is very likely overkill for the vast majority of people.  Interestingly, when I first started down the path of leveraging k8s at home, I didn't realise a [group](https://github.com/k8s-at-home) had also decided to start a community initiative in parallel.  My first pass, which I wont be posting publicly, simply involved the code to get me a k8s cluster via a marriage of Terraform and kubespray and relied on me writing additional tooling to handle the actual k8s deployments against my cluster. It worked but it was extremely opinionated and clunky as hell. I decided recently to align with this community initiative and transition that process under the magic of [Flux](https://github.com/fluxcd/flux2).
+
+##### **What is Flux?**
+Along with a number of other useful things, Flux gives you a means to define sources as resources in your cluster via its source controller.  This can, for example, monitor a github repository branch for changes and enact those changes within your cluster.  Wrapped with the appropriate testing and a sprinkling of [kustomize](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/), you have a pretty powerful means of safely deploying changes to your cluster.  The k8s@home has a [fantastic list of repos](https://github.com/k8s-at-home/awesome-home-kubernetes) tied to the contributors for anyone to peruse for inspiration.  Most recently, they went as far as releasing a [github template](https://github.com/k8s-at-home/template-cluster-k3s) to lower the barrier of entry for anyone considering moving into this world, which is basically what this post will cover. 
