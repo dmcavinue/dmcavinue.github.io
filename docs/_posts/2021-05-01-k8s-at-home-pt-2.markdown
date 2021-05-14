@@ -61,7 +61,7 @@ The `builder` Dockerfile at `./docker/builder/Dockerfile` is really just an alpi
 ###### **Testing**
 There are some hooks already provisioned under the original template that catch some nice things like yaml typos and formatting issues. I also pulled in some security policies that can be manually run via conftest or `task flux:conftest`.  I have really looked into extending these yet, something I'll play with in the future. For now, it gives me a starting point to test the security of this setup.
 
-###### **So what do we have deployed?**
+###### **So what do I have deployed?**
 Still heavily a WIP but I opted to group the applications I would be deploying into namespaces relevant to their function.  In the end, I have the following namespaces:
 
 - **home-automation** : home-assistant, vernemq scalable for mqtt, zwave2mqtt, zigbee2mqtt for zwave/zigbee devices, floorplan for my [floorplan deployment]({{ site.baseurl }}/2021/home-assistant-and-unity/) openfaas for serverless function playing, influxdb for measurments 
@@ -77,3 +77,11 @@ I opted to use [longhorn](https://rancher.com/products/longhorn/) as my storage 
 
 ###### **Problem 2: Host devices**
 I have an interesting problem, host devices.  My home automation relies on a number of host devices.  USB devices that deliver zwave and zigbee functionality, a USB RTL-SDR controller.  How do I get these usable in an automated fashion and tied the required pods to them with affinity rules.  What if these USB devices move around in the cluster!?! Initially, I considered something to expose these USB devices as network devices.  While this would work, it felt clunky.  Back of napkining it, I decided I could easily write some basic code, something lightweight that simply polled the usb devices regularly with some kind of defined filtering rules and labelled the nodes in a strctured manner based on the devices.  We make USB devices like any other resource, available to the cluster. It could be deployed as a daemonset on the cluster and any required deployments could set there affinity rules accordingly.  I was all ready to write this thing, then I found [nudl](https://github.com/leonnicolas/nudl).  Somebody beat me to it.  This does exactly that! You deploy it as a daemonset, define some filters in case you might want to exclude some devices and define the label format you would like.  I opted for `device/vid_pid`.  You can see the simple deployment [here](https://github.com/nucstack/k8s/blob/main/cluster/core/nudl/nudl.yaml).
+
+###### **Renovation**
+One very useful feature of this setup is renovate.  This workflow monitors all helm releases in the for update charts and automatically adds PRs against your repo.  Other workflows are monitoring submodules and and flux deployment releases.  The end result is very easy renovation of the applications deployed in the cluster.  Once they are merged to the `main` branch, the fluc source controller picks up the diff based on the interval defined for the source repo and the changes are deployed.  The helm repository controller also refreshes the helm repositorie at a defined interval too.
+
+###### **Notification**
+The notification controller under flux is useful for notification, in my case, I have tied it to a slack channel I use.  This keeps me in the loop on deployments and issues. I also use botkube as a further means of monitoring specific resources in the cluster.
+
+All in all, it has been deployed in the fashion for ~2 months and working without major issue.
