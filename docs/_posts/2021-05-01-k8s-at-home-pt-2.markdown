@@ -7,7 +7,73 @@ tags: ['tool:ansible','tool:terraform','tool:kubernetes','tool:docker','tool:git
 
 ---
 
-This is part 2 of the [Kubernetes at Home : part 1]({{ site.baseurl }}/2021/k8s-at-home-pt-1/) post a made earlier.  This goes more into the gitops/flux aspect of this setup, as well as some of the interesting affinity hurdles to overcome related to home automation in general. My setup uses a smattering of tooling and practices that work well for me.  As I said before, the whole point of doing this under kubernetes for me is to enforce some additional skills for me with the technology.  It is very likely overkill for the vast majority of people.  Interestingly, when I first started down the path of leveraging k8s at home, I didn't realise a [group](https://github.com/k8s-at-home) had also decided to start a community initiative in parallel.  My first pass, which I wont be posting publicly, simply involved the code to get me a k8s cluster via a marriage of Terraform and kubespray and relied on me writing additional tooling to handle the actual k8s deployments against my cluster. It worked but it was extremely opinionated and clunky as hell. I decided recently to align with this community initiative and transition that process under the magic of [Flux](https://github.com/fluxcd/flux2).
+This is part 2 of the [Kubernetes at Home : part 1]({{ site.baseurl }}/2021/k8s-at-home-pt-1/) post a made earlier.  This goes more into the gitops/flux aspect of this setup, as well as some of the interesting affinity hurdles to overcome related to home automation in general. My setup uses a smattering of tooling and practices that work well for me.  Interestingly, when I first started down the path of leveraging k8s at home, I didn't realise a [group](https://github.com/k8s-at-home) had also decided to start a community initiative in parallel.  My first pass, which I wont be posting publicly, simply involved the code to get me a k8s cluster via a marriage of Terraform and kubespray and relied on me writing additional tooling to handle the actual k8s deployments against my cluster. It worked but it was extremely opinionated and clunky as hell. I decided recently to align with this community initiative and transition that process under the magic of [Flux](https://github.com/fluxcd/flux2).
 
-##### **What is Flux?**
-Along with a number of other useful things, Flux gives you a means to define sources as resources in your cluster via its source controller.  This can, for example, monitor a github repository branch for changes and enact those changes within your cluster.  Wrapped with the appropriate testing and a sprinkling of [kustomize](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/), you have a pretty powerful means of safely deploying changes to your cluster.  The k8s@home has a [fantastic list of repos](https://github.com/k8s-at-home/awesome-home-kubernetes) tied to the contributors for anyone to peruse for inspiration.  Most recently, they went as far as releasing a [github template](https://github.com/k8s-at-home/template-cluster-k3s) to lower the barrier of entry for anyone considering moving into this world, which is basically what this post will cover. 
+###### **What is Flux?**
+Along with a number of other useful things, Flux gives you a means to define sources as resources in your cluster via its source controller.  This can, for example, monitor a github repository branch for changes and enact those changes within your cluster.  Wrapped with the appropriate testing and a sprinkling of [kustomize](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/), you have a pretty powerful means of safely deploying changes to your cluster.  The k8s@home has a [fantastic list of repos](https://github.com/k8s-at-home/awesome-home-kubernetes) tied to the contributors for anyone to peruse for inspiration.  Most recently, they went as far as releasing a [github template](https://github.com/k8s-at-home/template-cluster-k3s) to lower the barrier of entry for anyone considering moving into this world, which is mostly what this post will cover. 
+
+###### **Y tho?!?**
+As I said before, the whole point of doing this under kubernetes for me is to enforce some additional skills for me with the technology.  It is very likely overkill for the vast majority of people. The answer to this is 'for funzies'.
+
+###### **My Deployment**
+I went down the the route of setting up a dedicated organization in github for this as I figured it might lend itself to some of the impending auth problems.  At the moment, it is an organization of one but :shrug:.  From the [first]({{ site.baseurl }}/2021/k8s-at-home-pt-1/) post, you can see the refactoring I did to stack those NUCs to make it all more concise for my available space. so obviously, the organization became [nucstack](https://github.com/nucstack).  the [k8s](https://github.com/nucstack/k8s) repo under this contains all of code for this.  I recently refactored this entirely to leverage the above [k3s template](https://github.com/k8s-at-home/template-cluster-k3s) as a base, to align with the existing community initiative.  
+
+Some deviations I made:
+ - I dropped [k3s](https://k3s.io/) in favor of [kubespray](https://kubespray.io/#/) as my k8s deployment means. I my end up revisiting k3s in the future though as I am interesting in dropping the bloat and the potential of flipping from etcd to another state backend gets me. (Nodes communicating over wireguard :thinkingface:) 
+ - I'm a big fan of [go-task/task](https://github.com/go-task/task) so I wrapped all operational and bootstrap steps as tasks.
+ - Added a submodule under `./ansible/playbooks` for kubespray to handle k8s cluster deployment as well as the dependabot config to keep that up to date.
+ - Added a submodule under `./external/k8s-security-policies` that tie in some basic conftests already tried and tested under the raspernetes projects. I'll probably play with this more in the future again once things mature.
+ - I added the HCL and some basic terraform modules and Under `./terraform` to handle a staging/production environment provision against a small proxmox cluster I have in a home lab for testing purposes.  These modules are pretty opinionated at teh moment some of the nodes side config and auth generation for both the physical and virtual instances.  IN the future, I'll be adding some cloud instance deployments here too.
+ - I added an admittedly bloated docker image and compose to handle all of the dependencies for and flatten it to just docker when playing.  Once the CI is mature, this will probably be broken out as needed but for now a simple `docker-compose run --rm builder` gets me to a shell with everything I need.
+
+###### **Repository Layout**
+```bash
+├── .git-crypt          # git-crypt is leveraged in conjunction with GPG keys to secure sensitive things
+├── .github             # our .github workflows for things like dependabot/renovate jobs
+├── ansible             # all things ansible, mostly to get us a vanilla k8s cluster
+│   ├── inventory       # host inventory used by below playbooks per environment, production, staging, etc
+│   └── playbooks       # ansible playbooks
+│       └── kubespray   # playbook to deploy a vanilla k8s cluster
+│       └── k3s         # playbook to get us a functional k3s provided k8s cluster: TBD
+├── cluster             # the meat of our k8s deployments, as yaml deployed via fluxv2 and kustomize
+│   ├── apps            # application deployments themselves, helm releases
+│   ├── base            # bootstrap deps, the flux controllers themselves, helm repos,etc
+│   ├── core            # some core deployments, certs, storage, lb, security, etc
+│   └── crds            # some CRDS required by the above 
+├── docker              # dockerfiles for any relevant docker images
+├── docker-compose.yaml # compose for our builder, really just simplifies persisted things when live interacting. 
+├── .env.example        # example of required .env variables
+├── external            # any external submodules, security policies, etc
+├── Taskfile.yml        # our root Taskfile used by go-task
+├── .tasks              # our go tasks broken down for organizational purposes
+├── terraform           # all things terraform
+│   ├── cluster         # hcl for our infrastructure, mainly for my staging env instances
+│   └── modules         # some simple terraform modules to DRY up the terraform instances a bit
+└── tmpl                # some template files used by envsubst in conjunction with our env vars.     
+```
+
+###### **Secret things**
+The .env generation is a bit cumbersome at the moment, since we have a smattering of secrets across all the deployments, but once its provisioned, its relatively hands-off.  You can see in the docker-compose, we reference `./.env` as our `env-file`.  Not 100% ideal as all sensitive things are acessible globally here but its good enough for my needs for now.  The tasks are set up to reference these envs in conjunction with a basic task to manage rerolling of secrets as needed.  This nice thing this gets us is sensitive things are tracked in our repo and encrypted along with everything else.  If you use vscode too, you can leverage the `signageos.signageos-vscode-sops` extension for live encryption/decryption of these files when updating.  You should be easily able to add other users gpg keys to this too, to allow multiple individuals access to these secrets.
+
+###### **Builder**
+The `builder` Dockerfile at `./docker/builder/Dockerfile` is really just an alpine image loaded with all the deps necessary to run everything needed.  Its loaded with binaries for ansible, kubectl, sops, flux, go-task, conftest etc.  Definitely not intended for CI usage, as this image can get heavy but it gives us a checked in interaction point without needing to load up any workstations with all those deps. One main point of this is playing so we'll need that.  The `./docker-compose.yaml` is set up to use this image along with the `.env` you coy and update from the example.  Obviously, this can be repurposed to use repo env vars as needed.  I also have this set up to persist bashhistory in a local docker volume, make things a bit easier when playing with it all.  It will also mount the pwd to the working dir. I do have this running as `network: host` which isn't ideal but allows for simpler interaction with the clusters.  Something I'll probably resolve in the future. As a disclaimer, I do have it mounting `~/.gnupg:/root/.gnupg`, which is my lazy way of accessing the client gpg keys.  Again, something I'll probably drop in the future.
+
+###### **Testing**
+There are some hooks already provisioned under the original template that catch some nice things like yaml typos and formatting issues. I also pulled in some security policies that can be manually run via conftest or `task flux:conftest`.  I have really looked into extending these yet, something I'll play with in the future. For now, it gives me a starting point to test the security of this setup.
+
+###### **So what do we have deployed?**
+Still heavily a WIP but I opted to group the applications I would be deploying into namespaces relevant to their function.  In the end, I have the following namespaces:
+
+- **home-automation** : home-assistant, vernemq scalable for mqtt, zwave2mqtt, zigbee2mqtt for zwave/zigbee devices, floorplan for my [floorplan deployment]({{ site.baseurl }}/2021/home-assistant-and-unity/) openfaas for serverless function playing, influxdb for measurments 
+- **security** : authelia, openldap, authelia allows me to converge the auth for all these applications via nginx-ingress annotations under one SSO option.  Some apps work better with LDAP so openldap  that covers that :shrug:
+- **observability** : prometheus, thanos, grafana, loki, rsyslog, promtail, botkube, rtlamr, unifi-poller
+- **longhorn-system** : [longhorn-system](https://rancher.com/products/longhorn/) for PVs (they recommend this namespace, sucks but I wasn't going to argue)
+- **certmanager** : cert-manager for ACME
+- **networking** : nginx-ingress
+
+
+###### **Problem 1: Persistence**
+I opted to use [longhorn](https://rancher.com/products/longhorn/) as my storage solution.  It lended itself well to my setup, with storage across all my nodes. It allows me to easily use the local SSDs but replicated as I deem necessary across the available nodes.  It also allows for useful things like snapshotting/backups on schedule.  I have mine set up to backup regularly to an NFS server local to the cluster which itself is backed regualrly up to a cloud storage provider.
+
+###### **Problem 2: Host devices**
+I have an interesting problem, host devices.  My home automation relies on a number of host devices.  USB devices that deliver zwave and zigbee functionality, a USB RTL-SDR controller.  How do I get these usable in an automated fashion and tied the required pods to them with affinity rules.  What if these USB devices move around in the cluster!?! Initially, I considered something to expose these USB devices as network devices.  While this would work, it felt clunky.  Back of napkining it, I decided I could easily write some basic code, something lightweight that simply polled the usb devices regularly with some kind of defined filtering rules and labelled the nodes in a strctured manner based on the devices.  We make USB devices like any other resource, available to the cluster. It could be deployed as a daemonset on the cluster and any required deployments could set there affinity rules accordingly.  I was all ready to write this thing, then I found [nudl](https://github.com/leonnicolas/nudl).  Somebody beat me to it.  This does exactly that! You deploy it as a daemonset, define some filters in case you might want to exclude some devices and define the label format you would like.  I opted for `device/vid_pid`.  You can see the simple deployment [here](https://github.com/nucstack/k8s/blob/main/cluster/core/nudl/nudl.yaml).
