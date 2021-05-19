@@ -5,9 +5,9 @@
 * **Wayfair LLC** : *Systems Engineer III/IV/Cloud Engineer* : __Jan 2014 - Feb 2021__
   <br><br>
   <p>
-    Relocated to the companies HQ based in Boston in 2014.  For a couple of years, I managed a small team of engineers focused on projects. Became interested in automation, configuration management and infrastructure provisioning.  Migrated under the SRE team and got involved in figuring out the management of our windows environment via DSC.  This expanded into figuring IAC responsibilities.  Worked heavily in Terraform Provider and module development to handle and flatten provisioning of infrastucture in our private and public environments.
+    Relocated to the companies HQ based in Boston in 2014.  For a couple of years, I managed a small team of engineers focused on projects. Became interested in automation, configuration management and infrastructure provisioning.  I migrated under the SRE team and got involved in figuring out the management of our windows environment via DSC.  This quickly expanded into improving IAC as a whole for our private/public cloud environments.  I worked heavily in all things Terraform and by extension a good number of Hashicorp tooling, with one of our team responsiblities being the development of custom providers and associated terraform modules and their deployment strategy.  I have worked on the development and deployment of a number of applications to our kubernetes environment as well as initiatives to improve/streamline the provisioning of physical infrastructure in our private cloud environments.  I worked on initiatives to aide in the tracking of ownership of resources, developing processes to allow teams to visualize in real time the resources consumed by their teams across both our private and public cloud environments.
   </p>
-  {% assign skills    = 'ansible,puppet,terraform,vagrant,vault,consul,kubernetes,helm,dsc,gcp,packer,ci,docker,git' | split: ',' | uniq | sort -%}
+  {% assign skills    = 'ansible,puppet,terraform,vagrant,vault,consul,kubernetes,helm,gcp,packer,ci,docker,git' | split: ',' | uniq | sort -%}
   {% assign languages = 'golang,python,powershell,hcl,sql' | split: ',' | uniq | sort -%}
   {% assign others    = 'shell,windows,centos,esxi,cisco,networking' | split: ',' | uniq | sort -%}
 
