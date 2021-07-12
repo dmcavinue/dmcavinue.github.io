@@ -12,9 +12,9 @@ layout: default
         {% for tag in page.tags -%}
           {% assign kv = tag | split: ":" -%}
           {% if kv.size == 2 -%}
-            <div style="display: inline" class="{{kv[0]}}"><a href="{{ site.baseurl }}/tags/#{{ tag[0] }}">{{ kv[1] }}</a></div>
+            <div style="display: inline" class="{{kv[0]}}"><a href="{{ site.baseurl }}/tags/#{{ tag[0] }}">{{ kv[1] | upcase }}</a></div>
           {% else -%}
-            <div style="display: inline" class="tags"><a href="{{ site.baseurl }}/tags/#{{ tag[0] }}">{{  tag }}</a></div>
+            <div style="display: inline" class="tags"><a href="{{ site.baseurl }}/tags/#{{ tag[0] }}">{{  tag | upcase }}</a></div>
           {% endif -%}
         {% endfor -%}
         </span>
