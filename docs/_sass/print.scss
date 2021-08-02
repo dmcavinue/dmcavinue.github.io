@@ -1,0 +1,53 @@
+/* ==========================================================================
+   PRINT STYLES
+   ========================================================================== */
+   @media print {      
+    @page {
+      size: auto;
+      margin: 0;
+    }
+    // [hidden] {
+    //   display: none;
+    // }
+    html {
+      margin: 1;
+      padding: 1;
+      min-height: auto !important;
+      font-size: 13px;
+    }
+    // body {
+    //   margin: 0 auto;
+    //   font-size: 1rem;
+    //   line-height: 1.5;
+    // }
+    .social-accounts {
+      line-height: 1.5;
+      display: inline !important;
+      font-size: 14px;
+      font-weight: bold;
+      text-align: center;
+    }
+    // a, a:visited {
+    //   color: #000;
+    //   text-decoration: none;
+    //   word-wrap: break-word;
+    // }
+    table,tr,td {
+      border: 2px solid black;      
+    }
+    th {
+      border: 2px solid black;
+      background-color: #000;
+      color: #fff;
+      -webkit-print-color-adjust: exact;
+    }
+    .pagebreak { page-break-before: always; }
+    .btn-mobile-menu,
+    .panel-main,
+    .user-image,
+    .footer,
+    .adsbygoogle {
+      display: none !important;
+      height: 1px !important;
+    }
+  }

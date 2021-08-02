@@ -3,6 +3,7 @@
 @import "uno";
 @import "tables";
 @import "monokai";
+@import "print";
 
 /* Modifications */
 
@@ -289,7 +290,10 @@ pre.highlight code,
 .footer__copyright {
     margin: 0 20px 10px;
 }
-
+.social-accounts {
+  display: none;
+  height: 1px;
+}
 .user-image {
   margin-bottom: 1.2em;
   position: relative;

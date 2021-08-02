@@ -1,3 +1,4 @@
+
 ##### **Work Experience**
 
 <table>
@@ -7,23 +8,22 @@
 <th>Jan 2014 to Feb 2021</th>
 </tr>
 <tr><td colspan="3">
-* Developed and Maintained Infrastructure as code for private/public cloud environments.
-* Established cost estimation processes for private/public cloud environments.
-* Developed custom terraform module and provider tooling CI/CD strategy for use in IaC deployments.
+* Developed and Maintained Infrastructure as code for hybrid environments (On-Prem and GCP).
+* Developed and Established cost estimation tooling and processes across private/public cloud environments.
+* Developed custom terraform module and provider tooling/CI for use self-service in IaC deployments.
 * Developed various automations and services to support infrastructure pipeline.
-* Developed tooling to support private cloud infrastructure provisioning.
 * Developed tooling and pipeline to enable developers to self-service infrastructure as required.
 </td></tr>
 
 <tr>
 <th>Wayfair<br>Ireland, UK, Boston</th>
 <th>Systems Engineer I/II<br>Projects Team Manager</th>
-<th>Jul 2011 to Jan 2024</th>
+<th>Jul 2011 to Jan 2014</th>
 </tr>
 <tr><td colspan="3">
 * Tech Resource for all European Offices based in London, Galway and Berlin
 * Managed a team of IT Engineers/Projects Team
-* Responsible for OS/Application Deployment for all Offices 
+* Responsible for OS/Application Deployment for all Offices
 </td></tr>
 
 <tr>
@@ -48,20 +48,11 @@
 </td></tr>
 </table>
 
-<br>
-##### **Education and Training**
-
-<table>
-<tr><td>
-* **Bachelor of Science (Information Systems)** : *2004 to 2008*
-	[University of Limerick, Ireland](https://www.ul.ie/)
-</td></tr>
-</table>
-
+<div class="pagebreak"></div>
 <br>
 ##### **Skills**
 
-{% assign skills    = 'sccm,active-directory,consul,jenkins,github,vsphere,ansible,puppet,terraform,vagrant,vault,kubernetes,helm,gcp,packer,ci,docker,git' | split: ',' | uniq | sort -%}
+{% assign skills    = 'sccm,active-directory,consul,jenkins,github,vsphere,ansible,puppet,terraform,vagrant,vault,kubernetes,helm,gcp,packer,ci,docker,aws,git' | split: ',' | uniq | sort -%}
 {% assign languages = 'java,golang,python,powershell,hcl,bash' | split: ',' | uniq | sort -%}
 {% assign others    = 'windows,linux,esxi,cisco,documentation-as-code' | split: ',' | uniq | sort -%}
 
@@ -73,7 +64,7 @@
 </tr>
 <tr>
 <td>
-<div class="language-small">
+<div style="display: inline" class="language-small">
   {% for language in languages -%}
     <a href="{{ site.baseurl }}/tags/#{{ language }}">{{ language | upcase }}</a>
   {% endfor -%}
