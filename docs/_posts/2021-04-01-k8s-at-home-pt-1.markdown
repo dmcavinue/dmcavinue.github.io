@@ -2,7 +2,7 @@
 title:  "Kubernetes at Home: part 1"
 date:   2021-04-01 00:00:00
 categories: ['home-automation','kubernetes','terraform','nucstack']
-tags: ['tool:terraform','tool:kubernetes','tool:docker','tool:git','hardware']
+tags: ['tool:terraform','tool:kubernetes','tool:docker', 'tool:aws','tool:git','hardware']
 ---
 
 I figured it was about time for me to detail my home automation setup somewhere.  It has gone through a bunch of iterations and grown to a point where I'm comfortable doing so.

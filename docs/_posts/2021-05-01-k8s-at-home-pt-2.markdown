@@ -2,7 +2,7 @@
 title:  "Kubernetes at Home: part 2"
 date:   2021-05-01 00:00:00
 categories: ['home-automation','kubernetes','terraform','nucstack']
-tags: ['tool:ansible','tool:terraform','tool:kubernetes','tool:docker','tool:git','tool:helm','tool:flux','tool:sops','tool:kustomize','language:hcl','language:bash','language:golang','gitops','ci/cd'
+tags: ['tool:ansible','tool:terraform','tool:kubernetes','tool:docker','tool:aws','tool:git','tool:helm','tool:flux','tool:sops','tool:kustomize','language:hcl','language:bash','language:golang','gitops','ci/cd'
 ]
 
 ---
@@ -23,7 +23,7 @@ Some deviations I made:
  - I'm a big fan of [go-task/task](https://github.com/go-task/task) so I wrapped all operational and bootstrap steps as tasks.
  - Added a submodule under `./ansible/playbooks` for kubespray to handle k8s cluster deployment as well as the dependabot config to keep that up to date.
  - Added a submodule under `./external/k8s-security-policies` that tie in some basic conftests already tried and tested under the raspernetes projects. I'll probably play with this more in the future again once things mature.
- - I added the HCL and some basic terraform modules and Under `./terraform` to handle a staging/production environment provision against a small proxmox cluster I have in a home lab for testing purposes.  These modules are pretty opinionated at teh moment some of the nodes side config and auth generation for both the physical and virtual instances.  IN the future, I'll be adding some cloud instance deployments here too.
+ - I added the HCL under `./terraform` to handle provisioning of AWS based instances via some respe3cted community terraform modules.  The HCL included under `./terraform/infrastructure/aws.tf` gives an idea of provisioning against AWS.  It will provision a VPC with one public subnet and one private subnet.  An internet gateway will be provisioned and used to allow internet connectivity for any instances under the private subnet via its NAT gateway.  At the moment, I also provision a single `t2.nano` ec2 instance that acts as a tailscale relay instance that routes any defined private subnets to my tailscale account.  This gives me a secure way to access any nodes I provision without having to enable a public IP.  The `./packer` directory also contains the definition for custom AMIs rolled with k3s and tailscale.
  - I added an admittedly bloated docker image and compose to handle all of the dependencies for and flatten it to just docker when playing.  Once the CI is mature, this will probably be broken out as needed but for now a simple `docker-compose run --rm builder` gets me to a shell with everything I need.
 
 ###### **Repository Layout**
@@ -47,8 +47,7 @@ Some deviations I made:
 ├── Taskfile.yml        # our root Taskfile used by go-task
 ├── .tasks              # our go tasks broken down for organizational purposes
 ├── terraform           # all things terraform
-│   ├── cluster         # hcl for our infrastructure, mainly for my staging env instances
-│   └── modules         # some simple terraform modules to DRY up the terraform instances a bit
+│   └──  infrastructure # hcl for our infrastructure, mainly for my staging env instances
 └── tmpl                # some template files used by envsubst in conjunction with our env vars.     
 ```
 
