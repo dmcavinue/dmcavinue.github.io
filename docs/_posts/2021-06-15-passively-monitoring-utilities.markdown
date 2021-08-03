@@ -2,7 +2,7 @@
 title:  "Passively monitoring Utilities"
 date:   2021-06-15 00:00:00
 categories: ['rtlsdr','mqtt','influxdb','esp32','power']
-tags: ['tool:influxdb','rtl-sdr','esp32','kubernetes']
+tags: ['tool:grafana','tool:influxdb','tool:docker','sdr','esp32','tool:kubernetes']
 
 ---
 
