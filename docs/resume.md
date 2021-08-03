@@ -3,9 +3,11 @@
 
 <table>
 <tr>
+<thead>
 <th>Wayfair<br>Boston, MA</th>
 <th>Systems Engineer III/IV<br>Cloud Engineer</th>
 <th>Jan 2014 to Feb 2021</th>
+</thead>
 </tr>
 <tr><td colspan="3">
 * Developed and Maintained Infrastructure as code for hybrid environments (On-Prem and GCP).
@@ -16,9 +18,11 @@
 </td></tr>
 
 <tr>
+<thead>
 <th>Wayfair<br>Ireland, UK, Boston</th>
 <th>Systems Engineer I/II<br>Projects Team Manager</th>
 <th>Jul 2011 to Jan 2014</th>
+</thead>
 </tr>
 <tr><td colspan="3">
 * Tech Resource for all European Offices based in London, Galway and Berlin
@@ -27,9 +31,11 @@
 </td></tr>
 
 <tr>
+<thead>
 <th>Active Technology Ltd<br>Clare, Ireland</th>
 <th>IT Consultant<br>Technician</th>
 <th>July 2009 to July 2011</th>
+</thead>
 </tr>
 <tr><td colspan="3">
 * Handled the IT side of CCTV, Intruder Alarms and Access Control Systems installs.
@@ -37,9 +43,11 @@
 </td></tr>
 
 <tr>
+<thead>
 <th>University of Limerick<br>Limerick, Ireland</th>
 <th>Postgraduate Researcher</th>
 <th>Oct 2008 to Jul 2009</th>
+</thead>
 </tr>
 <tr><td colspan="3">
 * Worked as part of a small research team developing an interactive tutoring environment for use in primary school education.
@@ -54,13 +62,15 @@
 
 {% assign skills    = 'sccm,active-directory,consul,jenkins,github,vsphere,ansible,puppet,terraform,vagrant,vault,kubernetes,helm,gcp,packer,ci,docker,aws,git' | split: ',' | uniq | sort -%}
 {% assign languages = 'java,golang,python,powershell,hcl,bash' | split: ',' | uniq | sort -%}
-{% assign others    = 'windows,linux,esxi,cisco,documentation-as-code' | split: ',' | uniq | sort -%}
+{% assign others    = 'windows,linux,esxi,cisco,documentation-as-code,esp32' | split: ',' | uniq | sort -%}
 
 <table>
 <tr>
+<thead>
 <th>Languages</th>
 <th>Tools</th>
 <th>Other</th>
+</thead>
 </tr>
 <tr>
 <td>
@@ -96,8 +106,8 @@
 <table>
 <tr><td>
 * **[Kubernetes at Home]({{ site.baseurl }}/2021/k8s-at-home-pt-1/)** : Kubernetes cluster at home to handle home automation, managed with Flux, GitOps.
+* **[Playing with Hashistack]({{ site.baseurl }}/2021/playing-with-hashistack/)** : Setting up Consul/Vault/Nomad in a dance-off versus the k8s@home setup.
 * **[Unity3D Floorplan, MQTT & you]({{ site.baseurl }}/2021/home-assistant-and-unity/)** : Render your home floorplan in 3D, real time monitor and visualize events.
-* **Utility Monitoring** : Passively tracking Utility metrics via RTLAMR and InfluxDB.
-* **Setting up a Magic Mirror** : Setting up a magic mirror and the home automation goodness that comes with it!
+* **[Utility Monitoring]({{ site.baseurl }}/2021/passively-monitoring-utilities/)** : Passively tracking Utility metrics via an SDR and ESP32.
 </td></tr>
 </table>
