@@ -20,23 +20,23 @@ I also provisioned a simple custom container image [here](https://github.com/nuc
 
 For the circuit monitoring side, the example code to run on youe ESP32 is available [here](https://github.com/CircuitSetup/Expandable-6-Channel-ESP32-Energy-Meter/blob/master/Software/ESPHome/6chan_energy_meter_5-addons_36-channels.yaml) in the repo I linked earlier.  If you aren't familiar with ESP devices, there are plenty of documents in the wild that cover them. How I do it is via [ESPHome](https://esphome.io/).  This is a framework for ESP8266/32 devices that allow for easy management and control of ESP devices in your Home.  It provides libraries to provision components that will natively be availbale to things my Home Assistant. ESPHome can be added as an addon to Home assistant or run independently. The basic flow for a net new ESP device via ESPHome is:
 
-1. Add a device entry for your new ESP device in ESPHome. Be sure to add accurate WIFI Settings.  It will provision a config manifest for the device with some sane defaults.
+* Add a device entry for your new ESP device in ESPHome. Be sure to add accurate WIFI Settings.  It will provision a config manifest for the device with some sane defaults.
 <p align="center">
 <img height="50%" width="50%" align="center" src="{{ site.baseurl }}/images/posts/power-monitoring/esphome.jpg" alt="esphome" /><br>
 </p>
 
-2. I would recommend setting up some secrets to secure the device.  Most importantly, an API and OTA key, this should deter any nefarious passers-by from reflashing.
+* I would recommend setting up some secrets to secure the device.  Most importantly, an API and OTA key, this should deter any nefarious passers-by from reflashing.
 
-3. Set up any other required code here as needed, you can reference the [circuitsetup example]((https://github.com/CircuitSetup/Expandable-6-Channel-ESP32-Energy-Meter/blob/master/Software/ESPHome/6chan_energy_meter_5-addons_36-channels.yaml)). For your first flash, I would recommend sticking with basics.  
+* Set up any other required code here as needed, you can reference the [circuitsetup example](https://github.com/CircuitSetup/Expandable-6-Channel-ESP32-Energy-Meter/blob/master/Software/ESPHome/6chan_energy_meter_5-addons_36-channels.yaml). For your first flash, I would recommend sticking with basics.  
 
-4. Under your device entry in esphome, Click `Validate` to ensure your formatting is correct, then click `Install`.
+* Under your device entry in esphome, Click `Validate` to ensure your formatting is correct, then click `Install`.
 <p align="center">
 <img height="50%" width="50%" align="center" src="{{ site.baseurl }}/images/posts/power-monitoring/esphome-2.jpg" alt="esphome" /><br>
 </p>
 
-5. It should present you with a prompt to select how you want to install. For the first install, you will need to do it locally via USB.  If you select `Manual Download`, it will generate a binary file with your config manifest and download it local to your machine for manual flash.  I just use the [ESP Flash download tool](https://www.espressif.com/en/support/download/other-tools) for this.  Simply boot your ESP32 into flash mode and select your file.  After you do this the first time, future flashes can be done via the ESPHome UI.
+* It should present you with a prompt to select how you want to install. For the first install, you will need to do it locally via USB.  If you select `Manual Download`, it will generate a binary file with your config manifest and download it local to your machine for manual flash.  I just use the [ESP Flash download tool](https://www.espressif.com/en/support/download/other-tools) for this.  Simply boot your ESP32 into flash mode and select your file.  After you do this the first time, future flashes can be done via the ESPHome UI.
 
-6. If you use Home Assistant, you can add the ESP32 by adding a new `ESPHome` integration and entering the requested details.  It will look for the ESP32's IP and API Key.  If all went well, you should have your device in Home assistant and any defined sensors.  It provisions some default uptime and Connections sensors as well a useful `Restart` switch, to gracefully reboot the ESP32.
+* If you use Home Assistant, you can add the ESP32 by adding a new `ESPHome` integration and entering the requested details.  It will look for the ESP32's IP and API Key.  If all went well, you should have your device in Home assistant and any defined sensors.  It provisions some default uptime and Connections sensors as well a useful `Restart` switch, to gracefully reboot the ESP32.
 <p align="center">
 <img height="50%" width="50%" align="center" src="{{ site.baseurl }}/images/posts/power-monitoring/esphome-3.jpg" alt="esphome" /><br>
 </p>
@@ -58,7 +58,7 @@ The current transformers have a particular orientation, so be aware of that.  Al
 <p align="center">
 <img height="50%" width="50%" align="center" src="{{ site.baseurl }}/images/posts/power-monitoring/mcb-with-transformers.jpg" alt="esphome" /><br>
 </p>
-The cabinet with some additional current transformers installed and working (albeit in need of some cleanup!).  The end result so far is 10 channels being monitored reliably.
+The cabinet with some additional current transformers installed and working (albeit in need of some cleanup!).  The end result so far is 10 channels being monitored reliably.  The ESP32 registers sensors for each of these channels under the device in Home Assistant, which in turn has been set up to export the sensors I care about as metrics to prometheus for use in Grafana.  The SDRs InfluxDB database is also set up as a datasource in Grafana too.
 <p align="center">
 <img height="70%" width="70%" align="center" src="{{ site.baseurl }}/images/posts/power-monitoring/grafana.jpg" alt="esphome" /><br>
 </p>
