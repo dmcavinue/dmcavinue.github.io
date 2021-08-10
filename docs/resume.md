@@ -62,7 +62,7 @@
 
 {% assign skills    = 'sccm,active-directory,consul,jenkins,github,vsphere,ansible,puppet,terraform,vagrant,vault,kubernetes,helm,gcp,packer,ci,docker,aws,git' | split: ',' | uniq | sort -%}
 {% assign languages = 'java,golang,python,powershell,hcl,bash' | split: ',' | uniq | sort -%}
-{% assign others    = 'windows,linux,esxi,cisco,documentation-as-code,esp32' | split: ',' | uniq | sort -%}
+{% assign others    = 'tailscale,wireguard,windows,linux,esxi,cisco,documentation-as-code,esp32' | split: ',' | uniq | sort -%}
 
 <table>
 <tr>
