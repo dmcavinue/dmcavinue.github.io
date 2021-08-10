@@ -1,0 +1,8 @@
+/* TEAM */
+Author: Daniel McAvinue
+Site: http://dmcavinue.github.io
+
+/* SITE */
+Last update: 2021/08/10
+Standards: HTML5, CSS3
+Components: Jekyll

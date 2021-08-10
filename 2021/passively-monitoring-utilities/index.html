@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <title>Passively monitoring Utilities</title>
+  <meta name="description" content="This is something I’ve been working on for a while.  A way to passively and accurately monitor my utility usage.  It would need to be able to tie into my existing home automation infrastructure and poll at a regular enough interval to be useful. From (passively) digging around my meters and reading up on solutions others have used, I settle on a couple of approaches.  Firstly, it appears that in my area my meters advertise their data on the regular for easy consumption by electrical companies.  This information is advertised by my gas, water and electric meters unencrypted and is too useful to pass up.  It also allows me to read this passively to avoid interfering with my meters.  The cost for this would be a simple RTL-SDR Receiver.  As a quick disclaimer, interfering with your meters in any way can lead to a fine, so please avoid that.  I have seen some alternative approaches involving installing simple cameras that watch the meters dials and while this is ‘technically’ passive, probably wouldn’t appear that way to anyone that asks to physically look at your meters should they come knocking.
+
+">
+  <meta name="author" content="Daniel McAvinue">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Passively monitoring Utilities">
+  <meta name="twitter:description" content="This is something I’ve been working on for a while.  A way to passively and accurately monitor my utility usage.  It would need to be able to tie into my existing home automation infrastructure and poll at a regular enough interval to be useful. From (passively) digging around my meters and reading up on solutions others have used, I settle on a couple of approaches.  Firstly, it appears that in my area my meters advertise their data on the regular for easy consumption by electrical companies.  This information is advertised by my gas, water and electric meters unencrypted and is too useful to pass up.  It also allows me to read this passively to avoid interfering with my meters.  The cost for this would be a simple RTL-SDR Receiver.  As a quick disclaimer, interfering with your meters in any way can lead to a fine, so please avoid that.  I have seen some alternative approaches involving installing simple cameras that watch the meters dials and while this is ‘technically’ passive, probably wouldn’t appear that way to anyone that asks to physically look at your meters should they come knocking.
+
+">
+  
+  <meta name="twitter:image" content="/images/favicons/favicon-194x194.png">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Passively monitoring Utilities">
+  <meta property="og:description" content="This is something I’ve been working on for a while.  A way to passively and accurately monitor my utility usage.  It would need to be able to tie into my existing home automation infrastructure and poll at a regular enough interval to be useful. From (passively) digging around my meters and reading up on solutions others have used, I settle on a couple of approaches.  Firstly, it appears that in my area my meters advertise their data on the regular for easy consumption by electrical companies.  This information is advertised by my gas, water and electric meters unencrypted and is too useful to pass up.  It also allows me to read this passively to avoid interfering with my meters.  The cost for this would be a simple RTL-SDR Receiver.  As a quick disclaimer, interfering with your meters in any way can lead to a fine, so please avoid that.  I have seen some alternative approaches involving installing simple cameras that watch the meters dials and while this is ‘technically’ passive, probably wouldn’t appear that way to anyone that asks to physically look at your meters should they come knocking.
+
+">
+  <meta property="og:image" content="/images/favicons/favicon-194x194.png">
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="stylesheet" href="/css/main.css?1628639046077223252">
+  <link rel="canonical" href="https://dmcavinue.github.io/2021/passively-monitoring-utilities/">
+</head>
+
+
+  <body>
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover " style="background-image: url(/images/cover.jpg)">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+        <a href="/" title="link to home of Daniel McAvinue">
+          <img src="/images/profile.png" class="user-image" alt="My Profile Photo">
+          <h1 class="panel-cover__title panel-title">Daniel McAvinue</h1>
+        </a>
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description">dmcavinue.github.io</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/resume/" title="link to Daniel McAvinue resume" class="resume-button">Resume</a></li>
+              <li class="navigation__item"><a href="/#projects" title="link to Daniel McAvinue projects" class="projects-button">Projects</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+
+              
+              <!-- LinkedIn -->
+              <li class="navigation__item">
+                <a href="https://www.linkedin.com/in/daniel-mcavinue-589a2937" title="daniel-mcavinue-589a2937 on LinkedIn" target="_blank">
+                  <i class="icon icon-social-linkedin"></i>
+                  <span class="label">LinkedIn</span>
+                </a>
+              </li>
+              
+
+              
+              <!-- GitHub -->
+              <li class="navigation__item">
+                <a href="https://www.github.com/dmcavinue" title="dmcavinue on GitHub" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+              
+
+              
+              <!-- Email -->
+              <li class="navigation__item">
+                <a href="mailto:dan@mcavinue.io" title="Email dan@mcavinue.io" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+              
+            </ul>
+          </nav>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+  <div class="social-accounts">
+    <h1>Daniel McAvinue</h1>
+    <h6>
+    <!-- Site -->  
+    <i class="icon icon-web"> dmcavinue.github.io</i><br>
+    <!-- LinkedIn -->
+    <i class="icon icon-social-linkedin"> daniel-mcavinue-589a2937</i><br>
+    <!-- Email -->
+    <i class="icon icon-mail"> dan@mcavinue.io</i><br>
+    <!-- GitHub -->
+    <i class="icon icon-social-github"> dmcavinue</i>
+    </h6>
+  </div>  
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+  <header class="post-header">
+    <h1 class="post-title">Passively monitoring Utilities</h1>
+    <br>
+    <div class="post-meta">
+      <time datetime="2021-06-15 00:00" class="post-meta__date date">Jun 2021</time>
+                          
+        <span class="post-meta__tags">
+        <div style="display: inline" class="tool"><a href="/tags/#">GRAFANA</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">INFLUXDB</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">DOCKER</a></div>
+          <div style="display: inline" class="tags"><a href="/tags/#">SDR</a></div>
+          <div style="display: inline" class="tags"><a href="/tags/#">ESP32</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">KUBERNETES</a></div>
+          </span>
+      
+    </div>
+  </header>
+  <br><br><br>
+  <section class="post">
+    <p>This is something I’ve been working on for a while.  A way to passively and accurately monitor my utility usage.  It would need to be able to tie into my existing home automation infrastructure and poll at a regular enough interval to be useful. From (passively) digging around my meters and reading up on solutions others have used, I settle on a couple of approaches.  Firstly, it appears that in my area my meters advertise their data on the regular for easy consumption by electrical companies.  This information is advertised by my gas, water and electric meters unencrypted and is too useful to pass up.  It also allows me to read this passively to avoid interfering with my meters.  The cost for this would be a simple RTL-SDR Receiver.  As a quick disclaimer, interfering with your meters in any way can lead to a fine, so please avoid that.  I have seen some alternative approaches involving installing simple cameras that watch the meters dials and while this is ‘technically’ passive, probably wouldn’t appear that way to anyone that asks to physically look at your meters should they come knocking.</p>
+
+<p>Ok, so this covers the holistic utilities, but what about granularity?!  For example, What if I want to know for what is drawing power and where at a given moment? For this, I settled on something that is still ‘technically’ passive but not for those afraid to crack open that MCB cabinet.  As you might have noticed from this sites logo, I’m a fan of ESP32 devices, they are dirt cheap, easy to set up and almost as easy to write code for.  They also integrate very well with Home Assistant.  There also exists a very cool addon board compatible with these chips that allows you read in as many circuits as you need from your MCB. You can read about it (here)[https://github.com/CircuitSetup/Expandable-6-Channel-ESP32-Energy-Meter].  <strong>Note:</strong> Be sure to read this documentation thoroughly before attempting any install, you’re playing with electricity here!  If you’re not comfortable with that, you proabably need an electrician.  Fortunately for me, I have electrocuted myself enough in the past to be okay with risking another shock.</p>
+
+<h5 id="the-hardware"><strong>The hardware</strong></h5>
+<p>For the SDR, I opted for a cheap and cheerful <a href="https://www.amazon.com/NooElec-NESDR-Smart-Bundle-R820T2-Based/dp/B01GDN1T4S">NooElec NESDR</a>. It’s USB format would allow me to use it within my k8s cluster and set up my workflow to run as a deployment on the cluster along with everything else.  For the Circuit monitoring, I purchased an <a href="https://www.amazon.com/Xiuxin-Development-Dual-Mode-Bluetooth-Antenna/dp/B079PVCF2G">ESP32</a>, a <a href="https://circuitsetup.us/product/expandable-6-channel-esp32-energy-meter/">main board</a> as well as the associated 9V AC Power adapter and additional 6 channel addon board.  This got me a good start of 12 channels to play with.  Along with this, I was going to need <a href="https://circuitsetup.us/product/100a-50ma-current-transformer-yhdc-sct-013/">Current transformers</a> for all the circuits I wanted to monitor.  These range in supported amperage and depends on the circuits you will want to monitor.</p>
+
+<h5 id="the-software"><strong>The Software</strong></h5>
+<p>For the SDR side of this, It looks like someone has already covered the tricky part, finding your meters in the wild and collecting it in a way that makes sense!  You can read about that <a href="https://github.com/bemasher/rtlamr-collect">here</a>.  This project, written in Golang, provides a means to target specific meter IDs from all of the meters and their respective protocols that your SDR is likely going to pick up. Don’t forget, this is just a radio and your neighbours have meters too! Once I had my SDR device and plugged it into the target k8s node, I set up a first pass deployment.  This first run, just deploying straight k8s resources as no helm chart exists for this tooling (yet).</p>
+
+<p>I also provisioned a simple custom container image <a href="https://github.com/nucstack/container-images/tree/master/apps/rtlamr-collect">here</a> for this code, as a reliable one didn’t exist.  This image builds on top of a golang base image and simple builds the required binaries.  As a note, this tooling is broken into two packages by its developer, one which handles the SDR side of things and another that handles the data collection.  In the future if I decide to make a helm chart for this, I will probably fork this code relocate this responsbility to a metrics export for prometheus.  This will let me drop the influxDB dependency too. You can see the rough deployment of this all <a href="https://github.com/nucstack/k8s/blob/main/cluster/apps/observability/rtlamr-collect/rtlamr-collect.yaml">here</a>.  For the moment, mounting the SDR usb device and setting the necessary env vars to target the data collection to my separately deployed influx database.</p>
+
+<p>For the circuit monitoring side, the example code to run on youe ESP32 is available <a href="https://github.com/CircuitSetup/Expandable-6-Channel-ESP32-Energy-Meter/blob/master/Software/ESPHome/6chan_energy_meter_5-addons_36-channels.yaml">here</a> in the repo I linked earlier.  If you aren’t familiar with ESP devices, there are plenty of documents in the wild that cover them. How I do it is via <a href="https://esphome.io/">ESPHome</a>.  This is a framework for ESP8266/32 devices that allow for easy management and control of ESP devices in your Home.  It provides libraries to provision components that will natively be availbale to things my Home Assistant. ESPHome can be added as an addon to Home assistant or run independently. The basic flow for a net new ESP device via ESPHome is:</p>
+
+<ul>
+  <li>Add a device entry for your new ESP device in ESPHome. Be sure to add accurate WIFI Settings.  It will provision a config manifest for the device with some sane defaults.</li>
+</ul>
+<p align="center">
+<img height="50%" width="50%" align="center" src="/images/posts/power-monitoring/esphome.jpg" alt="esphome"><br>
+</p>
+
+<ul>
+  <li>
+    <p>I would recommend setting up some secrets to secure the device.  Most importantly, an API and OTA key, this should deter any nefarious passers-by from reflashing.</p>
+  </li>
+  <li>
+    <p>Set up any other required code here as needed, you can reference the <a href="https://github.com/CircuitSetup/Expandable-6-Channel-ESP32-Energy-Meter/blob/master/Software/ESPHome/6chan_energy_meter_5-addons_36-channels.yaml">circuitsetup example</a>. For your first flash, I would recommend sticking with basics.</p>
+  </li>
+  <li>
+    <p>Under your device entry in esphome, Click <code class="language-plaintext highlighter-rouge">Validate</code> to ensure your formatting is correct, then click <code class="language-plaintext highlighter-rouge">Install</code>.</p>
+  </li>
+</ul>
+<p align="center">
+<img height="50%" width="50%" align="center" src="/images/posts/power-monitoring/esphome-2.jpg" alt="esphome"><br>
+</p>
+
+<ul>
+  <li>
+    <p>It should present you with a prompt to select how you want to install. For the first install, you will need to do it locally via USB.  If you select <code class="language-plaintext highlighter-rouge">Manual Download</code>, it will generate a binary file with your config manifest and download it local to your machine for manual flash.  I just use the <a href="https://www.espressif.com/en/support/download/other-tools">ESP Flash download tool</a> for this.  Simply boot your ESP32 into flash mode and select your file.  After you do this the first time, future flashes can be done via the ESPHome UI.</p>
+  </li>
+  <li>
+    <p>If you use Home Assistant, you can add the ESP32 by adding a new <code class="language-plaintext highlighter-rouge">ESPHome</code> integration and entering the requested details.  It will look for the ESP32’s IP and API Key.  If all went well, you should have your device in Home assistant and any defined sensors.  It provisions some default uptime and Connections sensors as well a useful <code class="language-plaintext highlighter-rouge">Restart</code> switch, to gracefully reboot the ESP32.</p>
+  </li>
+</ul>
+<p align="center">
+<img height="50%" width="50%" align="center" src="/images/posts/power-monitoring/esphome-3.jpg" alt="esphome"><br>
+</p>
+
+<h5 id="the-electrocution"><strong>The Electrocution</strong></h5>
+<p>Ok, I managed to get away with NOT electrocuting myself. Here are some shots of the ESP32 install. I do still have some cleanup to do here.  Which will happen when my additional addon board and current transformers arrive.</p>
+<p align="center">
+<img height="50%" width="50%" align="center" src="/images/posts/power-monitoring/esp32-with-wiring.jpg" alt="esphome"><br>
+</p>
+<p>I got lucky with my MCB cabinet, the electrical wiring was immaculate and allowed plenty of room for the ESP32 to install below.  Ideally, if you are installing this though, I would recommend outside the MCB. While it didn’t affect me, The case interferes with the wireless signal and is most definitely not a hospitable environment for it.</p>
+<p align="center">
+<img height="50%" width="50%" align="center" src="/images/posts/power-monitoring/esp32-power-brick.jpg" alt="esphome"><br>
+</p>
+<p>I opted to route my power supply for the unit to a socket directly below the cabinet itself, which turned out pretty clean.</p>
+<p align="center">
+<img height="50%" width="50%" align="center" src="/images/posts/power-monitoring/current-transformers.jpg" alt="esphome"><br>
+</p>
+<p>The current transformers have a particular orientation, so be aware of that.  Also reminder to be VERY careful inside the cabinet.  If you don’t know what you’re doing, you definitely shouldn’t be in here.  In the case of this image, these clamps are wrapping around the 200A main feed and is EXTREMELY dangerous interfere with.</p>
+<p align="center">
+<img height="50%" width="50%" align="center" src="/images/posts/power-monitoring/mcb-with-transformers.jpg" alt="esphome"><br>
+</p>
+<p>The cabinet with some additional current transformers installed and working (albeit in need of some cleanup!).  The end result so far is 10 channels being monitored reliably.  The ESP32 registers sensors for each of these channels under the device in Home Assistant, which in turn has been set up to export the sensors I care about as metrics to prometheus for use in Grafana.  The SDRs InfluxDB database is also set up as a datasource in Grafana too.</p>
+<p align="center">
+<img height="70%" width="70%" align="center" src="/images/posts/power-monitoring/grafana.jpg" alt="esphome"><br>
+</p>
+<p align="center">
+<img height="70%" width="70%" align="center" src="/images/posts/power-monitoring/grafana-2.jpg" alt="esphome"><br>
+</p>
+<p>I do still need to do some work on the visualization of this data, but here are some shots of the data in Grafana.  The ESP32 data is set to refresh at a 60 second interval and does so pretty reliably.  The SDR isn’t so reliable but does work, with a refresh interval of ~5-10 minutes. Ultimately, I plan on using these in different ways.  The the SDR data as a means to validate the overall numbers for electricity, as well as deviations from trend in our Gas and Water consumption. Example: f we’re on holiday and the gas/water spikes, Home assistant can alert us and <a href="https://www.amazon.com/Automation-Z-Wave-Shutoff-Compatiable-Smartthings/dp/B083DNGQRZ">automatically switch off main valves</a>.  The ESP32, being more pointed and real time, will let me track specific device power usage and circuit state for a whole bunch of things.  E.g. Device usage in specific rooms can be another factor of evidence a room is occupied.  This setup has been running for about a month without issue.  There is obviously still lots to do but great progress so far!</p>
+
+  </section>
+  
+</article>
+
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">© 2021 Daniel McAvinue. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1628639046077223252"></script>
+
+
+    </div>
+  </body>
+</html>

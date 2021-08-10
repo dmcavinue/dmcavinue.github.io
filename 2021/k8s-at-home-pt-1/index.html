@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <title>Kubernetes at Home: part 1</title>
+  <meta name="description" content="I figured it was about time for me to detail my home automation setup somewhere.  It has gone through a bunch of iterations and grown to a point where I’m comfortable doing so.
+v1 of this started on a single Raspberry PI and has evolved into a cluster of NUCs backed by kubernetes and spanning a smattering of differences services and tooling.
+
+">
+  <meta name="author" content="Daniel McAvinue">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Kubernetes at Home: part 1">
+  <meta name="twitter:description" content="I figured it was about time for me to detail my home automation setup somewhere.  It has gone through a bunch of iterations and grown to a point where I’m comfortable doing so.
+v1 of this started on a single Raspberry PI and has evolved into a cluster of NUCs backed by kubernetes and spanning a smattering of differences services and tooling.
+
+">
+  
+  <meta name="twitter:image" content="/images/favicons/favicon-194x194.png">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Kubernetes at Home: part 1">
+  <meta property="og:description" content="I figured it was about time for me to detail my home automation setup somewhere.  It has gone through a bunch of iterations and grown to a point where I’m comfortable doing so.
+v1 of this started on a single Raspberry PI and has evolved into a cluster of NUCs backed by kubernetes and spanning a smattering of differences services and tooling.
+
+">
+  <meta property="og:image" content="/images/favicons/favicon-194x194.png">
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="stylesheet" href="/css/main.css?1628639046077223252">
+  <link rel="canonical" href="https://dmcavinue.github.io/2021/k8s-at-home-pt-1/">
+</head>
+
+
+  <body>
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover " style="background-image: url(/images/cover.jpg)">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+        <a href="/" title="link to home of Daniel McAvinue">
+          <img src="/images/profile.png" class="user-image" alt="My Profile Photo">
+          <h1 class="panel-cover__title panel-title">Daniel McAvinue</h1>
+        </a>
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description">dmcavinue.github.io</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/resume/" title="link to Daniel McAvinue resume" class="resume-button">Resume</a></li>
+              <li class="navigation__item"><a href="/#projects" title="link to Daniel McAvinue projects" class="projects-button">Projects</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+
+              
+              <!-- LinkedIn -->
+              <li class="navigation__item">
+                <a href="https://www.linkedin.com/in/daniel-mcavinue-589a2937" title="daniel-mcavinue-589a2937 on LinkedIn" target="_blank">
+                  <i class="icon icon-social-linkedin"></i>
+                  <span class="label">LinkedIn</span>
+                </a>
+              </li>
+              
+
+              
+              <!-- GitHub -->
+              <li class="navigation__item">
+                <a href="https://www.github.com/dmcavinue" title="dmcavinue on GitHub" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+              
+
+              
+              <!-- Email -->
+              <li class="navigation__item">
+                <a href="mailto:dan@mcavinue.io" title="Email dan@mcavinue.io" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+              
+            </ul>
+          </nav>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+  <div class="social-accounts">
+    <h1>Daniel McAvinue</h1>
+    <h6>
+    <!-- Site -->  
+    <i class="icon icon-web"> dmcavinue.github.io</i><br>
+    <!-- LinkedIn -->
+    <i class="icon icon-social-linkedin"> daniel-mcavinue-589a2937</i><br>
+    <!-- Email -->
+    <i class="icon icon-mail"> dan@mcavinue.io</i><br>
+    <!-- GitHub -->
+    <i class="icon icon-social-github"> dmcavinue</i>
+    </h6>
+  </div>  
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+  <header class="post-header">
+    <h1 class="post-title">Kubernetes at Home: part 1</h1>
+    <br>
+    <div class="post-meta">
+      <time datetime="2021-04-01 00:00" class="post-meta__date date">Apr 2021</time>
+                          
+        <span class="post-meta__tags">
+        <div style="display: inline" class="tool"><a href="/tags/#">TERRAFORM</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">KUBERNETES</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">DOCKER</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">AWS</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">GIT</a></div>
+          <div style="display: inline" class="tags"><a href="/tags/#">HARDWARE</a></div>
+          </span>
+      
+    </div>
+  </header>
+  <br><br><br>
+  <section class="post">
+    <p>I figured it was about time for me to detail my home automation setup somewhere.  It has gone through a bunch of iterations and grown to a point where I’m comfortable doing so.
+v1 of this started on a single <a href="https://www.raspberrypi.org/">Raspberry PI</a> and has evolved into a cluster of NUCs backed by kubernetes and spanning a smattering of differences services and tooling.</p>
+
+<h3 id="requirements"><strong>Requirements</strong></h3>
+<p><br></p>
+
+<h5 id="offlinability"><strong>Offlinability</strong></h5>
+<p>From day one, a main requirement for my home automation setup has been a strong ‘offlinability’.  A good deal of the IOT consumer hardware out there documented have dependencies (hidden or not) in cloud based services.  While this is fine for some devices, critical devices for me like alarm/cctv need to operate without an internet connection present.  This negates using any cloud providers for the core instances themselves.</p>
+
+<h5 id="replaceability"><strong>Replaceability</strong></h5>
+<p>I need this thing to be relatively quiet, cheap to run, cheap to replace and scale, etc.</p>
+
+<h5 id="iacified"><strong>IACified</strong></h5>
+<p>This thing needs to be as codified as possible, preferably in a git repo.  I want to have this thing set up with all the available tooling to handle testing, deployment of changes as well and observability as needed.</p>
+
+<h5 id="software"><strong>Software</strong></h5>
+<p>I had already decided this thing was going to live in the form of a kubernetes cluster.  With most (if not all) of my required applications available already in the form of containers, it would be relatively easy to tie things together, not to mention the learning opportunities.</p>
+
+<h5 id="hardware"><strong>Hardware</strong></h5>
+<p>I did a good amount of digging on this front, initially attempting to use a cluster of Raspberry Pi 4s.  While this worked, it didn’t meet the resource needs for the applications I wanted to play with.  In the end, I managed to procure a slab o’ NUCs on eBay from a defunct startup.  This was outdated hardware but ~$300 got me 10x 6th gen Intel NUCs and 5x NVidia TK1s.  These things were and needed to be added with memory/disk but ideal for this purpose.  Interestingly, what was shipped to me more or less worked out of the box.  The slab came with a simple 16 port gigabit switch and power supply for all involved too.</p>
+
+<p align="center">
+<img height="50%" width="50%" align="center" src="/images/posts/nucstack/1-original-slab.png" alt="original-slab">
+</p>
+
+<p>I dropped 4x of the TK1 units as they were unnecessary right now (left one behind for testing purposes). I also added a Raspberry PI that was going to act as my first pass at PXE OS provisioning for these devices.  For this first pass too, I loaded each NUC up with 8GB ram and a 32GB USB stick.  Definitely not ideal but got me up and running.</p>
+
+<h5 id="problem-1-kvm"><strong>Problem 1: KVM</strong></h5>
+<p>One interesting problem to solve was remote control.  These are consumer grade devices, too old to support something like Intel AMT/vPro.  Ideally, we would have a quick way to interact with these nodes remotely if needed.  I know we won’t get anything near enterprise grade manageability, but <em>something</em>. Enter <a href="https://pikvm.org/">Pi-KVM</a>.</p>
+
+<p>As the name suggest, a Raspberry Pi that acts a KVM, emulating USB devices like input, storage and providing HDMI input.  Here’s my first pass of this.</p>
+
+<p align="center">
+<img height="50%" width="50%" align="center" src="/images/posts/nucstack/7-kvm-1.png" alt="kvm-1">
+</p>
+
+<p>As you can see, I opted for a <a href="https://www.raspberrypi.org/products/raspberry-pi-zero-w/">Raspberry Pi Zero W</a> for the low power/smaller form factor at a sacrifice to FPS (I’m not going to be gaming over this thing!). I’m not going to go into the build of this thing as their site covers that.  Coupled with a cheap 8 Port HDMI/USB KVM and assuming we can wrangle control of the KVM from the PI too, we have something.  It’s a bit of a WIP and probably deserves a post in itself at some point when I deem it worthy.</p>
+
+<h5 id="problem-2-os-provisioning"><strong>Problem 2: OS Provisioning</strong></h5>
+<p>We need to reliably provision/re-provision an OS to these as needed and in a ‘Codified’ way.  Obviously, PXE booting make sense for thse, since they support LAN Boot.  In the end, I opted for something cheap and cheerful. Enter <a href="https://github.com/netbootxyz/netboot.xyz">netboot</a>.  This tool is very easy to use and allows you to easily define profiles for your hosts.  My home setup uses unifi hardware and allowed me to easily define a subnet with the required DHCP configuration to PXE provision the OS.</p>
+
+<p>I was able to quickly deploy an OS to the 32GB USB sticks on these nodes and tired kicked a very basic kubernetes cluster deployment to these nodes using <a href="https://github.com/kubernetes-sigs/kubespray">Kubespray</a>.  On to productionifying it!</p>
+
+<h4 id="stack-not-slab">Stack not Slab</h4>
+<p>The layout of these boards likely made sense for the original deployment as a slab in a in rack but nowhere near the spacing I was allowing for this thing. At a max, I want this on a single shelf in a 12 U rack. I was alloting ~3U for this. I went about quickly separating these NUCs from the slab and started into figuring out layout.</p>
+
+<p align="center">
+<img height="50%" width="50%" align="center" src="/images/posts/nucstack/2-disassembled-nucs.png" alt="disassembled-nucs">
+</p>
+
+<h5 id="problem-34-layout--storage"><strong>Problem 3/4: Layout &amp; Storage</strong></h5>
+<p>Loosely, I knew I was going to use some form of distributed Storage on these nodes for persisted things backed by my Synology NAS for backups, etc.  This meant that we needed encorporate larger disks in this setup, 32GB USB wasn’t going to cut it.  These NUCs had a single <a href="https://www.amazon.com/dp/B01IU8AWI8">SATA connection</a> available but thats about it.  Not to mention the the fact that I only had the PCB, no housing to mount these disks. In the end I bought a gaggle of cheap 120GB SSDs, some 3.5 inch brackets and a smattering of <a href="https://www.amazon.com/dp/B01N9Q8YLE">riser screws</a>.  Then went to town on figuring out layout.</p>
+
+<p align="center">
+<img height="50%" width="50%" align="center" src="/images/posts/nucstack/4-stacking-nucs-1.png" alt="stacking-nucs-1">
+</p>
+
+<p>In the end after some gentle persuasiona and drilling, ended up with this pattern:</p>
+
+<p align="center">
+<img height="50%" width="50%" align="center" src="/images/posts/nucstack/5-stacking-nucs-2.png" alt="stacking-nucs-2">
+</p>
+
+<p>The <a href="https://www.amazon.com/dp/B08L74HBGL">3.5 inch hard drive brackets</a> between each NUC allowed for just enough space to mount a disk while still leaving adequate room for airflow, cabling, etc. End Result:</p>
+
+<p align="center">
+<img height="50%" width="50%" align="center" src="/images/posts/nucstack/6-stacking-nucs-3.png" alt="stacking-nucs-3">
+</p>
+
+<p>In the end, I did refactor this slightly to maximize the number to 8x NUCs on my <a href="https://www.amazon.com/dp/B008X3JHJQ">2U shelf</a>.  For this first pass, I stuck with the cheap 16 port switch too.  I’ll likely be swapping that out for something more capable in the future. Not picture, the KVM hardware, which fits snugly on top of the switch, I added some risers to this too, to allow for some airflow as these things can get toasty. The stack itself is affized using some simple L- brackets</p>
+
+<p align="center">
+<img height="50%" width="50%" align="center" src="/images/posts/nucstack/8-nucstack-assembled.png" alt="nucstack-assembled">
+</p>
+
+<p>…and here we have it mounted in the 12U rack in my closet.  It has been in place for a few months now with no issues so far.  Some likely tweaks I will make is transition the power delivery to 2x <a href="https://www.amazon.com/dp/B07HTFGM6R">passively cooled units</a> to add some redundancy and drop the noise of this power supply.</p>
+<p align="center">
+<img height="50%" width="50%" align="center" src="/images/posts/nucstack/9-nucstack-mounted.png" alt="nucstack-mounted">
+</p>
+
+<h4 id="final-note"><strong>Final Note</strong></h4>
+<p>In a follow-up post, I’ll go into the method I used to manage this cluster, building on top of some very recent work by the fantastic <a href="https://github.com/k8s-at-home">k8s@home</a> community!</p>
+
+  </section>
+  
+</article>
+
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">© 2021 Daniel McAvinue. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1628639046077223252"></script>
+
+
+    </div>
+  </body>
+</html>

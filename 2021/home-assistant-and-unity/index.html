@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <title>Home Assistant Floorplan and Unity</title>
+  <meta name="description" content="Anyone that knows me knows I play a bit too much in home automation.  One loose goal of mine I’ve been looking to figure out is real time visualizing of my home automation devices.  Ultimately, I wanted to provision a web application that could be dropped on a kiosk (in my case, a magic mirror) that pops up and pan in real time when devices state events occurs.  I’ll be going into the magic mirror setup itself later on at some point. This post is just to brain dump the approach I took to get this up and running.
+
+">
+  <meta name="author" content="Daniel McAvinue">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Home Assistant Floorplan and Unity">
+  <meta name="twitter:description" content="Anyone that knows me knows I play a bit too much in home automation.  One loose goal of mine I’ve been looking to figure out is real time visualizing of my home automation devices.  Ultimately, I wanted to provision a web application that could be dropped on a kiosk (in my case, a magic mirror) that pops up and pan in real time when devices state events occurs.  I’ll be going into the magic mirror setup itself later on at some point. This post is just to brain dump the approach I took to get this up and running.
+
+">
+  
+  <meta name="twitter:image" content="/images/favicons/favicon-194x194.png">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Home Assistant Floorplan and Unity">
+  <meta property="og:description" content="Anyone that knows me knows I play a bit too much in home automation.  One loose goal of mine I’ve been looking to figure out is real time visualizing of my home automation devices.  Ultimately, I wanted to provision a web application that could be dropped on a kiosk (in my case, a magic mirror) that pops up and pan in real time when devices state events occurs.  I’ll be going into the magic mirror setup itself later on at some point. This post is just to brain dump the approach I took to get this up and running.
+
+">
+  <meta property="og:image" content="/images/favicons/favicon-194x194.png">
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="stylesheet" href="/css/main.css?1628639046077223252">
+  <link rel="canonical" href="https://dmcavinue.github.io/2021/home-assistant-and-unity/">
+</head>
+
+
+  <body>
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover " style="background-image: url(/images/cover.jpg)">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+        <a href="/" title="link to home of Daniel McAvinue">
+          <img src="/images/profile.png" class="user-image" alt="My Profile Photo">
+          <h1 class="panel-cover__title panel-title">Daniel McAvinue</h1>
+        </a>
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description">dmcavinue.github.io</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/resume/" title="link to Daniel McAvinue resume" class="resume-button">Resume</a></li>
+              <li class="navigation__item"><a href="/#projects" title="link to Daniel McAvinue projects" class="projects-button">Projects</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+
+              
+              <!-- LinkedIn -->
+              <li class="navigation__item">
+                <a href="https://www.linkedin.com/in/daniel-mcavinue-589a2937" title="daniel-mcavinue-589a2937 on LinkedIn" target="_blank">
+                  <i class="icon icon-social-linkedin"></i>
+                  <span class="label">LinkedIn</span>
+                </a>
+              </li>
+              
+
+              
+              <!-- GitHub -->
+              <li class="navigation__item">
+                <a href="https://www.github.com/dmcavinue" title="dmcavinue on GitHub" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+              
+
+              
+              <!-- Email -->
+              <li class="navigation__item">
+                <a href="mailto:dan@mcavinue.io" title="Email dan@mcavinue.io" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+              
+            </ul>
+          </nav>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+  <div class="social-accounts">
+    <h1>Daniel McAvinue</h1>
+    <h6>
+    <!-- Site -->  
+    <i class="icon icon-web"> dmcavinue.github.io</i><br>
+    <!-- LinkedIn -->
+    <i class="icon icon-social-linkedin"> daniel-mcavinue-589a2937</i><br>
+    <!-- Email -->
+    <i class="icon icon-mail"> dan@mcavinue.io</i><br>
+    <!-- GitHub -->
+    <i class="icon icon-social-github"> dmcavinue</i>
+    </h6>
+  </div>  
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+  <header class="post-header">
+    <h1 class="post-title">Home Assistant Floorplan and Unity</h1>
+    <br>
+    <div class="post-meta">
+      <time datetime="2021-03-01 00:00" class="post-meta__date date">Mar 2021</time>
+                          
+        <span class="post-meta__tags">
+        <div style="display: inline" class="tool"><a href="/tags/#">UNITY</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">BLENDER</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">HOME-ASSISTANT</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">MQTT</a></div>
+          <div style="display: inline" class="language"><a href="/tags/#">C#</a></div>
+          <div style="display: inline" class="language"><a href="/tags/#">JAVASCRIPT</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">DOCKER</a></div>
+          </span>
+      
+    </div>
+  </header>
+  <br><br><br>
+  <section class="post">
+    <p>Anyone that knows me knows I play a bit too much in home automation.  One loose goal of mine I’ve been looking to figure out is real time visualizing of my home automation devices.  Ultimately, I wanted to provision a web application that could be dropped on a kiosk (in my case, a magic mirror) that pops up and pan in real time when devices state events occurs.  I’ll be going into the magic mirror setup itself later on at some point. This post is just to brain dump the approach I took to get this up and running.</p>
+
+<h4 id="the-setup"><strong>The Setup</strong></h4>
+<p>In basic terms, my home automation solution of choice is <a href="https://www.home-assistant.io/">Home Assistant</a>. I have used it successfully for many years and it allows me to manage to my home automation setup declared as code in a github repository.  The backbone communication between things in my setup is a simple MQTT broker, that is responsible for the getting and setting the state of devices in my home. This can be as simple as the state of a light switch or motion sensor but include useful things like the real time power consumption of individual sockets. This broker serves up this state to any authenticated client that needs it, allowing clients to subscribe to realtime changes the state of any device(s) it needs.  I have played with floorplan tools in the past in my deployment, allowing me to overlay my devices on a floorplan of my home and have interactable icons available to view or toggle the state of things.  While this works well, I wanted to take it a step further.</p>
+
+<h4 id="the-goal"><strong>The Goal</strong></h4>
+<p>The goal here was to render my house in 3D and build something via Unity that allows some form of client communication to visualize this state in 3D.  Projects like this <a href="https://community.home-assistant.io/t/3d-floorplan-using-lovelace-picture-elements-card/123357">aren’t new</a>, I will basically be doing similar to this.  My implementation will be slightly different though, linking to my MQTT broker as opposed to the home assistant API.</p>
+
+<h4 id="the-floorplan"><strong>The Floorplan</strong></h4>
+<p>Unfortunately, I can’t go into <em>too</em> much detail on the 3D model of my house itself but here’s a screenshot of an outside door thats panned to automatically when opened.</p>
+<p align="center">
+<img height="50%" width="50%" align="center" src="/images/posts/unity-hass/1-unity.png" alt="Unity Demo">
+</p>
+<p>I did however throw up a quick demo project <a href="https://github.com/dmcavinue/unity-floorplan">here</a> that demostrates the basic communication. A given unity gameobject’s state is managed by a simple javascript MQTT client from client that loads up the webgl instance and subscribes to device topics via websocket.  With regards to the 3d model, There is plenty of documentation on how to build these out. Really, its down to how much time you want to put into it.  I most definitely put way more time than I shoudl have into it!  My approach was a combination of <a href="https://www.sketchup.com/">Sketchup</a> to build out the floorplan and some furniture model and <a href="https://www.blender.org/">Blender</a> to provision things that animate like doors and windows.</p>
+
+<h4 id="how-we-talk"><strong>How we talk</strong></h4>
+<p>Other implementations I have seen have relied on a poll on interval of the Home assistant states API to update all devices and while this worked, I found it too heavy for the quantity of devices and resource intensive on the deployed application.  The approach I used offloads this to a MQTT client subscription that runs client-side at the cost of relying on the client having direct access to the MQTT broker. Most of the process I used is documented <a href="https://docs.unity3d.com/Manual/webgl-interactingwithbrowserscripting.html">here</a>, which allowed for the required  communication between unity instance to the webgl clients javascript engines. You can find the code for this under <code class="language-plaintext highlighter-rouge">./Assets/Plugins/WebGL</code> in the demo project.</p>
+
+<p>The script at <code class="language-plaintext highlighter-rouge">./Assets/Scripts/MQTTDevice.cs</code> is expected to be tied to any game objects you would like to automate.  In my example, you will see it associated with the <code class="language-plaintext highlighter-rouge">door-1</code> and <code class="language-plaintext highlighter-rouge">light-1</code> gameobjects.  If you inspect these objects, you will see some variables under this component:</p>
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">triggerAnimation</code> : <em>Associated gameobject to trigger on animation on/off state</em>
+</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">reverseTrigger</code> : <em>Reverse Boolean operation of state e.g. false = triggered</em>
+</li>
+</ul>
+
+<p>The first variable allows you to trigger the Animation for another gameobject if required. This useful for things like motion sensor gameobjects that trigger door animations.  In theory, this script <em>can</em> be associated with any object as long as its in the scene, but lets keep things somewhat organized.</p>
+
+<p align="center">
+<img class="mermaid" src="https://mermaid.ink/svg/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG5DbGllbnQtPj5XZWJHTCBTZXJ2ZXI6IEhUVFAgQ2FsbCB0byBTZXJ2ZXIsIGxvYWRzIHVwIHVuaXR5IGluc3RhbmNlXG5XZWJHTCBTZXJ2ZXItPj5DbGllbnQ6IFNlcnZlciByZXR1cm5zIE1RVFQgYnJva2VyIHNlc3Npb24gaW5mby9kZXZpY2UgdG9waWNzXG5DbGllbnQtPj5NUVRUIEJyb2tlcjogQ2xpZW50IHNwaW5zIHVwIEpTIE1RVFQgY2xpZW50IGFuZCBzdWJzY3JpYmVzIHRvIE1RVFQgYnJva2VycyBkZXZpY2UgdG9waWNzXG5NUVRUIEJyb2tlci0-PkNsaWVudDogQnJva2VyIHJldHVybnMgZGV2aWNlIHRvcGljIGV2ZW50cyB0byBjbGllbnRcbkNsaWVudC0-PldlYkdMIFNlcnZlcjogQ2xpZW50IHRyaWdnZXJzIGFzc29jaWF0ZWQgZ2FtZW9iamVjdCBhbmltYXRpb24vc3RhdGUgY2hhbmdlcyIsIm1lcm1haWQiOnsidGhlbWUiOiJkYXJrIn19">
+</p>
+<p>This is a ‘back of napkin’ outline of the intended flow.  As you can see, there are some rough edges.  For example, auth to the MQTT broker under JS probably isn’t ideal.</p>
+
+<p>As a quick plug, Its not included in this demo but I suggest checing out the fantastic <a href="https://unity.com/unity/features/editor/art-and-design/cinemachine">Cinemachine</a> plugin, which allowed me to define virtual camera’s that could be triggered to pan to regions as lights turn on, doors/windows open, motion sensors trigger, etc.</p>
+
+<h4 id="the-builddeploy"><strong>The build/deploy</strong></h4>
+<p>I have opted to roll the resulting unity WebGL build into a container image, for deployment to my home automation k8s cluster, It hasn’t been rolled into a helm chart yet but you can see the basic deployment <a href="https://github.com/nucstack/k8s/tree/main/cluster/apps/home-automation/floorplan">here</a>.  Even though my floorplan model was pretty complex in the end, covering two floors of my house with all furniture and lighting as well as the outside perimeter, the resulting compiled WebGL artifacts were relatively small, at ~40mb uncompressed. There are definitely some fine-tuning opportunities too related to the build to improve performance, load time, etc.  I included a simplified <code class="language-plaintext highlighter-rouge">docker-compose.yml</code> and <code class="language-plaintext highlighter-rouge">Dockerfile</code> the the <a href="https://github.com/dmcavinue/unity-floorplan">demo project</a> to demonstrate rolling the resulting build into a container image.  In all honesty, its a one-liner that loads the build under <code class="language-plaintext highlighter-rouge">nginx:stable</code>.  In the future, I will likely attempt to reroll this under another provider besides <code class="language-plaintext highlighter-rouge">nginx</code> that will allow for useful things like env vars. Assuming you build the webgl output to <code class="language-plaintext highlighter-rouge">./build</code>, yoiu should be able to simply run <code class="language-plaintext highlighter-rouge">docker-compose up</code> to instantiate this and access it at <code class="language-plaintext highlighter-rouge">http://locahost:4000</code>.</p>
+
+<p><strong>Disclaimer:</strong> While it is functional, This example repo is VERY basic, it just demonstrates a single door and light tied to two devices topics under an MQTT Broker.  This is very rough around the edges still</p>
+
+<h4 id="final-note"><strong>Final Note</strong></h4>
+<p>Next steps will probably be some cleanup of environmental configuration as well as allowing for 2 way state. E.g. selecting gameobject devices in unity will perform an MQTT publish against a target topic to toggle lights, etc.  Interestingly, I was actually able to set up this up pretty quickly to deploy to my Oculus Quest 2 as an apk and walk around within this model so that may be an avenue to dive into too.</p>
+
+  </section>
+  
+</article>
+
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">© 2021 Daniel McAvinue. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1628639046077223252"></script>
+
+
+    </div>
+  </body>
+</html>

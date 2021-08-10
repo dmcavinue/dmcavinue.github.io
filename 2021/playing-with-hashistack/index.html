@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <title>Playing with Hashistack (a.k.a consul/vault/nomad)</title>
+  <meta name="description" content="As an alternative approach to this Kubernetes at Home work, I had been mulling over the idea of baking off the approach against some of hashicorp’s tools.  Marrying consul/vault/nomad together allows for the creation of a ‘hashistack’.  This is still being worked out but I’ve dropped a repo to detail the work involved in putting this together.  These services are all designed to interoperate well and combined with something like traefik, you get me a very simple means to deploy these containerized workloads to the nomad cluster as needed in a similar fashion to deploying on a kubernetes cluster. You can target specific nodes based on labels.  As you can see, the structure of this repo is very similiar to the k8s@home repo. I’m going to attempt to replicate the responsibilities and deployment process I’ve set up there.  Ultimately allowing the deployment to scale in a cloud provider as needed.
+
+">
+  <meta name="author" content="Daniel McAvinue">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Playing with Hashistack (a.k.a consul/vault/nomad)">
+  <meta name="twitter:description" content="As an alternative approach to this Kubernetes at Home work, I had been mulling over the idea of baking off the approach against some of hashicorp’s tools.  Marrying consul/vault/nomad together allows for the creation of a ‘hashistack’.  This is still being worked out but I’ve dropped a repo to detail the work involved in putting this together.  These services are all designed to interoperate well and combined with something like traefik, you get me a very simple means to deploy these containerized workloads to the nomad cluster as needed in a similar fashion to deploying on a kubernetes cluster. You can target specific nodes based on labels.  As you can see, the structure of this repo is very similiar to the k8s@home repo. I’m going to attempt to replicate the responsibilities and deployment process I’ve set up there.  Ultimately allowing the deployment to scale in a cloud provider as needed.
+
+">
+  
+  <meta name="twitter:image" content="/images/favicons/favicon-194x194.png">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Playing with Hashistack (a.k.a consul/vault/nomad)">
+  <meta property="og:description" content="As an alternative approach to this Kubernetes at Home work, I had been mulling over the idea of baking off the approach against some of hashicorp’s tools.  Marrying consul/vault/nomad together allows for the creation of a ‘hashistack’.  This is still being worked out but I’ve dropped a repo to detail the work involved in putting this together.  These services are all designed to interoperate well and combined with something like traefik, you get me a very simple means to deploy these containerized workloads to the nomad cluster as needed in a similar fashion to deploying on a kubernetes cluster. You can target specific nodes based on labels.  As you can see, the structure of this repo is very similiar to the k8s@home repo. I’m going to attempt to replicate the responsibilities and deployment process I’ve set up there.  Ultimately allowing the deployment to scale in a cloud provider as needed.
+
+">
+  <meta property="og:image" content="/images/favicons/favicon-194x194.png">
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="stylesheet" href="/css/main.css?1628639046077223252">
+  <link rel="canonical" href="https://dmcavinue.github.io/2021/playing-with-hashistack/">
+</head>
+
+
+  <body>
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover " style="background-image: url(/images/cover.jpg)">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+        <a href="/" title="link to home of Daniel McAvinue">
+          <img src="/images/profile.png" class="user-image" alt="My Profile Photo">
+          <h1 class="panel-cover__title panel-title">Daniel McAvinue</h1>
+        </a>
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description">dmcavinue.github.io</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/resume/" title="link to Daniel McAvinue resume" class="resume-button">Resume</a></li>
+              <li class="navigation__item"><a href="/#projects" title="link to Daniel McAvinue projects" class="projects-button">Projects</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+
+              
+              <!-- LinkedIn -->
+              <li class="navigation__item">
+                <a href="https://www.linkedin.com/in/daniel-mcavinue-589a2937" title="daniel-mcavinue-589a2937 on LinkedIn" target="_blank">
+                  <i class="icon icon-social-linkedin"></i>
+                  <span class="label">LinkedIn</span>
+                </a>
+              </li>
+              
+
+              
+              <!-- GitHub -->
+              <li class="navigation__item">
+                <a href="https://www.github.com/dmcavinue" title="dmcavinue on GitHub" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+              
+
+              
+              <!-- Email -->
+              <li class="navigation__item">
+                <a href="mailto:dan@mcavinue.io" title="Email dan@mcavinue.io" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+              
+            </ul>
+          </nav>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+  <div class="social-accounts">
+    <h1>Daniel McAvinue</h1>
+    <h6>
+    <!-- Site -->  
+    <i class="icon icon-web"> dmcavinue.github.io</i><br>
+    <!-- LinkedIn -->
+    <i class="icon icon-social-linkedin"> daniel-mcavinue-589a2937</i><br>
+    <!-- Email -->
+    <i class="icon icon-mail"> dan@mcavinue.io</i><br>
+    <!-- GitHub -->
+    <i class="icon icon-social-github"> dmcavinue</i>
+    </h6>
+  </div>  
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+  <header class="post-header">
+    <h1 class="post-title">Playing with Hashistack (a.k.a consul/vault/nomad)</h1>
+    <br>
+    <div class="post-meta">
+      <time datetime="2021-06-01 00:00" class="post-meta__date date">Jun 2021</time>
+                          
+        <span class="post-meta__tags">
+        <div style="display: inline" class="tool"><a href="/tags/#">ANSIBLE</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">TERRAFORM</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">CONSUL</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">DOCKER</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">GIT</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">VAULT</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">TRAEFIK</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">NOMAD</a></div>
+          <div style="display: inline" class="tags"><a href="/tags/#">GITOPS</a></div>
+          <div style="display: inline" class="tags"><a href="/tags/#">CI/CD</a></div>
+          </span>
+      
+    </div>
+  </header>
+  <br><br><br>
+  <section class="post">
+    <p>As an alternative approach to this <a href="/2021/k8s-at-home-pt-1/">Kubernetes at Home</a> work, I had been mulling over the idea of baking off the approach against some of hashicorp’s tools.  Marrying consul/vault/nomad together allows for the creation of a ‘hashistack’.  This is still being worked out but I’ve dropped a <a href="https://github.com/nucstack/hashistack">repo</a> to detail the work involved in putting this together.  These services are all designed to interoperate well and combined with something like traefik, you get me a very simple means to deploy these containerized workloads to the nomad cluster as needed in a similar fashion to deploying on a kubernetes cluster. You can target specific nodes based on labels.  As you can see, the structure of this repo is very similiar to the k8s@home repo. I’m going to attempt to replicate the responsibilities and deployment process I’ve set up there.  Ultimately allowing the deployment to scale in a cloud provider as needed.</p>
+
+<h6 id="provisioning-the-instances"><strong>Provisioning the instances</strong></h6>
+<p>I through together a lazy ansible manifest leveraging the fantastic hashicorp ansible roles by <a href="https://galaxy.ansible.com/brianshumate">brianshumate</a>.  These allowed me to spin up some basic deployments of consul, vault and nomad across my target nodes. These dependencies are all rolled into the included Dockerfile to simplify setting the requirements.  <strong>Disclaimer</strong>: The deployment in the repo is most definitely not production-ready and riddled with security issues and TODOs, but is ideal for my test purposes.</p>
+
+<p>Since this repo is intended for hand-on playing, I’ve also decided to throw together some simple tasks under <code class="language-plaintext highlighter-rouge">.taskfiles</code> to handle some of the operations against the vault and nomad instances once they are alive. E.g unsealing the vault instance once its alive.  This setup includes a basic traefik service set up to allow for definition of ingress to our wrokloads as needed. I do still need to provision ACME for this but it give you an idea of how this works.  I have included a single job in this repo at the moment that spins up a simple grafana deployment on the nomad cluster and defines a service to allow ingress.  It will also deploy docker on all requested nodes, which I will be using as my workload engine.</p>
+
+<h6 id="secret-things"><strong>Secret things</strong></h6>
+<p>Once again, I’m using <code class="language-plaintext highlighter-rouge">git-crypt</code> to encrypt the sensitive things in place.  I can’t really leverage vault for this with chickens and eggs being where they are.  In this case, I am encrypting the terraform state as well as the vault secrets.  the environmental variables are untracked and need to be defined based on the <code class="language-plaintext highlighter-rouge">.env.example</code>. I can kick off the ansible install on my nodes with <code class="language-plaintext highlighter-rouge">task ansible:install</code>.  Once the ansible install completes, My nodes should all be set up with consul, vault and nomad.  I have set up my environment with a domain that has been set up to upstream DNS requests to these consul nodes too.  A quick hit of the <code class="language-plaintext highlighter-rouge">http://consul.service.&lt;datacenter&gt;.&lt;domain&gt;:8500</code> proves that it is working as expected.</p>
+
+<p align="center">
+<img height="50%" width="50%" align="center" src="/images/posts/hashistack/1-consul-services.png" alt="consul-services"><br>
+Ignore the lack of HTTPS
+</p>
+
+<p>As you can see, this lists all known service and their healthcheck status. Since consul is set up as the upstream resolver for this domain, These services should as be resolvable too from my workstation at <code class="language-plaintext highlighter-rouge">&lt;service&gt;.service.&lt;datacenter&gt;.&lt;domain&gt;</code>.  A quick hit of <code class="language-plaintext highlighter-rouge">http://active.vault.service.&lt;datacenter&gt;.&lt;domain&gt;:8200</code> should get us to the vault ui.</p>
+
+<p align="center">
+<img height="50%" width="50%" align="center" src="/images/posts/hashistack/3-vault.png" alt="vault"><br>
+Vault UI
+</p>
+
+<p>Now on to nomad, browsing to <code class="language-plaintext highlighter-rouge">nomad-servers.service.&lt;datacenter&gt;.&lt;domain&gt;:4646</code>, brings us to the nomad UI. Time to deploy a job!</p>
+
+<p align="center">
+<img height="50%" width="50%" align="center" src="/images/posts/hashistack/4-nomad.png" alt="nomad"><br>
+Nomad UI with any jobs defined
+</p>
+
+<p>I can deploy the grafana job with <code class="language-plaintext highlighter-rouge">task nomad:start</code>, which is just set up to deploy the grafana nomad job definition at <code class="language-plaintext highlighter-rouge">nomad/jobs/grafana.nomad</code>.  This includes everything needed to deploy the grafana  public docker image to the nomad cluster.  It also contains a <code class="language-plaintext highlighter-rouge">service {}</code> definition for our ingress.</p>
+
+<p align="center">
+<img height="50%" width="50%" align="center" src="/images/posts/hashistack/5-nomad-grafana.png" alt="nomad-grafana"><br>
+Grafana job defined in Nomad after deployment
+</p>
+
+<p>Once deployed, you should then see grafana’s service also register in consul:</p>
+
+<p align="center">
+<img height="50%" width="50%" align="center" src="/images/posts/hashistack/7-consul-grafana.png" alt="consul-grafana"><br>
+Grafana service registered in consul
+</p>
+
+<p>…and a quick hit of that host <code class="language-plaintext highlighter-rouge">http://grafana.service.&lt;datacenter&gt;.&lt;domain&gt;</code> routes us through traefik to our workload application on the nomad instance chosen to run this workload.</p>
+
+<p align="center">
+<img height="50%" width="50%" align="center" src="/images/posts/hashistack/6-traefik.png" alt="traefik"><br>
+Traefik ingress route for grafana workload
+</p>
+
+<p align="center">
+<img height="50%" width="50%" align="center" src="/images/posts/hashistack/8-grafana.png" alt="grafana"><br>
+Grafana accessed via service ingress
+</p>
+
+<p>This a very basic demonstration but you can see the power.  It doesn’t come with all of the bells and whistles out of the box that k8s does to define, at least it isn’t as apparent.  Expect a further update here once I can get this rolling in a safe and structured way.</p>
+
+<p><strong>Important Disclaimer</strong>: I’m not using any TLS/HTTPS in this examples, in an ideal world, you need to make sure you do this.  There is some great documentation on setting up ACME with your hashistack to ensure certs are provisioned and kept up to date (e.g. via letsencrypt).</p>
+
+  </section>
+  
+</article>
+
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">© 2021 Daniel McAvinue. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1628639046077223252"></script>
+
+
+    </div>
+  </body>
+</html>

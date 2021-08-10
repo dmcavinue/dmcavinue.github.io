@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <title>Kubernetes at Home: part 2</title>
+  <meta name="description" content="This is part 2 of the Kubernetes at Home : part 1 post a made earlier.  This goes more into the gitops/flux aspect of this setup, as well as some of the interesting affinity hurdles to overcome related to home automation in general. My setup uses a smattering of tooling and practices that work well for me.  Interestingly, when I first started down the path of leveraging k8s at home, I didn’t realise a group had also decided to start a community initiative in parallel.  My first pass, which I wont be posting publicly, simply involved the code to get me a k8s cluster via a marriage of Terraform and kubespray and relied on me writing additional tooling to handle the actual k8s deployments against my cluster. It worked but it was extremely opinionated and clunky as hell. I decided recently to align with this community initiative and transition that process under the magic of Flux.
+
+">
+  <meta name="author" content="Daniel McAvinue">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Kubernetes at Home: part 2">
+  <meta name="twitter:description" content="This is part 2 of the Kubernetes at Home : part 1 post a made earlier.  This goes more into the gitops/flux aspect of this setup, as well as some of the interesting affinity hurdles to overcome related to home automation in general. My setup uses a smattering of tooling and practices that work well for me.  Interestingly, when I first started down the path of leveraging k8s at home, I didn’t realise a group had also decided to start a community initiative in parallel.  My first pass, which I wont be posting publicly, simply involved the code to get me a k8s cluster via a marriage of Terraform and kubespray and relied on me writing additional tooling to handle the actual k8s deployments against my cluster. It worked but it was extremely opinionated and clunky as hell. I decided recently to align with this community initiative and transition that process under the magic of Flux.
+
+">
+  
+  <meta name="twitter:image" content="/images/favicons/favicon-194x194.png">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Kubernetes at Home: part 2">
+  <meta property="og:description" content="This is part 2 of the Kubernetes at Home : part 1 post a made earlier.  This goes more into the gitops/flux aspect of this setup, as well as some of the interesting affinity hurdles to overcome related to home automation in general. My setup uses a smattering of tooling and practices that work well for me.  Interestingly, when I first started down the path of leveraging k8s at home, I didn’t realise a group had also decided to start a community initiative in parallel.  My first pass, which I wont be posting publicly, simply involved the code to get me a k8s cluster via a marriage of Terraform and kubespray and relied on me writing additional tooling to handle the actual k8s deployments against my cluster. It worked but it was extremely opinionated and clunky as hell. I decided recently to align with this community initiative and transition that process under the magic of Flux.
+
+">
+  <meta property="og:image" content="/images/favicons/favicon-194x194.png">
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="stylesheet" href="/css/main.css?1628639046077223252">
+  <link rel="canonical" href="https://dmcavinue.github.io/2021/k8s-at-home-pt-2/">
+</head>
+
+
+  <body>
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover " style="background-image: url(/images/cover.jpg)">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+        <a href="/" title="link to home of Daniel McAvinue">
+          <img src="/images/profile.png" class="user-image" alt="My Profile Photo">
+          <h1 class="panel-cover__title panel-title">Daniel McAvinue</h1>
+        </a>
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description">dmcavinue.github.io</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/resume/" title="link to Daniel McAvinue resume" class="resume-button">Resume</a></li>
+              <li class="navigation__item"><a href="/#projects" title="link to Daniel McAvinue projects" class="projects-button">Projects</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+
+              
+              <!-- LinkedIn -->
+              <li class="navigation__item">
+                <a href="https://www.linkedin.com/in/daniel-mcavinue-589a2937" title="daniel-mcavinue-589a2937 on LinkedIn" target="_blank">
+                  <i class="icon icon-social-linkedin"></i>
+                  <span class="label">LinkedIn</span>
+                </a>
+              </li>
+              
+
+              
+              <!-- GitHub -->
+              <li class="navigation__item">
+                <a href="https://www.github.com/dmcavinue" title="dmcavinue on GitHub" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+              
+
+              
+              <!-- Email -->
+              <li class="navigation__item">
+                <a href="mailto:dan@mcavinue.io" title="Email dan@mcavinue.io" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+              
+            </ul>
+          </nav>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+  <div class="social-accounts">
+    <h1>Daniel McAvinue</h1>
+    <h6>
+    <!-- Site -->  
+    <i class="icon icon-web"> dmcavinue.github.io</i><br>
+    <!-- LinkedIn -->
+    <i class="icon icon-social-linkedin"> daniel-mcavinue-589a2937</i><br>
+    <!-- Email -->
+    <i class="icon icon-mail"> dan@mcavinue.io</i><br>
+    <!-- GitHub -->
+    <i class="icon icon-social-github"> dmcavinue</i>
+    </h6>
+  </div>  
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+  <header class="post-header">
+    <h1 class="post-title">Kubernetes at Home: part 2</h1>
+    <br>
+    <div class="post-meta">
+      <time datetime="2021-05-01 00:00" class="post-meta__date date">May 2021</time>
+                          
+        <span class="post-meta__tags">
+        <div style="display: inline" class="tool"><a href="/tags/#">ANSIBLE</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">TERRAFORM</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">KUBERNETES</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">DOCKER</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">AWS</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">GIT</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">HELM</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">FLUX</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">SOPS</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">KUSTOMIZE</a></div>
+          <div style="display: inline" class="language"><a href="/tags/#">HCL</a></div>
+          <div style="display: inline" class="language"><a href="/tags/#">BASH</a></div>
+          <div style="display: inline" class="language"><a href="/tags/#">GOLANG</a></div>
+          <div style="display: inline" class="tags"><a href="/tags/#">GITOPS</a></div>
+          <div style="display: inline" class="tags"><a href="/tags/#">CI/CD</a></div>
+          </span>
+      
+    </div>
+  </header>
+  <br><br><br>
+  <section class="post">
+    <p>This is part 2 of the <a href="/2021/k8s-at-home-pt-1/">Kubernetes at Home : part 1</a> post a made earlier.  This goes more into the gitops/flux aspect of this setup, as well as some of the interesting affinity hurdles to overcome related to home automation in general. My setup uses a smattering of tooling and practices that work well for me.  Interestingly, when I first started down the path of leveraging k8s at home, I didn’t realise a <a href="https://github.com/k8s-at-home">group</a> had also decided to start a community initiative in parallel.  My first pass, which I wont be posting publicly, simply involved the code to get me a k8s cluster via a marriage of Terraform and kubespray and relied on me writing additional tooling to handle the actual k8s deployments against my cluster. It worked but it was extremely opinionated and clunky as hell. I decided recently to align with this community initiative and transition that process under the magic of <a href="https://github.com/fluxcd/flux2">Flux</a>.</p>
+
+<h6 id="what-is-flux"><strong>What is Flux?</strong></h6>
+<p>Along with a number of other useful things, Flux gives you a means to define sources as resources in your cluster via its source controller.  This can, for example, monitor a github repository branch for changes and enact those changes within your cluster.  Wrapped with the appropriate testing and a sprinkling of <a href="https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/">kustomize</a>, you have a pretty powerful means of safely deploying changes to your cluster.  The k8s@home has a <a href="https://github.com/k8s-at-home/awesome-home-kubernetes">fantastic list of repos</a> tied to the contributors for anyone to peruse for inspiration.  Most recently, they went as far as releasing a <a href="https://github.com/k8s-at-home/template-cluster-k3s">github template</a> to lower the barrier of entry for anyone considering moving into this world, which is mostly what this post will cover.</p>
+
+<h6 id="y-tho"><strong>Y tho?!?</strong></h6>
+<p>As I said before, the whole point of doing this under kubernetes for me is to enforce some additional skills for me with the technology.  It is very likely overkill for the vast majority of people. The answer to this is ‘for funzies’.</p>
+
+<h6 id="my-deployment"><strong>My Deployment</strong></h6>
+<p>I went down the the route of setting up a dedicated organization in github for this as I figured it might lend itself to some of the impending auth problems.  At the moment, it is an organization of one but :shrug:.  From the <a href="/2021/k8s-at-home-pt-1/">first</a> post, you can see the refactoring I did to stack those NUCs to make it all more concise for my available space. so obviously, the organization became <a href="https://github.com/nucstack">nucstack</a>.  the <a href="https://github.com/nucstack/k8s">k8s</a> repo under this contains all of code for this.  I recently refactored this entirely to leverage the above <a href="https://github.com/k8s-at-home/template-cluster-k3s">k3s template</a> as a base, to align with the existing community initiative.</p>
+
+<p>Some deviations I made:</p>
+<ul>
+  <li>I dropped <a href="https://k3s.io/">k3s</a> in favor of <a href="https://kubespray.io/#/">kubespray</a> as my k8s deployment means. I my end up revisiting k3s in the future though as I am interesting in dropping the bloat and the potential of flipping from etcd to another state backend gets me. (Nodes communicating over wireguard :thinkingface:)</li>
+  <li>I’m a big fan of <a href="https://github.com/go-task/task">go-task/task</a> so I wrapped all operational and bootstrap steps as tasks.</li>
+  <li>Added a submodule under <code class="language-plaintext highlighter-rouge">./ansible/playbooks</code> for kubespray to handle k8s cluster deployment as well as the dependabot config to keep that up to date.</li>
+  <li>Added a submodule under <code class="language-plaintext highlighter-rouge">./external/k8s-security-policies</code> that tie in some basic conftests already tried and tested under the raspernetes projects. I’ll probably play with this more in the future again once things mature.</li>
+  <li>I added the HCL under <code class="language-plaintext highlighter-rouge">./terraform</code> to handle provisioning of AWS based instances via some respe3cted community terraform modules.  The HCL included under <code class="language-plaintext highlighter-rouge">./terraform/infrastructure/aws.tf</code> gives an idea of provisioning against AWS.  It will provision a VPC with one public subnet and one private subnet.  An internet gateway will be provisioned and used to allow internet connectivity for any instances under the private subnet via its NAT gateway.  At the moment, I also provision a single <code class="language-plaintext highlighter-rouge">t2.nano</code> ec2 instance that acts as a tailscale relay instance that routes any defined private subnets to my tailscale account.  This gives me a secure way to access any nodes I provision without having to enable a public IP.  The <code class="language-plaintext highlighter-rouge">./packer</code> directory also contains the definition for custom AMIs rolled with k3s and tailscale.</li>
+  <li>I added an admittedly bloated docker image and compose to handle all of the dependencies for and flatten it to just docker when playing.  Once the CI is mature, this will probably be broken out as needed but for now a simple <code class="language-plaintext highlighter-rouge">docker-compose run --rm builder</code> gets me to a shell with everything I need.</li>
+</ul>
+
+<h6 id="repository-layout"><strong>Repository Layout</strong></h6>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>├── .git-crypt          <span class="c"># git-crypt is leveraged in conjunction with GPG keys to secure sensitive things</span>
+├── .github             <span class="c"># our .github workflows for things like dependabot/renovate jobs</span>
+├── ansible             <span class="c"># all things ansible, mostly to get us a vanilla k8s cluster</span>
+│   ├── inventory       <span class="c"># host inventory used by below playbooks per environment, production, staging, etc</span>
+│   └── playbooks       <span class="c"># ansible playbooks</span>
+│       └── kubespray   <span class="c"># playbook to deploy a vanilla k8s cluster</span>
+│       └── k3s         <span class="c"># playbook to get us a functional k3s provided k8s cluster: TBD</span>
+├── cluster             <span class="c"># the meat of our k8s deployments, as yaml deployed via fluxv2 and kustomize</span>
+│   ├── apps            <span class="c"># application deployments themselves, helm releases</span>
+│   ├── base            <span class="c"># bootstrap deps, the flux controllers themselves, helm repos,etc</span>
+│   ├── core            <span class="c"># some core deployments, certs, storage, lb, security, etc</span>
+│   └── crds            <span class="c"># some CRDS required by the above </span>
+├── docker              <span class="c"># dockerfiles for any relevant docker images</span>
+├── docker-compose.yaml <span class="c"># compose for our builder, really just simplifies persisted things when live interacting. </span>
+├── .env.example        <span class="c"># example of required .env variables</span>
+├── external            <span class="c"># any external submodules, security policies, etc</span>
+├── Taskfile.yml        <span class="c"># our root Taskfile used by go-task</span>
+├── .tasks              <span class="c"># our go tasks broken down for organizational purposes</span>
+├── terraform           <span class="c"># all things terraform</span>
+│   └──  infrastructure <span class="c"># hcl for our infrastructure, mainly for my staging env instances</span>
+└── tmpl                <span class="c"># some template files used by envsubst in conjunction with our env vars.     </span>
+</code></pre></div></div>
+
+<h6 id="secret-things"><strong>Secret things</strong></h6>
+<p>The .env generation is a bit cumbersome at the moment, since we have a smattering of secrets across all the deployments, but once its provisioned, its relatively hands-off.  You can see in the docker-compose, we reference <code class="language-plaintext highlighter-rouge">./.env</code> as our <code class="language-plaintext highlighter-rouge">env-file</code>.  Not 100% ideal as all sensitive things are acessible globally here but its good enough for my needs for now.  The tasks are set up to reference these envs in conjunction with a basic task to manage rerolling of secrets as needed.  This nice thing this gets us is sensitive things are tracked in our repo and encrypted along with everything else.  If you use vscode too, you can leverage the <code class="language-plaintext highlighter-rouge">signageos.signageos-vscode-sops</code> extension for live encryption/decryption of these files when updating.  You should be easily able to add other users gpg keys to this too, to allow multiple individuals access to these secrets.</p>
+
+<h6 id="builder"><strong>Builder</strong></h6>
+<p>The <code class="language-plaintext highlighter-rouge">builder</code> Dockerfile at <code class="language-plaintext highlighter-rouge">./docker/builder/Dockerfile</code> is really just an alpine image loaded with all the deps necessary to run everything needed.  Its loaded with binaries for ansible, kubectl, sops, flux, go-task, conftest etc.  Definitely not intended for CI usage, as this image can get heavy but it gives us a checked in interaction point without needing to load up any workstations with all those deps. One main point of this is playing so we’ll need that.  The <code class="language-plaintext highlighter-rouge">./docker-compose.yaml</code> is set up to use this image along with the <code class="language-plaintext highlighter-rouge">.env</code> you coy and update from the example.  Obviously, this can be repurposed to use repo env vars as needed.  I also have this set up to persist bashhistory in a local docker volume, make things a bit easier when playing with it all.  It will also mount the pwd to the working dir. I do have this running as <code class="language-plaintext highlighter-rouge">network: host</code> which isn’t ideal but allows for simpler interaction with the clusters.  Something I’ll probably resolve in the future. As a disclaimer, I do have it mounting <code class="language-plaintext highlighter-rouge">~/.gnupg:/root/.gnupg</code>, which is my lazy way of accessing the client gpg keys.  Again, something I’ll probably drop in the future.</p>
+
+<h6 id="testing"><strong>Testing</strong></h6>
+<p>There are some hooks already provisioned under the original template that catch some nice things like yaml typos and formatting issues. I also pulled in some security policies that can be manually run via conftest or <code class="language-plaintext highlighter-rouge">task flux:conftest</code>.  I have really looked into extending these yet, something I’ll play with in the future. For now, it gives me a starting point to test the security of this setup.</p>
+
+<h6 id="so-what-do-i-have-deployed"><strong>So what do I have deployed?</strong></h6>
+<p>Still heavily a WIP but I opted to group the applications I would be deploying into namespaces relevant to their function.  In the end, I have the following namespaces:</p>
+
+<ul>
+  <li>
+<strong>home-automation</strong> : home-assistant, vernemq scalable for mqtt, zwave2mqtt, zigbee2mqtt for zwave/zigbee devices, floorplan for my <a href="/2021/home-assistant-and-unity/">floorplan deployment</a> openfaas for serverless function playing, influxdb for measurments</li>
+  <li>
+<strong>security</strong> : authelia, openldap, authelia allows me to converge the auth for all these applications via nginx-ingress annotations under one SSO option.  Some apps work better with LDAP so openldap  that covers that :shrug:</li>
+  <li>
+<strong>observability</strong> : prometheus, thanos, grafana, loki, rsyslog, promtail, botkube, rtlamr, unifi-poller</li>
+  <li>
+<strong>longhorn-system</strong> : <a href="https://rancher.com/products/longhorn/">longhorn-system</a> for PVs (they recommend this namespace, sucks but I wasn’t going to argue)</li>
+  <li>
+<strong>certmanager</strong> : cert-manager for ACME</li>
+  <li>
+<strong>networking</strong> : nginx-ingress</li>
+</ul>
+
+<h6 id="problem-1-persistence"><strong>Problem 1: Persistence</strong></h6>
+<p>I opted to use <a href="https://rancher.com/products/longhorn/">longhorn</a> as my storage solution.  It lended itself well to my setup, with storage across all my nodes. It allows me to easily use the local SSDs but replicated as I deem necessary across the available nodes.  It also allows for useful things like snapshotting/backups on schedule.  I have mine set up to backup regularly to an NFS server local to the cluster which itself is backed regualrly up to a cloud storage provider.</p>
+
+<h6 id="problem-2-host-devices"><strong>Problem 2: Host devices</strong></h6>
+<p>I have an interesting problem, host devices.  My home automation relies on a number of host devices.  USB devices that deliver zwave and zigbee functionality, a USB RTL-SDR controller.  How do I get these usable in an automated fashion and tied the required pods to them with affinity rules.  What if these USB devices move around in the cluster!?! Initially, I considered something to expose these USB devices as network devices.  While this would work, it felt clunky.  Back of napkining it, I decided I could easily write some basic code, something lightweight that simply polled the usb devices regularly with some kind of defined filtering rules and labelled the nodes in a strctured manner based on the devices.  We make USB devices like any other resource, available to the cluster. It could be deployed as a daemonset on the cluster and any required deployments could set there affinity rules accordingly.  I was all ready to write this thing, then I found <a href="https://github.com/leonnicolas/nudl">nudl</a>.  Somebody beat me to it.  This does exactly that! You deploy it as a daemonset, define some filters in case you might want to exclude some devices and define the label format you would like.  I opted for <code class="language-plaintext highlighter-rouge">device/vid_pid</code>.  You can see the simple deployment <a href="https://github.com/nucstack/k8s/blob/main/cluster/core/nudl/nudl.yaml">here</a>.</p>
+
+<h6 id="renovation"><strong>Renovation</strong></h6>
+<p>One very useful feature of this setup is renovate.  This workflow monitors all helm releases in the for update charts and automatically adds PRs against your repo.  Other workflows are monitoring submodules and and flux deployment releases.  The end result is very easy renovation of the applications deployed in the cluster.  Once they are merged to the <code class="language-plaintext highlighter-rouge">main</code> branch, the fluc source controller picks up the diff based on the interval defined for the source repo and the changes are deployed.  The helm repository controller also refreshes the helm repositorie at a defined interval too.</p>
+
+<h6 id="notification"><strong>Notification</strong></h6>
+<p>The notification controller under flux is useful for notification, in my case, I have tied it to a slack channel I use.  This keeps me in the loop on deployments and issues. I also use botkube as a further means of monitoring specific resources in the cluster.</p>
+
+<p>All in all, it has been deployed in the fashion for ~2 months and working without major issue.</p>
+
+  </section>
+  
+</article>
+
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">© 2021 Daniel McAvinue. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1628639046077223252"></script>
+
+
+    </div>
+  </body>
+</html>

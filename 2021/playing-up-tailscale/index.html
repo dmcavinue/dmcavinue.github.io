@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <title>Playing with Tailscale</title>
+  <meta name="description" content="I recently did some playing around with tailscale which is a fancy wrapper for wireguard.  It takes some of the headaches away from wireguard and provides a clean way to manage instances registered with a wireguard network.  It can definitely handle alot more complex things than the scope of my playground.  I entirely leveraged their currently free-tier account and wanted to attempt a simple setup of a relay to route subnets to a tailscale network as needed.  At the moment, I’m using basic EC2 instances to prove out the concept but there are definitely more interesting potential methods in the wild.  The goal was to allow me to provision a VPC in some region and securely access some resources under a private subnet with having to get crazy with a convoluted VPN setup.  Tailscale uses Wireguard as its underlying VPN technology and you haven’t use it yet, its well worth diving into.  Its extremely simple to get a wireguard VPN up and running, relying on the exchange of public keys between the intended servers, similar to SSH keys. 
+Wireguard has clients for all the things and since 5.6 its protocol has been incorporated in the linux kernel.  One pain point with ‘vanilla’ wireguard is management of all that.  There are also lots of tools in the wild to let you manage these things in a clean way.
+I threw together a basic demo here that will demonstrate leveraging a relay.
+
+">
+  <meta name="author" content="Daniel McAvinue">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Playing with Tailscale">
+  <meta name="twitter:description" content="I recently did some playing around with tailscale which is a fancy wrapper for wireguard.  It takes some of the headaches away from wireguard and provides a clean way to manage instances registered with a wireguard network.  It can definitely handle alot more complex things than the scope of my playground.  I entirely leveraged their currently free-tier account and wanted to attempt a simple setup of a relay to route subnets to a tailscale network as needed.  At the moment, I’m using basic EC2 instances to prove out the concept but there are definitely more interesting potential methods in the wild.  The goal was to allow me to provision a VPC in some region and securely access some resources under a private subnet with having to get crazy with a convoluted VPN setup.  Tailscale uses Wireguard as its underlying VPN technology and you haven’t use it yet, its well worth diving into.  Its extremely simple to get a wireguard VPN up and running, relying on the exchange of public keys between the intended servers, similar to SSH keys. 
+Wireguard has clients for all the things and since 5.6 its protocol has been incorporated in the linux kernel.  One pain point with ‘vanilla’ wireguard is management of all that.  There are also lots of tools in the wild to let you manage these things in a clean way.
+I threw together a basic demo here that will demonstrate leveraging a relay.
+
+">
+  
+  <meta name="twitter:image" content="/images/favicons/favicon-194x194.png">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Playing with Tailscale">
+  <meta property="og:description" content="I recently did some playing around with tailscale which is a fancy wrapper for wireguard.  It takes some of the headaches away from wireguard and provides a clean way to manage instances registered with a wireguard network.  It can definitely handle alot more complex things than the scope of my playground.  I entirely leveraged their currently free-tier account and wanted to attempt a simple setup of a relay to route subnets to a tailscale network as needed.  At the moment, I’m using basic EC2 instances to prove out the concept but there are definitely more interesting potential methods in the wild.  The goal was to allow me to provision a VPC in some region and securely access some resources under a private subnet with having to get crazy with a convoluted VPN setup.  Tailscale uses Wireguard as its underlying VPN technology and you haven’t use it yet, its well worth diving into.  Its extremely simple to get a wireguard VPN up and running, relying on the exchange of public keys between the intended servers, similar to SSH keys. 
+Wireguard has clients for all the things and since 5.6 its protocol has been incorporated in the linux kernel.  One pain point with ‘vanilla’ wireguard is management of all that.  There are also lots of tools in the wild to let you manage these things in a clean way.
+I threw together a basic demo here that will demonstrate leveraging a relay.
+
+">
+  <meta property="og:image" content="/images/favicons/favicon-194x194.png">
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="stylesheet" href="/css/main.css?1628639046077223252">
+  <link rel="canonical" href="https://dmcavinue.github.io/2021/playing-up-tailscale/">
+</head>
+
+
+  <body>
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover " style="background-image: url(/images/cover.jpg)">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+        <a href="/" title="link to home of Daniel McAvinue">
+          <img src="/images/profile.png" class="user-image" alt="My Profile Photo">
+          <h1 class="panel-cover__title panel-title">Daniel McAvinue</h1>
+        </a>
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description">dmcavinue.github.io</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/resume/" title="link to Daniel McAvinue resume" class="resume-button">Resume</a></li>
+              <li class="navigation__item"><a href="/#projects" title="link to Daniel McAvinue projects" class="projects-button">Projects</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+
+              
+              <!-- LinkedIn -->
+              <li class="navigation__item">
+                <a href="https://www.linkedin.com/in/daniel-mcavinue-589a2937" title="daniel-mcavinue-589a2937 on LinkedIn" target="_blank">
+                  <i class="icon icon-social-linkedin"></i>
+                  <span class="label">LinkedIn</span>
+                </a>
+              </li>
+              
+
+              
+              <!-- GitHub -->
+              <li class="navigation__item">
+                <a href="https://www.github.com/dmcavinue" title="dmcavinue on GitHub" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+              
+
+              
+              <!-- Email -->
+              <li class="navigation__item">
+                <a href="mailto:dan@mcavinue.io" title="Email dan@mcavinue.io" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+              
+            </ul>
+          </nav>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+  <div class="social-accounts">
+    <h1>Daniel McAvinue</h1>
+    <h6>
+    <!-- Site -->  
+    <i class="icon icon-web"> dmcavinue.github.io</i><br>
+    <!-- LinkedIn -->
+    <i class="icon icon-social-linkedin"> daniel-mcavinue-589a2937</i><br>
+    <!-- Email -->
+    <i class="icon icon-mail"> dan@mcavinue.io</i><br>
+    <!-- GitHub -->
+    <i class="icon icon-social-github"> dmcavinue</i>
+    </h6>
+  </div>  
+</header>
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+  <header class="post-header">
+    <h1 class="post-title">Playing with Tailscale</h1>
+    <br>
+    <div class="post-meta">
+      <time datetime="2021-08-01 00:00" class="post-meta__date date">Aug 2021</time>
+                          
+        <span class="post-meta__tags">
+        <div style="display: inline" class="tool"><a href="/tags/#">TAILSCALE</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">AWS</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">DOCKER</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">TERRAFORM</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">PACKER</a></div>
+          <div style="display: inline" class="tool"><a href="/tags/#">WIREGUARD</a></div>
+          </span>
+      
+    </div>
+  </header>
+  <br><br><br>
+  <section class="post">
+    <p>I recently did some playing around with <a href="https://www.tailscale.com">tailscale</a> which is a fancy wrapper for wireguard.  It takes some of the headaches away from wireguard and provides a clean way to manage instances registered with a wireguard network.  It can definitely handle alot more complex things than the scope of my playground.  I entirely leveraged their currently free-tier account and wanted to attempt a simple setup of a relay to route subnets to a tailscale network as needed.  At the moment, I’m using basic EC2 instances to prove out the concept but there are definitely <a href="https://github.com/QuinnyPig/tailscale-layer">more interesting potential methods</a> in the wild.  The goal was to allow me to provision a VPC in some region and securely access some resources under a private subnet with having to get crazy with a convoluted VPN setup.  Tailscale uses <a href="https://www.wireguard.com/">Wireguard</a> as its underlying VPN technology and you haven’t use it yet, its well worth diving into.  Its extremely simple to get a wireguard VPN up and running, relying on the exchange of public keys between the intended servers, similar to SSH keys. 
+Wireguard has clients for all the things and since 5.6 its protocol has been incorporated in the linux kernel.  One pain point with ‘vanilla’ wireguard is management of all that.  There are also lots of tools in the wild to let you manage these things in a clean way.
+I threw together a basic demo <a href="https://github.com/dmcavinue/tailscale-relay">here</a> that will demonstrate leveraging a relay.</p>
+
+<p>This repository uses a devcontainer and as a result works best via VSCode with the <code class="language-plaintext highlighter-rouge">Remote - Containers</code> extension installed.  The devcontainer is a simple Dockerfile tracked in the rewpo under <code class="language-plaintext highlighter-rouge">.devcontainer/Dockerfile</code> thats based on alpine and contains all the dependencies you will need.  the <code class="language-plaintext highlighter-rouge">README</code> covers the meat of it but once set up with the required environment variables it will let you:</p>
+<ol>
+  <li>Provision custom tailscale-relay AMIs in AWS via <a href="https://www.hashicorp.com/products/terraform">Packer</a>
+</li>
+  <li>Provision a VPC with a public subnet for IGW and NAT routing for any private subnets to reach the world.</li>
+  <li>one <code class="language-plaintext highlighter-rouge">t2.nano</code> instance in the private subnet to act as our relay</li>
+  <li>one <code class="language-plaintext highlighter-rouge">t2.micro</code> instance as a demonstration of functionality</li>
+</ol>
+
+<p>The AWS resources after AMI creation are all provisioned using <a href="https://www.hashicorp.com/products/terraform">Terraform</a> and all operations are performed using <a href="https://github.com/go-task/task">go-task</a> which abstracts away some of the complexity.  You can examine the tasks under <code class="language-plaintext highlighter-rouge">./.taskfiles</code>.  You can see all available tasks by simply running <code class="language-plaintext highlighter-rouge">task</code>.</p>
+
+<h5 id="packer">Packer</h5>
+<p>The <code class="language-plaintext highlighter-rouge">tailscale-relay</code> custom AMI is defined under <code class="language-plaintext highlighter-rouge">./packer/tailscale-relay.json.pkr.hcl</code>.<br>
+Packer basically spins up a <code class="language-plaintext highlighter-rouge">t2.nano</code> instance in the target region using the latest public ubuntu 20.04 image, runs a script that adds the tailscale repos and installs the tailscale package, does some cleanup and bundles the resulting instances disk up as a custom AMI.  It tags these images and makes them ready for use by our terraform.  Obviously, in a production scenario, there would be more care around securing the resulting image and its supply chain but for now this is fine for testing.</p>
+
+<p align="center">
+<img height="75%" width="75%" align="center" src="/images/posts/tailscale-relay/1-packer.png" alt="packer"><br>
+The packer build process running
+</p>
+
+<p>You will need to set up a <a href="https://www.tailscale.com">tailscale</a> account and add a new ephemeral key for use.  As a note, these keys do expire.  Probably good thing for a demo.  You <strong>can</strong> use a reusable key but this would be dangerous to accidentally leave in the wild and active.</p>
+<p align="center">
+<img height="75%" width="75%" align="center" src="/images/posts/tailscale-relay/2-tailscale-apikey.png" alt="tailscale"><br>
+Setting up our tailscale key
+</p>
+
+<p>Once you have this and define it in the repo’s <code class="language-plaintext highlighter-rouge">.env</code> file along with the AWS credentials, you’re ready to test this out. You can simply run <code class="language-plaintext highlighter-rouge">task terraform:apply</code>.  That will handle the initialization and terraform apply.  I’m leveraging some publically available terraform modules and providers, which you can review under <code class="language-plaintext highlighter-rouge">./terraform/infrastructure</code>. Just for simplicities sake, <code class="language-plaintext highlighter-rouge">tailscale_relay.tf</code> contains the terraform definitions that provision our SSH key, VPC, subnets and tailscale EC2 instance. I’ve kept some variables statically defined in the <code class="language-plaintext highlighter-rouge">locals {}</code> block of this file again for simplicity. <code class="language-plaintext highlighter-rouge">./some_instance.tf</code> just separates out the demo instance resource definition.  In this case, I provision a single <code class="language-plaintext highlighter-rouge">ts.micro</code> instance off of the latest <code class="language-plaintext highlighter-rouge">ubuntu 20.04</code> public image.</p>
+
+<p align="center">
+<img height="75%" width="75%" align="center" src="/images/posts/tailscale-relay/3-apply.png" alt="terraform"><br>
+Terraform Apply
+</p>
+
+<p>Once this apply completes, assuming your tailscale API key is correct and everything succeeded, you should see some resources in AWS and a new node in you <a href="https://login.tailscale.com/admin/machines">tailscale admin console</a>.</p>
+
+<p align="center">
+<img height="75%" width="75%" align="center" src="/images/posts/tailscale-relay/4-aws-instances.png" alt="aws"><br>
+AWS Instances
+</p>
+
+<p align="center">
+<img height="75%" width="75%" align="center" src="/images/posts/tailscale-relay/5-tailscale.png" alt="tailscale"><br>
+Tailscale Machines
+</p>
+
+<p>In my case, the tailscale relay is machine <code class="language-plaintext highlighter-rouge">ip-10.0.2.219</code>, note the highlighted <code class="language-plaintext highlighter-rouge">subnets(!)</code> under the node.  We need to approve this node to allow it to advertise routes to our subnets to the rest of the machines in our tailscale network.  Also, make sure to install the tailscale client on your local machine too and log in, you can see my workstation in the machine list. The clients are all available for download on their site.</p>
+
+<p align="center">
+<img height="75%" width="75%" align="center" src="/images/posts/tailscale-relay/6-tailscale.png" alt="tailscale"><br>
+Route approval
+</p>
+
+<p>There is a means to do this via the tailscale automatically but for now, I manually enable it.  Note that you can aslo set up a relay node to route internet traffic through it.  Probably a useful function to play with later on!</p>
+
+<p>The demo uses the default <code class="language-plaintext highlighter-rouge">ubuntu</code> username.  One important and useful note, the terraform state is stored locally under <code class="language-plaintext highlighter-rouge">./terraform/infrastructure/&lt;ENV&gt;/terraform.tfstate.d/terraform.tfstate</code>.  If you’ve used terraform before, you know that this contains sensitive  things, which is why I <code class="language-plaintext highlighter-rouge">.gitignore</code> it.  I also use some useful go-tasks vars to interrogate this data for useful things. If you look in <code class="language-plaintext highlighter-rouge">.taskfiles/ssh.yml</code>, you can see some of this.  the var <code class="language-plaintext highlighter-rouge">SSH_PRIVATE_KEY</code> is set up to parse the state file with <code class="language-plaintext highlighter-rouge">jq</code> and extract the private key from the <code class="language-plaintext highlighter-rouge">private_key_pem</code> resource.  The <code class="language-plaintext highlighter-rouge">ssh:export-privatekey</code> task in the same file outputs this key <code class="language-plaintext highlighter-rouge">~/.ssh/id_rsa</code>.  The public key for this resource was used in the key pair defined as authorized for our new EC2 instances.  As a result, After you run <code class="language-plaintext highlighter-rouge">task ssh:export-privatekey</code>, you should be able to ssh to the private ip address of the other instance you deployed in AWS, in my case <code class="language-plaintext highlighter-rouge">10.0.2.165</code>.</p>
+
+<p align="center">
+<img height="75%" width="75%" align="center" src="/images/posts/tailscale-relay/7-ssh.png" alt="aws"><br>
+Working SSH!
+</p>
+
+<p>When you’re finished, a simple <code class="language-plaintext highlighter-rouge">task terraform:destroy</code> run to completion should clean up all resources.</p>
+
+<p><strong>Note:</strong> It will not clean up the packer images we initially created so make sure to clean those up and their resulting disk snapshots to prevent incurring charges.</p>
+
+  </section>
+  
+</article>
+
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">© 2021 Daniel McAvinue. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1628639046077223252"></script>
+
+
+    </div>
+  </body>
+</html>
