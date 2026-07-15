@@ -3,7 +3,8 @@
 
 2. Run locally to see how that looks.  It should then be available at `http://localhost:4000` and should also refresh as you make changes:
 ``` bash
-docker-compose up
+nix develop
+jekyll serve --livereload
 ```
 
-3. Merge your changes to `master` and they should automatically publish to `https://dmcavinue.github.io` when pushed up.
+3. Merge your changes to `main` and they should automatically publish to `https://dmcavinue.github.io` when pushed up.
