@@ -9,7 +9,7 @@
     in {
       devShells.x86_64-linux.default = nix-environments.lib.mkShell pkgs [
         (m.base { inherit pkgs; extraPkgs = [
-          pkgs.bashInteractives
+          pkgs.bashInteractive
         ];})
         (m.opencode { inherit pkgs; })
       ];
