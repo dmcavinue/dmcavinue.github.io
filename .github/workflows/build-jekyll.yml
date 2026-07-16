@@ -20,8 +20,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
-        with:
-          token: ${{ secrets.GH_TOKEN }}
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
@@ -32,8 +30,6 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v6
-        with:
-          token: ${{ secrets.GH_TOKEN }}
 
       - name: Build with Jekyll
         run: bundle exec jekyll build --source ./docs --destination ./_site
@@ -53,5 +49,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
-        with:
-          token: ${{ secrets.GH_TOKEN }}
