@@ -101,4 +101,13 @@ jekyll-spaceship:
     src: https://github.githubassets.com/images/icons/emoji/
 
 plugins: ['jekyll-paginate', 'jekyll-spaceship']
-exclude: ['README.md', 'Gemfile', 'Gemfile.lock', 'screenshot.png']
+exclude:
+  - README.md
+  - screenshot.png
+  - vendor
+  - .bundle
+  - Gemfile
+  - Gemfile.lock
+  - gemset.nix
+  - .jekyll-cache
+  - .jekyll-metadata
