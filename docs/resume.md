@@ -148,8 +148,11 @@
 
 <br>
 
-<p align="center" class="no-print">
+<h5 class="no-print"><strong>GitHub Activity</strong></h5>
+<table class="no-print">
+<tr><td>
   <a href="https://github.com/dmcavinue" target="_blank" rel="noopener noreferrer">
     <img src="https://ghchart.rshah.org/2ea043/dmcavinue" alt="Dan's GitHub Contributions" width="100%" style="filter: invert(1) brightness(2) hue-rotate(180deg);"/>
   </a>
-</p>
+</td></tr>
+</table>
