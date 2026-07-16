@@ -137,9 +137,22 @@
 
 <table>
 <tr><td>
+* **[Local AI]({{ site.baseurl }}2025/local-ai-with-strix-halo/)** : Playing with local AI for home automation purposes using a Strix Halo node with 128GB unified memory, managed by kubernetes/gitops/flux.
+* **[Talos PI K8S Cluster]({{ site.baseurl }}/2026/talos-pi-cluster/)** : Talos based Kubernetes cluster at home running as minimally as possible on some raspberry pis, managed with Flux, GitOps.
 * **[Kubernetes at Home]({{ site.baseurl }}/2021/k8s-at-home-pt-1/)** : Kubernetes cluster at home to handle home automation, managed with Flux, GitOps.
 * **[Playing with Hashistack]({{ site.baseurl }}/2021/playing-with-hashistack/)** : Setting up Consul/Vault/Nomad in a dance-off versus the k8s@home setup.
 * **[Unity3D Floorplan, MQTT & you]({{ site.baseurl }}/2021/home-assistant-and-unity/)** : Render your home floorplan in 3D, real time monitor and visualize events.
 * **[Utility Monitoring]({{ site.baseurl }}/2021/passively-monitoring-utilities/)** : Passively tracking Utility metrics via an SDR and ESP32.
+</td></tr>
+</table>
+
+<br>
+
+<h5 class="no-print"><strong>GitHub Activity</strong></h5>
+<table class="no-print">
+<tr><td>
+  <a href="https://github.com/dmcavinue" target="_blank" rel="noopener noreferrer">
+    <img src="https://ghchart.rshah.org/2ea043/dmcavinue" alt="Dan's GitHub Contributions" width="100%" style="filter: invert(1) brightness(2) hue-rotate(180deg);"/>
+  </a>
 </td></tr>
 </table>
