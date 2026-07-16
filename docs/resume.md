@@ -137,6 +137,7 @@
 
 <table>
 <tr><td>
+* **[Observability at Home]({{ site.baseurl }}2024/centralized-monitoring-observability-at-home/)** : Setting up grafana, loki, vector, prometheus and alertmanager at home in a minimilized format to monitor/alert on all things home lab.
 * **[Local AI]({{ site.baseurl }}2025/local-ai-with-strix-halo/)** : Playing with local AI for home automation purposes using a Strix Halo node with 128GB unified memory, managed by kubernetes/gitops/flux.
 * **[Talos PI K8S Cluster]({{ site.baseurl }}/2026/talos-pi-cluster/)** : Talos based Kubernetes cluster at home running as minimally as possible on some raspberry pis, managed with Flux, GitOps.
 * **[Kubernetes at Home]({{ site.baseurl }}/2021/k8s-at-home-pt-1/)** : Kubernetes cluster at home to handle home automation, managed with Flux, GitOps.
