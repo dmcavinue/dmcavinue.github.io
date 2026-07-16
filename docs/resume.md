@@ -4,6 +4,35 @@
 <table>
 <tr>
 <thead>
+<th>Verana Health<br>Boston, MA</th>
+<th>Senior Devops Engineer</th>
+<th>Jan 2026 to Present</th>
+</thead>
+</tr>
+<tr><td colspan="3">
+* Merged with COTA Healthcare below
+* All of previous roles including migration of newly merged company infrastructure from GCP to AWS
+* Supporting devops team for new merged company in their AWS infrastructure
+</td></tr>
+
+<tr>
+<thead>
+<th>COTA Healthcare<br>Boston, MA</th>
+<th>Senior Infrastructure Engineer</th>
+<th>Oct 2021 to Jan 2026</th>
+</thead>
+</tr>
+<tr><td colspan="3">
+* Maintaining infrastructure via Terraform in GCP and AWS cloud environments
+* Managing multiple Kubernetes (GKE) clusters along with development platform tooling, deployment, service ingress and observability
+* Improving security posture of all infrastructure, ensuring compliances are met and all security vulnerabilities are mitigated 
+* Assisting development teams with their day to day and improving developer experience
+* Regular review of security posture to reduce blast radius of infrastructure deployments
+* Monitoring of resource usage relative across all infrastructure to reduce waste and unnecessary billing
+</td></tr>
+
+<tr>
+<thead>
 <th>Wayfair<br>Boston, MA</th>
 <th>Systems Engineer III/IV<br>Cloud Engineer</th>
 <th>Jan 2014 to Feb 2021</th>
@@ -16,7 +45,10 @@
 * Developed various automations and services to support infrastructure pipeline.
 * Developed tooling and pipeline to enable developers to self-service infrastructure as required.
 </td></tr>
-
+</table>
+<div class="pagebreak"></div>
+<br>
+<table>
 <tr>
 <thead>
 <th>Wayfair<br>Ireland, UK, Boston</th>
@@ -60,9 +92,9 @@
 <br>
 ##### **Skills**
 
-{% assign skills    = 'sccm,active-directory,consul,jenkins,github,vsphere,ansible,puppet,terraform,vagrant,vault,kubernetes,helm,gcp,packer,ci,docker,aws,git' | split: ',' | uniq | sort -%}
-{% assign languages = 'java,golang,python,powershell,hcl,bash' | split: ',' | uniq | sort -%}
-{% assign others    = 'tailscale,wireguard,windows,linux,esxi,cisco,documentation-as-code,esp32' | split: ',' | uniq | sort -%}
+{% assign skills    = 'gcp,aws,terraform,vault,kubernetes,helm,packer,ci/cd,containers,git,gitops,github,observability' | split: ',' | uniq | sort -%}
+{% assign languages = 'java,golang,python,hcl,bash' | split: ',' | uniq | sort -%}
+{% assign others    = 'tailscale,wireguard,windows,linux,documentation-as-code,esp32,talos' | split: ',' | uniq | sort -%}
 
 <table>
 <tr>
