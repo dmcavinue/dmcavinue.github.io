@@ -143,3 +143,11 @@
 * **[Utility Monitoring]({{ site.baseurl }}/2021/passively-monitoring-utilities/)** : Passively tracking Utility metrics via an SDR and ESP32.
 </td></tr>
 </table>
+
+<br>
+
+<p align="center" class="no-print">
+  <a href="https://github.com/dmcavinue" target="_blank" rel="noopener noreferrer">
+    <img src="https://ghchart.rshah.org/2ea043/dmcavinue" alt="Dan's GitHub Contributions" width="100%" style="filter: invert(1) brightness(2) hue-rotate(180deg);"/>
+  </a>
+</p>
