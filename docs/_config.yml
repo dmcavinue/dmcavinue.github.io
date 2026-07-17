@@ -102,12 +102,17 @@ jekyll-spaceship:
 
 plugins: ['jekyll-paginate', 'jekyll-spaceship']
 exclude:
+  - .bundle
+  - .jekyll-cache
+  - .jekyll-metadata
+  - .sass-cache/
+  - Gemfile
+  - Gemfile
+  - Gemfile.lock
+  - Gemfile.lock
+  - gemfiles/
+  - gemset.nix
+  - node_modules/
   - README.md
   - screenshot.png
   - vendor
-  - .bundle
-  - Gemfile
-  - Gemfile.lock
-  - gemset.nix
-  - .jekyll-cache
-  - .jekyll-metadata

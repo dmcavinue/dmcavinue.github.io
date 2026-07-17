@@ -7,7 +7,7 @@
     let
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
 
-      ruby = pkgs.ruby_3_4;
+      ruby = pkgs.ruby_4_0;
 
       gems = pkgs.bundlerEnv {
         name = "jekyll-env";
