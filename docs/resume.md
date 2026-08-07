@@ -7,37 +7,26 @@ permalink: /resume/
 <style>
 /* Modern Resume Styles */
 :root {
-  --primary-color: #3b82f6;
-  --primary-hover: #2563eb;
-  --bg-gradient-start: rgba(248, 250, 252, 0.5);
-  --bg-gradient-end: rgba(226, 232, 240, 0.5);
-  --card-bg: rgba(255, 255, 255, 0.85);
-  --text-main: #1e293b;
-  --text-muted: #64748b;
-  --border-color: rgba(226, 232, 240, 0.8);
-  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
-  --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --primary-color: #16a34a;
+  --primary-hover: #15803d;
+  --bg-gradient-start: #2d2d2d;
+  --bg-gradient-end: #222222;
+  --card-bg: #333333;
+  --text-main: #f8fafc;
+  --text-muted: #cbd5e1;
+  --border-color: #444444;
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+  --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
   --border-radius: 16px;
   --transition-speed: 0.3s;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-gradient-start: rgba(15, 23, 42, 0.5);
-    --bg-gradient-end: rgba(30, 41, 59, 0.5);
-    --card-bg: rgba(30, 41, 59, 0.7);
-    --text-main: #f8fafc;
-    --text-muted: #cbd5e1;
-    --border-color: rgba(51, 65, 85, 0.8);
-  }
 }
 
 .resume-wrapper {
   font-family: 'Inter', 'Roboto', 'Helvetica Neue', sans-serif;
   color: var(--text-main);
   background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
-  padding: 2.5rem;
+  padding: 1.5rem;
   border-radius: 24px;
   max-width: 900px;
   margin: 0 auto;
@@ -45,7 +34,7 @@ permalink: /resume/
 }
 
 .resume-section {
-  margin-bottom: 3.5rem;
+  margin-bottom: 2.5rem;
   animation: fadeIn 0.8s ease-out;
 }
 
@@ -81,7 +70,7 @@ permalink: /resume/
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
-  padding: 1.75rem;
+  padding: 1.25rem;
   margin-bottom: 1.5rem;
   box-shadow: var(--shadow-md);
   transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
@@ -207,22 +196,23 @@ permalink: /resume/
 }
 
 .skill-tag {
-  background: rgba(59, 130, 246, 0.1);
-  color: var(--primary-color);
+  background: #222222;
+  color: #f8fafc !important;
   padding: 0.4rem 0.85rem;
   border-radius: 9999px;
   font-size: 0.85rem;
   font-weight: 600;
   text-decoration: none !important;
   transition: all 0.2s ease;
-  border: 1px solid rgba(59, 130, 246, 0.2);
+  border: 1px solid #444444;
 }
 
 .skill-tag:hover {
-  background: var(--primary-color);
+  background: #111111;
   color: white !important;
   transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  border-color: #666666;
 }
 
 /* Projects Grid */
@@ -291,12 +281,14 @@ permalink: /resume/
 }
 
 .github-chart img {
-  min-width: 700px;
   width: 100%;
+  max-width: 100%;
+  height: auto;
 }
 
 .section-layout-table {
   width: 100%;
+  table-layout: fixed;
   border: none !important;
   border-collapse: collapse;
 }
@@ -348,36 +340,7 @@ permalink: /resume/
   .skills-grid, .projects-grid {
     display: block !important;
   }
-  .project-card {
-    border: none !important;
-    border-radius: 0 !important;
-    padding: 0 !important;
-    margin-bottom: 0.5rem !important;
-    display: block !important;
-  }
-  .project-title {
-    font-size: 0.95rem !important;
-    font-weight: bold !important;
-    display: inline !important;
-    margin-bottom: 0 !important;
-  }
-  .project-title::after {
-    content: " — " !important;
-    display: inline !important;
-    opacity: 1 !important;
-    transform: none !important;
-  }
-  .project-desc {
-    display: inline !important;
-    font-size: 0.95rem !important;
-    font-weight: normal !important;
-    line-height: 1.5 !important;
-    padding-left: 0 !important;
-  }
-  .project-desc::before {
-    display: none !important;
-  }
-  .skill-category {
+  .skill-category, .project-card {
     margin-bottom: 1.5rem !important;
   }
   .no-print {
@@ -590,7 +553,7 @@ permalink: /resume/
   </section>
 
   <!-- Personal Projects -->
-  <section class="resume-section">
+  <section class="resume-section no-print">
     <table class="section-layout-table">
       <thead>
         <tr><th><h2 class="resume-section-title">Personal Projects</h2></th></tr>
