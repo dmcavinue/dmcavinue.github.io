@@ -22,6 +22,15 @@ permalink: /resume/
   --transition-speed: 0.3s;
 }
 
+/* Override global post-container card styles for the resume page */
+.post-container {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
 .resume-wrapper {
   font-family: 'Inter', 'Roboto', 'Helvetica Neue', sans-serif;
   color: var(--text-main);
