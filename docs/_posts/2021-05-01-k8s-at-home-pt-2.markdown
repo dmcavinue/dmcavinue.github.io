@@ -1,8 +1,8 @@
 ---
 title: "Kubernetes at Home: part 2"
 date: 2021-05-01 00:00:00
-categories: ['home-automation','kubernetes','terraform','nucstack']
-tags: ['tool:ansible','tool:terraform','tool:kubernetes','tool:docker','tool:aws','tool:git','tool:helm','tool:flux','tool:sops','tool:kustomize','language:hcl','language:bash','language:golang','tool:gitops','tool:ci/cd']
+categories: ['ansible','terraform','kubernetes','docker','git','helm','flux','sops','kustomize','hcl','bash','golang',':gitops','ci/cd']
+tags: ['tool:ansible','tool:terraform','tool:kubernetes','tool:docker','tool:git','tool:helm','tool:flux','tool:sops','tool:kustomize','language:hcl','language:bash','language:golang','tool:gitops','tool:ci/cd']
 
 ---
 

@@ -457,13 +457,19 @@ additional_tags:
   
   /* Reduce padding on the main wrapper */
   .resume-wrapper {
-    padding: 1rem 0.5rem;
+    padding: 0.5rem 0;
     border-radius: 0;
+    max-width: 100% !important;
   }
   
   /* Reduce padding inside cards to maximize text area */
   .resume-card, .skill-category, .github-chart {
-    padding: 1rem;
+    padding: 1rem 0.5rem;
+  }
+  
+  /* Reduce bullet indentation */
+  .resume-list li {
+    padding-left: 1rem;
   }
   
   /* Stack the header details vertically instead of squishing them */
