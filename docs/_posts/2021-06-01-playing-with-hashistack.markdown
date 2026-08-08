@@ -1,9 +1,8 @@
 ---
-title:  "Playing with Hashistack (a.k.a consul/vault/nomad)"
-date:   2021-06-01 00:00:00
+title: "Playing with Hashistack (a.k.a consul/vault/nomad)"
+date: 2021-06-01 00:00:00
 categories: ['hashistack','nomad','terraform','consul','vault']
 tags: ['tool:ansible','tool:terraform','tool:consul','tool:docker','tool:git','tool:vault','tool:traefik','tool:nomad','tool:gitops','tool:ci/cd']
-]
 
 ---
 

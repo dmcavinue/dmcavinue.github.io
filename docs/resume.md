@@ -8,7 +8,6 @@ additional_tags:
   - "tool:eks"
   - "tool:istio"
   - "tool:cilium"
-  - "tool:spinnaker"
   - "tool:github-actions"
   - "tool:helm"
   - "language:python"
@@ -41,13 +40,18 @@ additional_tags:
   margin: 0 !important;
 }
 
+/* Override global layout margins to give the resume more width */
+.content-wrapper__inner {
+  margin: 0 5% !important; 
+}
+
 .resume-wrapper {
   font-family: 'Inter', 'Roboto', 'Helvetica Neue', sans-serif;
   color: var(--text-main);
   background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
   padding: 1.5rem;
   border-radius: 24px;
-  max-width: 900px;
+  max-width: 95%;
   margin: 0 auto;
   box-shadow: inset 0 2px 4px 0 rgba(255, 255, 255, 0.1);
 }
@@ -422,6 +426,53 @@ additional_tags:
     color: white !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  /* Remove layout margins completely on small screens to reclaim space */
+  .content-wrapper__inner {
+    margin: 0 !important;
+  }
+  
+  /* Reduce padding on the main wrapper */
+  .resume-wrapper {
+    padding: 1rem 0.5rem;
+    border-radius: 0;
+  }
+  
+  /* Reduce padding inside cards to maximize text area */
+  .resume-card, .skill-category, .github-chart {
+    padding: 1rem;
+  }
+  
+  /* Stack the header details vertically instead of squishing them */
+  .resume-card-header {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  /* Left-align the meta info (dates/location) */
+  .resume-card-meta {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.25rem;
+  }
+  
+  .resume-card-meta .location {
+    margin-top: 0;
+  }
+  
+  /* Make sure grids collapse to a single column */
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Tables don't resize well on mobile, force block layout */
+  .section-layout-table, .section-layout-table tbody, .section-layout-table tr, .section-layout-table td, .section-layout-table th, .section-layout-table thead {
+    display: block !important;
+    width: 100% !important;
   }
 }
 </style>
