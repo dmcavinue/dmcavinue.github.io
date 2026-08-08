@@ -6,10 +6,7 @@ additional_tags:
   - "tool:aws"
   - "tool:gke"
   - "tool:eks"
-  - "tool:istio"
-  - "tool:cilium"
   - "tool:github-actions"
-  - "tool:helm"
   - "language:python"
 ---
 
@@ -689,6 +686,7 @@ additional_tags:
       <tbody><tr><td>
     
         <ul class="resume-list">
+          <li><strong><a href="{{ site.baseurl }}/2026/iac-managed-aws-organization/" style="color: inherit; text-decoration: none;">IAC Managed AWS Organization</a>:</strong> Using terraform/sops to provision and manage AWS Organizations, SCPs, Groups, and Organizations policies.</li>
           <li><strong><a href="{{ site.baseurl }}/2024/centralized-monitoring-observability-at-home/" style="color: inherit; text-decoration: none;">Observability at Home</a>:</strong> Setting up grafana, loki, vector, prometheus and alertmanager at home in a minimilized format to monitor/alert on all things home lab.</li>
           <li><strong><a href="{{ site.baseurl }}/2025/local-ai-with-strix-halo/" style="color: inherit; text-decoration: none;">Local AI</a>:</strong> Playing with local AI for home automation purposes using a Strix Halo node with 128GB unified memory, managed by kubernetes/gitops/flux.</li>
           <li><strong><a href="{{ site.baseurl }}/2026/talos-pi-cluster/" style="color: inherit; text-decoration: none;">Talos PI K8S Cluster</a>:</strong> Talos based Kubernetes cluster at home running as minimally as possible on some raspberry pis, managed with Flux, GitOps.</li>
