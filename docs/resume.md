@@ -341,6 +341,10 @@ additional_tags:
 }
 
 @media print {
+  html, body {
+    font-size: 11px !important;
+    line-height: 1.3 !important;
+  }
   body {
     background: white !important;
   }
@@ -352,20 +356,35 @@ additional_tags:
   }
   .resume-card, .skill-category, .github-chart {
     box-shadow: none !important;
-    border: 1px solid #cbd5e1 !important;
-    border-radius: 8px !important;
-    padding: 0.75rem !important;
-    margin-bottom: 0.75rem !important;
+    border: none !important;
+    border-bottom: 1px solid #cbd5e1 !important;
+    border-radius: 0 !important;
+    padding: 0.2rem 0 !important;
+    margin-bottom: 0.3rem !important;
     break-inside: avoid;
     page-break-inside: avoid;
     overflow: visible !important;
   }
   .resume-card:last-of-type, .skill-category:last-of-type {
+    border-bottom: none !important;
     margin-bottom: 0 !important;
+  }
+  .resume-card-title {
+    font-size: 1.1rem !important;
+  }
+  .resume-card-subtitle {
+    font-size: 0.95rem !important;
+    margin-top: 0 !important;
+  }
+  .resume-card-header {
+    margin-bottom: 0.2rem !important;
+  }
+  .resume-card-meta {
+    font-size: 0.85rem !important;
   }
   .resume-section {
     margin-bottom: 0 !important;
-    padding-bottom: 0.75rem !important;
+    padding-bottom: 0.25rem !important;
   }
   .page-break-before {
     break-before: page !important;
@@ -374,18 +393,23 @@ additional_tags:
   .section-layout-table {
     margin-bottom: 0 !important;
   }
+  .section-layout-table td {
+    padding: 0 !important;
+  }
   /* Browsers struggle with printing CSS Grid, fall back to block */
   .skills-grid {
     display: block !important;
   }
   .skills-grid .skill-category {
-    margin-bottom: 0.75rem !important;
+    margin-bottom: 0.25rem !important;
+    padding-bottom: 0.25rem !important;
   }
   .skill-tags {
-    gap: 0.35rem !important;
+    gap: 0.2rem !important;
   }
   .resume-list li {
-    margin-bottom: 0.4rem !important;
+    margin-bottom: 0.15rem !important;
+    line-height: 1.3 !important;
   }
   .no-print {
     display: none !important;
@@ -395,22 +419,24 @@ additional_tags:
     color: black !important;
   }
   .resume-section-title {
-    color: white !important;
-    background: black !important;
-    border: 1px solid black !important;
-    border-radius: 8px !important;
-    padding: 0.5rem 1rem !important;
-    margin-top: 0.5rem !important;
-    margin-bottom: 0.75rem !important;
+    color: black !important;
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 2px solid black !important;
+    border-radius: 0 !important;
+    padding: 0 0 0.2rem 0 !important;
+    margin-top: 0.25rem !important;
+    margin-bottom: 0.5rem !important;
     display: block !important;
-    text-align: center;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
+    text-align: left !important;
+    font-size: 1.25rem !important;
   }
   .skill-tag {
     background: black !important;
     color: white !important;
     border-color: black !important;
+    padding: 0.1rem 0.4rem !important;
+    font-size: 0.75rem !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
@@ -419,13 +445,12 @@ additional_tags:
   }
   .resume-list li::before {
     color: #666 !important;
+    top: 1px !important;
   }
   .skill-tag, .skill-tag:visited, .skill-tag:hover, .skill-tag:active {
     border: 1px solid black !important;
     background: black !important;
     color: white !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
   }
 }
 
@@ -544,6 +569,7 @@ additional_tags:
             <li>Developed internal developer platforms, SDKs, and custom Terraform providers to enable engineering teams to self-service infrastructure safely and efficiently.</li>
             <li>Built extensive tooling and automation (utilizing Python/Bash) to streamline CI/CD workflows, creating faster feedback loops for developers.</li>
             <li>Led the design and rollout of cost estimation tooling across hybrid cloud environments, optimizing resource usage and cloud spend.</li>
+            <li>Managed a team of 9x IT Engineers based in Boston</li>
             <li>Tech Resource for all European Offices based in London, Galway and Berlin.</li>
             <li>Managed a team of IT Engineers/Projects Team.</li>
             <li>Responsible for OS/Application Deployment for all Offices.</li>
