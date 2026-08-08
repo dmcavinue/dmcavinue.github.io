@@ -216,6 +216,21 @@ permalink: /resume/
   border: 1px solid #444444;
 }
 
+.skill-tag-language {
+  background: #3b82f6 !important;
+  border-color: #3b82f6 !important;
+}
+
+.skill-tag-tool {
+  background: #16a34a !important;
+  border-color: #16a34a !important;
+}
+
+.skill-tag-other {
+  background: #000000 !important;
+  border-color: #000000 !important;
+}
+
 .skill-tag:hover {
   background: #111111;
   color: white !important;
@@ -345,11 +360,20 @@ permalink: /resume/
   .section-layout-table {
     margin-bottom: 0 !important;
   }
-  /* Browsers struggle with printing CSS Grid, fall back to block */
-  .skills-grid, .projects-grid {
+  /* Browsers struggle with printing CSS Grid, fall back to flex/block */
+  .skills-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 1rem !important;
+  }
+  .skills-grid .skill-category {
+    flex: 1 1 0px !important;
+    margin-bottom: 0 !important;
+  }
+  .projects-grid {
     display: block !important;
   }
-  .skill-category, .project-card {
+  .project-card {
     margin-bottom: 1.5rem !important;
   }
   .no-print {
@@ -368,8 +392,16 @@ permalink: /resume/
     margin-top: 1rem !important;
     margin-bottom: 1.5rem !important;
     display: block !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    text-align: center;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  .skill-tag {
+    background: black !important;
+    color: white !important;
+    border-color: black !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
   .resume-section-title::after {
     display: none !important;
@@ -526,16 +558,16 @@ permalink: /resume/
       </thead>
       <tbody><tr><td>
 
-        {% assign skills    = 'gcp,aws,terraform,vault,kubernetes,helm,packer,ci/cd,containers,git,gitops,github,observability' | split: ',' | uniq | sort -%}
-        {% assign languages = 'java,golang,python,hcl,bash' | split: ',' | uniq | sort -%}
-        {% assign others    = 'tailscale,wireguard,windows,linux,documentation-as-code,esp32,talos' | split: ',' | uniq | sort -%}
-    
+        {% assign sorted_tags = site.tags | sort %}
         <div class="skills-grid">
           <div class="skill-category">
             <h4>Languages</h4>
             <div class="skill-tags">
-              {% for language in languages -%}
-                <a href="{{ site.baseurl }}/tags/#{{ language }}" class="skill-tag">{{ language | upcase }}</a>
+              {% for tag in sorted_tags -%}
+                {% assign kv = tag[0] | split: ":" -%}
+                {% if kv.size == 2 and kv[0] == "language" -%}
+                  <a href="{{ site.baseurl }}/tags/#{{ tag[0] }}" class="skill-tag skill-tag-language">{{ kv[1] | upcase }}</a>
+                {% endif -%}
               {% endfor -%}
             </div>
           </div>
@@ -543,8 +575,11 @@ permalink: /resume/
           <div class="skill-category">
             <h4>Tools & Platforms</h4>
             <div class="skill-tags">
-              {% for skill in skills -%}
-                <a href="{{ site.baseurl }}/tags/#{{ skill }}" class="skill-tag">{{ skill | upcase }}</a>
+              {% for tag in sorted_tags -%}
+                {% assign kv = tag[0] | split: ":" -%}
+                {% if kv.size == 2 and kv[0] == "tool" -%}
+                  <a href="{{ site.baseurl }}/tags/#{{ tag[0] }}" class="skill-tag skill-tag-tool">{{ kv[1] | upcase }}</a>
+                {% endif -%}
               {% endfor -%}
             </div>
           </div>
@@ -552,8 +587,15 @@ permalink: /resume/
           <div class="skill-category">
             <h4>Other</h4>
             <div class="skill-tags">
-              {% for other in others -%}
-                <a href="{{ site.baseurl }}/tags/#{{ other }}" class="skill-tag">{{ other | upcase }}</a>
+              {% for tag in sorted_tags -%}
+                {% assign kv = tag[0] | split: ":" -%}
+                {% if kv.size != 2 or (kv[0] != "language" and kv[0] != "tool") -%}
+                  {% if kv.size == 2 -%}
+                    <a href="{{ site.baseurl }}/tags/#{{ tag[0] }}" class="skill-tag skill-tag-other">{{ kv[1] | upcase }}</a>
+                  {% else -%}
+                    <a href="{{ site.baseurl }}/tags/#{{ tag[0] }}" class="skill-tag skill-tag-other">{{ tag[0] | upcase }}</a>
+                  {% endif -%}
+                {% endif -%}
               {% endfor -%}
             </div>
           </div>

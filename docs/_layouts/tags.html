@@ -8,12 +8,12 @@ layout: default
 {% for tag in tags %}
   {% assign kv = tag[0] | split: ":" -%}
   {% if kv.size == 2 -%}
-    <div class="{{kv[0]}}">
+    <div class="{{kv[0]}}" id="{{ tag[0] }}">
       <a href="{{ site.baseurl }}/tags/#{{ tag[0] }}">{{ kv[1] | upcase }} ({{ tag | last | size }})</a>  
     </div>
   {% else -%}
-    <div class="tags">
-      <a href="#{{ tag[0] }}">{{  tag[0] | upcase }} ({{ tag | last | size }})</a>
+    <div class="tags" id="{{ tag[0] }}">
+      <a href="{{ site.baseurl }}/tags/#{{ tag[0] }}">{{  tag[0] | upcase }} ({{ tag | last | size }})</a>
     </div>
   {% endif %}
   <ul> <!-- create the list of posts -->
