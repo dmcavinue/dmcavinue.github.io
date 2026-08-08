@@ -10,7 +10,6 @@ additional_tags:
   - "tool:cilium"
   - "tool:spinnaker"
   - "tool:github-actions"
-  - "tool:route53"
   - "tool:helm"
   - "language:python"
 ---
@@ -347,22 +346,22 @@ additional_tags:
     padding: 0 !important;
     max-width: 100% !important;
   }
-  .resume-card, .skill-category, .project-card, .github-chart {
+  .resume-card, .skill-category, .github-chart {
     box-shadow: none !important;
     border: 1px solid #cbd5e1 !important;
-    border-radius: 12px !important;
-    padding: 1rem !important;
-    margin-bottom: 1.25rem !important;
+    border-radius: 8px !important;
+    padding: 0.75rem !important;
+    margin-bottom: 0.75rem !important;
     break-inside: avoid;
     page-break-inside: avoid;
     overflow: visible !important;
   }
-  .resume-card:last-of-type, .skill-category:last-of-type, .project-card:last-of-type {
+  .resume-card:last-of-type, .skill-category:last-of-type {
     margin-bottom: 0 !important;
   }
   .resume-section {
     margin-bottom: 0 !important;
-    padding-bottom: 1.5rem !important;
+    padding-bottom: 0.75rem !important;
   }
   .page-break-before {
     break-before: page !important;
@@ -376,32 +375,29 @@ additional_tags:
     display: block !important;
   }
   .skills-grid .skill-category {
-    margin-bottom: 1.5rem !important;
+    margin-bottom: 0.75rem !important;
   }
-  .projects-grid {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 0.75rem !important;
+  .skill-tags {
+    gap: 0.35rem !important;
   }
-  .project-card {
-    margin-bottom: 0 !important;
-    padding: 0.75rem !important;
+  .resume-list li {
+    margin-bottom: 0.4rem !important;
   }
   .no-print {
     display: none !important;
   }
   /* Optimize colors and borders for printers */
-  .resume-wrapper, .resume-card-title, .resume-card-subtitle, .resume-list li, .project-title, .project-desc, .skill-category h4 {
+  .resume-wrapper, .resume-card-title, .resume-card-subtitle, .resume-list li, .skill-category h4 {
     color: black !important;
   }
   .resume-section-title {
     color: white !important;
     background: black !important;
     border: 1px solid black !important;
-    border-radius: 12px !important;
-    padding: 0.75rem 1.5rem !important;
-    margin-top: 1rem !important;
-    margin-bottom: 1.5rem !important;
+    border-radius: 8px !important;
+    padding: 0.5rem 1rem !important;
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.75rem !important;
     display: block !important;
     text-align: center;
     -webkit-print-color-adjust: exact !important;
