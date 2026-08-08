@@ -171,7 +171,7 @@ permalink: /resume/
 /* Skills Grid */
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: 1fr;
   gap: 1.5rem;
 }
 
@@ -360,15 +360,12 @@ permalink: /resume/
   .section-layout-table {
     margin-bottom: 0 !important;
   }
-  /* Browsers struggle with printing CSS Grid, fall back to flex/block */
+  /* Browsers struggle with printing CSS Grid, fall back to block */
   .skills-grid {
-    display: flex !important;
-    flex-direction: row !important;
-    gap: 1rem !important;
+    display: block !important;
   }
   .skills-grid .skill-category {
-    flex: 1 1 0px !important;
-    margin-bottom: 0 !important;
+    margin-bottom: 1.5rem !important;
   }
   .projects-grid {
     display: block !important;
