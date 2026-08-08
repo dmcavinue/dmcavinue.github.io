@@ -3,10 +3,7 @@ layout: page
 title: ""
 permalink: /resume/
 additional_tags:
-  - "tool:aws"
   - "tool:gke"
-  - "tool:eks"
-  - "tool:github-actions"
   - "language:python"
 ---
 

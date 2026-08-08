@@ -1,6 +1,6 @@
 ---
-title:  "Playing with Tailscale"
-date:   2021-08-01 00:00:00
+title: "Playing with Tailscale"
+date: 2021-08-01 00:00:00
 categories: ['tailscale','aws','packer','terraform','docker', 'wireguard']
 tags: ['tool:tailscale','tool:aws','tool:docker','tool:terraform','tool:packer', 'tool:wireguard']
 
