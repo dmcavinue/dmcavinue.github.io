@@ -3,14 +3,7 @@ layout: page
 title: ""
 permalink: /resume/
 additional_tags:
-  - "tool:aws"
   - "tool:gke"
-  - "tool:eks"
-  - "tool:istio"
-  - "tool:cilium"
-  - "tool:spinnaker"
-  - "tool:github-actions"
-  - "tool:helm"
   - "language:python"
 ---
 
@@ -41,13 +34,18 @@ additional_tags:
   margin: 0 !important;
 }
 
+/* Override global layout margins to give the resume more width */
+.content-wrapper__inner {
+  margin: 0 5% !important; 
+}
+
 .resume-wrapper {
   font-family: 'Inter', 'Roboto', 'Helvetica Neue', sans-serif;
   color: var(--text-main);
   background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
   padding: 1.5rem;
   border-radius: 24px;
-  max-width: 900px;
+  max-width: 95%;
   margin: 0 auto;
   box-shadow: inset 0 2px 4px 0 rgba(255, 255, 255, 0.1);
 }
@@ -217,9 +215,9 @@ additional_tags:
 .skill-tag {
   background: #222222;
   color: #f8fafc !important;
-  padding: 0.4rem 0.85rem;
+  padding: 0.5rem 1rem;
   border-radius: 9999px;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   font-weight: 600;
   text-decoration: none !important;
   transition: all 0.2s ease;
@@ -337,6 +335,10 @@ additional_tags:
 }
 
 @media print {
+  html, body {
+    font-size: 11px !important;
+    line-height: 1.3 !important;
+  }
   body {
     background: white !important;
   }
@@ -348,40 +350,61 @@ additional_tags:
   }
   .resume-card, .skill-category, .github-chart {
     box-shadow: none !important;
-    border: 1px solid #cbd5e1 !important;
-    border-radius: 8px !important;
-    padding: 0.75rem !important;
-    margin-bottom: 0.75rem !important;
+    border: none !important;
+    border-bottom: 1px solid #cbd5e1 !important;
+    border-radius: 0 !important;
+    padding: 0.2rem 0 !important;
+    margin-bottom: 0.3rem !important;
     break-inside: avoid;
     page-break-inside: avoid;
     overflow: visible !important;
   }
   .resume-card:last-of-type, .skill-category:last-of-type {
+    border-bottom: none !important;
     margin-bottom: 0 !important;
+  }
+  .resume-card-title {
+    font-size: 1.1rem !important;
+  }
+  .resume-card-subtitle {
+    font-size: 0.95rem !important;
+    margin-top: 0 !important;
+  }
+  .resume-card-header {
+    margin-bottom: 0.2rem !important;
+  }
+  .resume-card-meta {
+    font-size: 0.85rem !important;
   }
   .resume-section {
     margin-bottom: 0 !important;
-    padding-bottom: 0.75rem !important;
+    padding-bottom: 0.25rem !important;
   }
   .page-break-before {
     break-before: page !important;
     page-break-before: always !important;
+    padding-top: 1.5rem !important;
   }
   .section-layout-table {
     margin-bottom: 0 !important;
+  }
+  .section-layout-table td {
+    padding: 0 0 0.5rem 0 !important;
   }
   /* Browsers struggle with printing CSS Grid, fall back to block */
   .skills-grid {
     display: block !important;
   }
   .skills-grid .skill-category {
-    margin-bottom: 0.75rem !important;
+    margin-bottom: 0.25rem !important;
+    padding-bottom: 0.25rem !important;
   }
   .skill-tags {
-    gap: 0.35rem !important;
+    gap: 0.2rem !important;
   }
   .resume-list li {
-    margin-bottom: 0.4rem !important;
+    margin-bottom: 0.15rem !important;
+    line-height: 1.3 !important;
   }
   .no-print {
     display: none !important;
@@ -391,22 +414,24 @@ additional_tags:
     color: black !important;
   }
   .resume-section-title {
-    color: white !important;
-    background: black !important;
-    border: 1px solid black !important;
-    border-radius: 8px !important;
-    padding: 0.5rem 1rem !important;
-    margin-top: 0.5rem !important;
-    margin-bottom: 0.75rem !important;
+    color: black !important;
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 2px solid black !important;
+    border-radius: 0 !important;
+    padding: 0 0 0.2rem 0 !important;
+    margin-top: 0.25rem !important;
+    margin-bottom: 0.5rem !important;
     display: block !important;
-    text-align: center;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
+    text-align: left !important;
+    font-size: 1.25rem !important;
   }
   .skill-tag {
     background: black !important;
     color: white !important;
     border-color: black !important;
+    padding: 0.2rem 0.6rem !important;
+    font-size: 0.9rem !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
@@ -415,13 +440,65 @@ additional_tags:
   }
   .resume-list li::before {
     color: #666 !important;
+    top: 1px !important;
   }
   .skill-tag, .skill-tag:visited, .skill-tag:hover, .skill-tag:active {
     border: 1px solid black !important;
     background: black !important;
     color: white !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  /* Remove layout margins completely on small screens to reclaim space */
+  .content-wrapper__inner {
+    margin: 0 !important;
+  }
+  
+  /* Reduce padding on the main wrapper */
+  .resume-wrapper {
+    padding: 0.5rem 0;
+    border-radius: 0;
+    max-width: 100% !important;
+  }
+  
+  /* Reduce padding inside cards to maximize text area */
+  .resume-card, .skill-category, .github-chart {
+    padding: 1rem 0.5rem;
+  }
+  
+  /* Reduce bullet indentation */
+  .resume-list li {
+    padding-left: 1rem;
+  }
+  
+  /* Stack the header details vertically instead of squishing them */
+  .resume-card-header {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  /* Left-align the meta info (dates/location) */
+  .resume-card-meta {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.25rem;
+  }
+  
+  .resume-card-meta .location {
+    margin-top: 0;
+  }
+  
+  /* Make sure grids collapse to a single column */
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Tables don't resize well on mobile, force block layout */
+  .section-layout-table, .section-layout-table tbody, .section-layout-table tr, .section-layout-table td, .section-layout-table th, .section-layout-table thead {
+    display: block !important;
+    width: 100% !important;
   }
 }
 </style>
@@ -448,9 +525,10 @@ additional_tags:
             </div>
           </div>
           <ul class="resume-list">
+            <li>Merged with previous employer COTA Healthcare under Verana Health assuming similar responsibilities.</li>
             <li>Architecting and executing the migration of newly merged company infrastructure from GCP to AWS, ensuring robust security standards and zero downtime.</li>
             <li>Defining and driving the infrastructure and platform strategy for the newly merged entity, aligning roadmaps to maximize business impact.</li>
-            <li>Mentoring platform and product engineers, guiding architecture decisions, and modeling high standards for reliability, security, and maintainability.</li>
+            <li>Guiding architecture decisions, and modeling high standards for reliability, security, and maintainability.</li>
           </ul>
         </div>
         </td></tr>
@@ -480,27 +558,7 @@ additional_tags:
           <div class="resume-card-header">
             <div>
               <h3 class="resume-card-title">Wayfair</h3>
-              <p class="resume-card-subtitle">Systems Engineer III/IV &bull; Cloud Engineer</p>
-            </div>
-            <div class="resume-card-meta">
-              <span>Jan 2014 – Feb 2021</span>
-              <span class="location">Boston, MA</span>
-            </div>
-          </div>
-          <ul class="resume-list">
-            <li>Engineered and maintained Infrastructure-as-Code for massive-scale hybrid environments (On-Premise and GCP).</li>
-            <li>Developed internal developer platforms, SDKs, and custom Terraform providers to enable engineering teams to self-service infrastructure safely and efficiently.</li>
-            <li>Built extensive tooling and automation (utilizing Python/Bash) to streamline CI/CD workflows, creating faster feedback loops for developers.</li>
-            <li>Led the design and rollout of cost estimation tooling across hybrid cloud environments, optimizing resource usage and cloud spend.</li>
-          </ul>
-        </div>
-        </td></tr>
-        <tr><td>
-          <div class="resume-card">
-          <div class="resume-card-header">
-            <div>
-              <h3 class="resume-card-title">Wayfair</h3>
-              <p class="resume-card-subtitle">Systems Engineer I/II &bull; Projects Team Manager</p>
+              <p class="resume-card-subtitle">Systems Engineer &bull; Projects Team Manager &bull; Cloud Engineer</p>
             </div>
             <div class="resume-card-meta">
               <span>Jul 2011 – Jan 2014</span>
@@ -508,6 +566,11 @@ additional_tags:
             </div>
           </div>
           <ul class="resume-list">
+            <li>Engineered and maintained Infrastructure-as-Code for massive-scale hybrid environments (On-Premise and GCP).</li>
+            <li>Developed internal developer platforms, SDKs, and custom Terraform providers to enable engineering teams to self-service infrastructure safely and efficiently.</li>
+            <li>Built extensive tooling and automation (utilizing Python/Bash) to streamline CI/CD workflows, creating faster feedback loops for developers.</li>
+            <li>Led the design and rollout of cost estimation tooling across hybrid cloud environments, optimizing resource usage and cloud spend.</li>
+            <li>Managed a team of 9x IT Engineers based in Boston</li>
             <li>Tech Resource for all European Offices based in London, Galway and Berlin.</li>
             <li>Managed a team of IT Engineers/Projects Team.</li>
             <li>Responsible for OS/Application Deployment for all Offices.</li>
@@ -626,10 +689,12 @@ additional_tags:
       <tbody><tr><td>
     
         <ul class="resume-list">
+          <li><strong><a href="{{ site.baseurl }}/2026/iac-managed-aws-organization/" style="color: inherit; text-decoration: none;">IAC Managed AWS Organization</a>:</strong> Using terraform/sops to provision and manage AWS Organizations, SCPs, Groups, and Organizations policies.</li>
           <li><strong><a href="{{ site.baseurl }}/2024/centralized-monitoring-observability-at-home/" style="color: inherit; text-decoration: none;">Observability at Home</a>:</strong> Setting up grafana, loki, vector, prometheus and alertmanager at home in a minimilized format to monitor/alert on all things home lab.</li>
           <li><strong><a href="{{ site.baseurl }}/2025/local-ai-with-strix-halo/" style="color: inherit; text-decoration: none;">Local AI</a>:</strong> Playing with local AI for home automation purposes using a Strix Halo node with 128GB unified memory, managed by kubernetes/gitops/flux.</li>
           <li><strong><a href="{{ site.baseurl }}/2026/talos-pi-cluster/" style="color: inherit; text-decoration: none;">Talos PI K8S Cluster</a>:</strong> Talos based Kubernetes cluster at home running as minimally as possible on some raspberry pis, managed with Flux, GitOps.</li>
           <li><strong><a href="{{ site.baseurl }}/2021/k8s-at-home-pt-1/" style="color: inherit; text-decoration: none;">Kubernetes at Home</a>:</strong> Kubernetes cluster at home to handle home automation, managed with Flux, GitOps.</li>
+          <li><strong><a href="{{ site.baseurl }}/2026/nix-develop-environments/" style="color: inherit; text-decoration: none;">NIX Development Environments</a>:</strong> Centralized NIX Development Environments to share across projects.</li>
           <li><strong><a href="{{ site.baseurl }}/2021/playing-with-hashistack/" style="color: inherit; text-decoration: none;">Playing with Hashistack</a>:</strong> Setting up Consul/Vault/Nomad in a dance-off versus the k8s@home setup.</li>
           <li><strong><a href="{{ site.baseurl }}/2021/home-assistant-and-unity/" style="color: inherit; text-decoration: none;">Unity3D Floorplan, MQTT & you</a>:</strong> Render your home floorplan in 3D, real time monitor and visualize events.</li>
           <li><strong><a href="{{ site.baseurl }}/2021/passively-monitoring-utilities/" style="color: inherit; text-decoration: none;">Utility Monitoring</a>:</strong> Passively tracking Utility metrics via an SDR and ESP32.</li>

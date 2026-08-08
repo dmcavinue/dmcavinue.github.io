@@ -1,6 +1,6 @@
 ---
-title:  "Kubernetes at Home: part 1"
-date:   2021-04-01 00:00:00
+title: "Kubernetes at Home: part 1"
+date: 2021-04-01 00:00:00
 categories: ['home-automation','kubernetes','terraform','nucstack']
 tags: ['tool:terraform','tool:kubernetes','tool:docker', 'tool:aws','tool:git','other:hardware']
 ---
