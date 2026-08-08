@@ -438,9 +438,9 @@ permalink: /resume/
             </div>
           </div>
           <ul class="resume-list">
-            <li>Merged with COTA Healthcare below.</li>
-            <li>All of previous roles including migration of newly merged company infrastructure from GCP to AWS.</li>
-            <li>Supporting devops team for new merged company in their AWS infrastructure.</li>
+            <li>Architecting and executing the migration of newly merged company infrastructure from GCP to AWS, ensuring robust security standards and zero downtime.</li>
+            <li>Defining and driving the infrastructure and platform strategy for the newly merged entity, aligning roadmaps to maximize business impact.</li>
+            <li>Mentoring platform and product engineers, guiding architecture decisions, and modeling high standards for reliability, security, and maintainability.</li>
           </ul>
         </div>
         </td></tr>
@@ -457,12 +457,11 @@ permalink: /resume/
             </div>
           </div>
           <ul class="resume-list">
-            <li>Maintaining infrastructure via Terraform in GCP and AWS cloud environments.</li>
-            <li>Managing multiple Kubernetes (GKE) clusters along with development platform tooling, deployment, service ingress and observability.</li>
-            <li>Improving security posture of all infrastructure, ensuring compliances are met and all security vulnerabilities are mitigated.</li>
-            <li>Assisting development teams with their day to day and improving developer experience.</li>
-            <li>Regular review of security posture to reduce blast radius of infrastructure deployments.</li>
-            <li>Monitoring of resource usage relative across all infrastructure to reduce waste and unnecessary billing.</li>
+            <li>Architected and maintained Infrastructure-as-Code using Terraform across AWS and GCP, embedding security best practices directly into CI/CD pipelines.</li>
+            <li>Managed and secured multiple Kubernetes clusters, focusing on cluster hardening, role-based access control (RBAC), network policies, and container vulnerability management.</li>
+            <li>Continuous security and compliance initiatives in a highly regulated healthcare environment, ensuring infrastructure met strict HIPAA requirements.</li>
+            <li>Owned the observability and monitoring strategy across the platform, defining SLOs, SLIs, and error budgets using metrics, logging, and tracing.</li>
+            <li>Implemented secure networking, identity, and access management (IAM) patterns to reduce the blast radius of infrastructure deployments.</li>
           </ul>
         </div>
         </td></tr>
@@ -479,11 +478,10 @@ permalink: /resume/
             </div>
           </div>
           <ul class="resume-list">
-            <li>Developed and Maintained Infrastructure as code for hybrid environments (On-Prem and GCP).</li>
-            <li>Developed and Established cost estimation tooling and processes across private/public cloud environments.</li>
-            <li>Developed custom terraform module and provider tooling/CI for use self-service in IaC deployments.</li>
-            <li>Developed various automations and services to support infrastructure pipeline.</li>
-            <li>Developed tooling and pipeline to enable developers to self-service infrastructure as required.</li>
+            <li>Engineered and maintained Infrastructure-as-Code for massive-scale hybrid environments (On-Premise and GCP).</li>
+            <li>Developed internal developer platforms, SDKs, and custom Terraform providers to enable engineering teams to self-service infrastructure safely and efficiently.</li>
+            <li>Built extensive tooling and automation (utilizing Python/Bash) to streamline CI/CD workflows, creating faster feedback loops for developers.</li>
+            <li>Led the design and rollout of cost estimation tooling across hybrid cloud environments, optimizing resource usage and cloud spend.</li>
           </ul>
         </div>
         </td></tr>
