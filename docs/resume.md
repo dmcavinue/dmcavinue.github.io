@@ -2,6 +2,17 @@
 layout: page
 title: ""
 permalink: /resume/
+additional_tags:
+  - "tool:aws"
+  - "tool:gke"
+  - "tool:eks"
+  - "tool:istio"
+  - "tool:cilium"
+  - "tool:spinnaker"
+  - "tool:github-actions"
+  - "tool:route53"
+  - "tool:helm"
+  - "language:python"
 ---
 
 <style>
@@ -556,15 +567,22 @@ permalink: /resume/
       </thead>
       <tbody><tr><td>
 
-        {% assign sorted_tags = site.tags | sort %}
+        {% capture all_tags_string %}
+          {%- for tag in site.tags -%}{{ tag[0] }},{%- endfor -%}
+          {%- if page.additional_tags -%}
+            {%- for tag in page.additional_tags -%}{{ tag }},{%- endfor -%}
+          {%- endif -%}
+        {% endcapture %}
+        {% assign sorted_tags = all_tags_string | split: "," | uniq | sort %}
         <div class="skills-grid">
           <div class="skill-category">
             <h4>Languages</h4>
             <div class="skill-tags">
               {% for tag in sorted_tags -%}
-                {% assign kv = tag[0] | split: ":" -%}
+                {% if tag == "" %}{% continue %}{% endif -%}
+                {% assign kv = tag | split: ":" -%}
                 {% if kv.size == 2 and kv[0] == "language" -%}
-                  <a href="{{ site.baseurl }}/tags/#{{ tag[0] }}" class="skill-tag skill-tag-language">{{ kv[1] | upcase }}</a>
+                  <a href="{{ site.baseurl }}/tags/#{{ tag }}" class="skill-tag skill-tag-language">{{ kv[1] | upcase }}</a>
                 {% endif -%}
               {% endfor -%}
             </div>
@@ -574,9 +592,10 @@ permalink: /resume/
             <h4>Tools & Platforms</h4>
             <div class="skill-tags">
               {% for tag in sorted_tags -%}
-                {% assign kv = tag[0] | split: ":" -%}
+                {% if tag == "" %}{% continue %}{% endif -%}
+                {% assign kv = tag | split: ":" -%}
                 {% if kv.size == 2 and kv[0] == "tool" -%}
-                  <a href="{{ site.baseurl }}/tags/#{{ tag[0] }}" class="skill-tag skill-tag-tool">{{ kv[1] | upcase }}</a>
+                  <a href="{{ site.baseurl }}/tags/#{{ tag }}" class="skill-tag skill-tag-tool">{{ kv[1] | upcase }}</a>
                 {% endif -%}
               {% endfor -%}
             </div>
@@ -586,12 +605,13 @@ permalink: /resume/
             <h4>Other</h4>
             <div class="skill-tags">
               {% for tag in sorted_tags -%}
-                {% assign kv = tag[0] | split: ":" -%}
+                {% if tag == "" %}{% continue %}{% endif -%}
+                {% assign kv = tag | split: ":" -%}
                 {% if kv.size != 2 or (kv[0] != "language" and kv[0] != "tool") -%}
                   {% if kv.size == 2 -%}
-                    <a href="{{ site.baseurl }}/tags/#{{ tag[0] }}" class="skill-tag skill-tag-other">{{ kv[1] | upcase }}</a>
+                    <a href="{{ site.baseurl }}/tags/#{{ tag }}" class="skill-tag skill-tag-other">{{ kv[1] | upcase }}</a>
                   {% else -%}
-                    <a href="{{ site.baseurl }}/tags/#{{ tag[0] }}" class="skill-tag skill-tag-other">{{ tag[0] | upcase }}</a>
+                    <a href="{{ site.baseurl }}/tags/#{{ tag }}" class="skill-tag skill-tag-other">{{ tag | upcase }}</a>
                   {% endif -%}
                 {% endif -%}
               {% endfor -%}
