@@ -499,9 +499,10 @@ additional_tags:
             </div>
           </div>
           <ul class="resume-list">
+            <li>Merged with previous employer COTA Healthcare under Verana Health assuming similar responsibilities.</li>
             <li>Architecting and executing the migration of newly merged company infrastructure from GCP to AWS, ensuring robust security standards and zero downtime.</li>
             <li>Defining and driving the infrastructure and platform strategy for the newly merged entity, aligning roadmaps to maximize business impact.</li>
-            <li>Mentoring platform and product engineers, guiding architecture decisions, and modeling high standards for reliability, security, and maintainability.</li>
+            <li>Guiding architecture decisions, and modeling high standards for reliability, security, and maintainability.</li>
           </ul>
         </div>
         </td></tr>
@@ -531,27 +532,7 @@ additional_tags:
           <div class="resume-card-header">
             <div>
               <h3 class="resume-card-title">Wayfair</h3>
-              <p class="resume-card-subtitle">Systems Engineer III/IV &bull; Cloud Engineer</p>
-            </div>
-            <div class="resume-card-meta">
-              <span>Jan 2014 – Feb 2021</span>
-              <span class="location">Boston, MA</span>
-            </div>
-          </div>
-          <ul class="resume-list">
-            <li>Engineered and maintained Infrastructure-as-Code for massive-scale hybrid environments (On-Premise and GCP).</li>
-            <li>Developed internal developer platforms, SDKs, and custom Terraform providers to enable engineering teams to self-service infrastructure safely and efficiently.</li>
-            <li>Built extensive tooling and automation (utilizing Python/Bash) to streamline CI/CD workflows, creating faster feedback loops for developers.</li>
-            <li>Led the design and rollout of cost estimation tooling across hybrid cloud environments, optimizing resource usage and cloud spend.</li>
-          </ul>
-        </div>
-        </td></tr>
-        <tr><td>
-          <div class="resume-card">
-          <div class="resume-card-header">
-            <div>
-              <h3 class="resume-card-title">Wayfair</h3>
-              <p class="resume-card-subtitle">Systems Engineer I/II &bull; Projects Team Manager</p>
+              <p class="resume-card-subtitle">Systems Engineer &bull; Projects Team Manager &bull; Cloud Engineer</p>
             </div>
             <div class="resume-card-meta">
               <span>Jul 2011 – Jan 2014</span>
@@ -559,6 +540,10 @@ additional_tags:
             </div>
           </div>
           <ul class="resume-list">
+            <li>Engineered and maintained Infrastructure-as-Code for massive-scale hybrid environments (On-Premise and GCP).</li>
+            <li>Developed internal developer platforms, SDKs, and custom Terraform providers to enable engineering teams to self-service infrastructure safely and efficiently.</li>
+            <li>Built extensive tooling and automation (utilizing Python/Bash) to streamline CI/CD workflows, creating faster feedback loops for developers.</li>
+            <li>Led the design and rollout of cost estimation tooling across hybrid cloud environments, optimizing resource usage and cloud spend.</li>
             <li>Tech Resource for all European Offices based in London, Galway and Berlin.</li>
             <li>Managed a team of IT Engineers/Projects Team.</li>
             <li>Responsible for OS/Application Deployment for all Offices.</li>
