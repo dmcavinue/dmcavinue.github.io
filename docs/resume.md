@@ -221,9 +221,9 @@ additional_tags:
 .skill-tag {
   background: #222222;
   color: #f8fafc !important;
-  padding: 0.4rem 0.85rem;
+  padding: 0.5rem 1rem;
   border-radius: 9999px;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   font-weight: 600;
   text-decoration: none !important;
   transition: all 0.2s ease;
@@ -389,12 +389,13 @@ additional_tags:
   .page-break-before {
     break-before: page !important;
     page-break-before: always !important;
+    padding-top: 1.5rem !important;
   }
   .section-layout-table {
     margin-bottom: 0 !important;
   }
   .section-layout-table td {
-    padding: 0 !important;
+    padding: 0 0 0.5rem 0 !important;
   }
   /* Browsers struggle with printing CSS Grid, fall back to block */
   .skills-grid {
@@ -435,8 +436,8 @@ additional_tags:
     background: black !important;
     color: white !important;
     border-color: black !important;
-    padding: 0.1rem 0.4rem !important;
-    font-size: 0.75rem !important;
+    padding: 0.2rem 0.6rem !important;
+    font-size: 0.9rem !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
