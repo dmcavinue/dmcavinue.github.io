@@ -243,7 +243,8 @@ pre.highlight code,
 }
 
 .categories a,
-.tags a {
+.tags a,
+.other a {
   border: 2px solid #fff;
   border-radius: 20px;
   color: #fff;
@@ -259,13 +260,15 @@ pre.highlight code,
 
 }
 
-.tags a:hover {
+.tags a:hover,
+.other a:hover {
   color: #000;
   background-color: #fff;
   border: 2px solid #000;
 }
 
-.tags-small a {
+.tags-small a,
+.other-small a {
   border: 2px solid #fff;
   border-radius: 20px;
   color: #fff;
@@ -281,7 +284,8 @@ pre.highlight code,
   white-space: nowrap;
 }
 
-.tags-small a:hover {
+.tags-small a:hover,
+.other-small a:hover {
   color: #fff;
   background-color: #fff;
   border: 2px solid #000;
