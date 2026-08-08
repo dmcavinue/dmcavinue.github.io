@@ -242,15 +242,15 @@ permalink: /resume/
 /* Projects Grid */
 .projects-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.25rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
 }
 
 .project-card {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: calc(var(--border-radius) * 0.75);
-  padding: 1.5rem;
+  padding: 1rem;
   transition: all var(--transition-speed);
   display: flex;
   flex-direction: column;
@@ -268,7 +268,7 @@ permalink: /resume/
 
 .project-title {
   font-weight: 700;
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   color: var(--primary-color);
   display: flex;
   align-items: center;
@@ -288,8 +288,8 @@ permalink: /resume/
 }
 
 .project-desc {
-  font-size: 0.95rem;
-  line-height: 1.6;
+  font-size: 0.9rem;
+  line-height: 1.5;
   color: var(--text-main);
 }
 
@@ -368,10 +368,13 @@ permalink: /resume/
     margin-bottom: 1.5rem !important;
   }
   .projects-grid {
-    display: block !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
   }
   .project-card {
-    margin-bottom: 1.5rem !important;
+    margin-bottom: 0 !important;
+    padding: 0.75rem !important;
   }
   .no-print {
     display: none !important;
@@ -599,49 +602,22 @@ permalink: /resume/
   </section>
 
   <!-- Personal Projects -->
-  <section class="resume-section no-print">
+  <section class="resume-section">
     <table class="section-layout-table">
       <thead>
         <tr><th><h2 class="resume-section-title">Personal Projects</h2></th></tr>
       </thead>
       <tbody><tr><td>
     
-        <div class="projects-grid">
-          <a href="{{ site.baseurl }}/2024/centralized-monitoring-observability-at-home/" class="project-card">
-            <span class="project-title">Observability at Home</span>
-            <span class="project-desc">Setting up grafana, loki, vector, prometheus and alertmanager at home in a minimilized format to monitor/alert on all things home lab.</span>
-          </a>
-    
-          <a href="{{ site.baseurl }}/2025/local-ai-with-strix-halo/" class="project-card">
-            <span class="project-title">Local AI</span>
-            <span class="project-desc">Playing with local AI for home automation purposes using a Strix Halo node with 128GB unified memory, managed by kubernetes/gitops/flux.</span>
-          </a>
-    
-          <a href="{{ site.baseurl }}/2026/talos-pi-cluster/" class="project-card">
-            <span class="project-title">Talos PI K8S Cluster</span>
-            <span class="project-desc">Talos based Kubernetes cluster at home running as minimally as possible on some raspberry pis, managed with Flux, GitOps.</span>
-          </a>
-    
-          <a href="{{ site.baseurl }}/2021/k8s-at-home-pt-1/" class="project-card">
-            <span class="project-title">Kubernetes at Home</span>
-            <span class="project-desc">Kubernetes cluster at home to handle home automation, managed with Flux, GitOps.</span>
-          </a>
-    
-          <a href="{{ site.baseurl }}/2021/playing-with-hashistack/" class="project-card">
-            <span class="project-title">Playing with Hashistack</span>
-            <span class="project-desc">Setting up Consul/Vault/Nomad in a dance-off versus the k8s@home setup.</span>
-          </a>
-    
-          <a href="{{ site.baseurl }}/2021/home-assistant-and-unity/" class="project-card">
-            <span class="project-title">Unity3D Floorplan, MQTT & you</span>
-            <span class="project-desc">Render your home floorplan in 3D, real time monitor and visualize events.</span>
-          </a>
-    
-          <a href="{{ site.baseurl }}/2021/passively-monitoring-utilities/" class="project-card">
-            <span class="project-title">Utility Monitoring</span>
-            <span class="project-desc">Passively tracking Utility metrics via an SDR and ESP32.</span>
-          </a>
-        </div>
+        <ul class="resume-list">
+          <li><strong><a href="{{ site.baseurl }}/2024/centralized-monitoring-observability-at-home/" style="color: inherit; text-decoration: none;">Observability at Home</a>:</strong> Setting up grafana, loki, vector, prometheus and alertmanager at home in a minimilized format to monitor/alert on all things home lab.</li>
+          <li><strong><a href="{{ site.baseurl }}/2025/local-ai-with-strix-halo/" style="color: inherit; text-decoration: none;">Local AI</a>:</strong> Playing with local AI for home automation purposes using a Strix Halo node with 128GB unified memory, managed by kubernetes/gitops/flux.</li>
+          <li><strong><a href="{{ site.baseurl }}/2026/talos-pi-cluster/" style="color: inherit; text-decoration: none;">Talos PI K8S Cluster</a>:</strong> Talos based Kubernetes cluster at home running as minimally as possible on some raspberry pis, managed with Flux, GitOps.</li>
+          <li><strong><a href="{{ site.baseurl }}/2021/k8s-at-home-pt-1/" style="color: inherit; text-decoration: none;">Kubernetes at Home</a>:</strong> Kubernetes cluster at home to handle home automation, managed with Flux, GitOps.</li>
+          <li><strong><a href="{{ site.baseurl }}/2021/playing-with-hashistack/" style="color: inherit; text-decoration: none;">Playing with Hashistack</a>:</strong> Setting up Consul/Vault/Nomad in a dance-off versus the k8s@home setup.</li>
+          <li><strong><a href="{{ site.baseurl }}/2021/home-assistant-and-unity/" style="color: inherit; text-decoration: none;">Unity3D Floorplan, MQTT & you</a>:</strong> Render your home floorplan in 3D, real time monitor and visualize events.</li>
+          <li><strong><a href="{{ site.baseurl }}/2021/passively-monitoring-utilities/" style="color: inherit; text-decoration: none;">Utility Monitoring</a>:</strong> Passively tracking Utility metrics via an SDR and ESP32.</li>
+        </ul>
         
       </td></tr></tbody>
     </table>
