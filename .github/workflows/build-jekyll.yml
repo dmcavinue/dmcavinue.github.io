@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - main
+      - '**'
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -11,8 +16,8 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   build:
@@ -21,19 +26,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '4.0'
-          bundler-cache: true
-          working-directory: './docs'
+      - name: Install Nix
+        uses: cachix/install-nix-action@v30
+
+      - name: Check Jekyll Configuration
+        run: nix develop --command bash -c "cd docs && bundle exec jekyll doctor"
 
       - name: Setup Pages
         uses: actions/configure-pages@v6
 
       - name: Build with Jekyll
-        working-directory: ./docs
-        run: bundle exec jekyll build --source . --destination ../_site
+        run: nix develop --command bash -c "cd docs && bundle exec jekyll build --source . --destination ../_site"
         env:
           JEKYLL_ENV: production
 
@@ -41,6 +44,7 @@ jobs:
         uses: actions/upload-pages-artifact@v5
 
   deploy:
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
