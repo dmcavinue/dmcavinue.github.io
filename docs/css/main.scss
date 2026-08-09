@@ -100,16 +100,23 @@ p {
   color: #16a34a;
 }
 
-.post-list__meta {
-  display: block;
+.post-list__meta,
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
   margin: .7em 0 0 0;
   font-size: .9em;
   color: #cbd5e1;
 }
 
-.post-list__meta--date {
+.post-list__meta--date,
+.post-meta__date {
   margin-right: .5em;
   color: #cbd5e1;
+  flex-shrink: 0;
 }
 
 .post-list__divider {
@@ -389,9 +396,15 @@ pre.highlight code,
 }
 
 .post-meta__tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.3rem;
   font-size: 15px;
-  padding: 0 5px;
-  float: right;
+  padding: 0;
+  float: none;
+  margin-left: auto;
 }
 
 .post-title {
