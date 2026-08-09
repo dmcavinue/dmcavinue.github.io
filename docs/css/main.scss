@@ -7,6 +7,15 @@
 
 /* Modifications */
 
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+pre, .highlight, table {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
 code {
   background: #333333;
   color: #16a34a;
