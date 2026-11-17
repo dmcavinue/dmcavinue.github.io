@@ -517,7 +517,7 @@ additional_tags:
           <div class="resume-card-header">
             <div>
               <h3 class="resume-card-title">Verana Health</h3>
-              <p class="resume-card-subtitle">Senior Devops Engineer</p>
+              <p class="resume-card-subtitle">Staff Devops Engineer</p>
             </div>
             <div class="resume-card-meta">
               <span>Jan 2026 – Present</span>
