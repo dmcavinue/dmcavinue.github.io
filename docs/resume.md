@@ -561,7 +561,7 @@ additional_tags:
               <p class="resume-card-subtitle">Systems Engineer &bull; Projects Team Manager &bull; Cloud Engineer</p>
             </div>
             <div class="resume-card-meta">
-              <span>Jul 2011 – Jan 2014</span>
+              <span>Jul 2011 – Feb 2021</span>
               <span class="location">Ireland, UK, Boston</span>
             </div>
           </div>
